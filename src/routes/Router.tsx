@@ -1,7 +1,8 @@
-import MobileLayout from '@src/components/layout/MobileLayout';
-import Checkout from '@src/pages/Checkout';
 import React from 'react';
 import { Route, Routes } from 'react-router';
+
+import MobileLayout from '@components/layout/MobileLayout';
+import Checkout from '@pages/Checkout';
 
 function Router() {
   return (

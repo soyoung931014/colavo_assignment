@@ -15,7 +15,7 @@ const Container = styled.div`
   background-color: #ccc;
 `;
 const Layout = styled.div`
-  width: 480px;
+  width: ${({ theme }) => theme.deviceSizes.mobile};
   height: 100vh;
   background-color: white;
   border: 1px solid #ccc;
