@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HiPlusCircle } from 'react-icons/hi';
-import TitleBar from '@src/components/header/TitleBar';
+import TitleBar from '@components/header/TitleBar';
+import Button from '@components/button/Button';
+import theme from '@src/styles/theme';
+
 const Checkout = () => {
   const [modal, setModal] = useState(false);
   return (
@@ -9,6 +12,7 @@ const Checkout = () => {
       <HeaderWrapper>
         <TitleBar />
       </HeaderWrapper>
+
       <MenuWrapper>
         <MenuDiv>
           <Icon />
@@ -20,7 +24,9 @@ const Checkout = () => {
         </MenuDiv>
       </MenuWrapper>
 
-      <ButtonWrapper>버튼</ButtonWrapper>
+      <ButtonWrapper>
+        <Button />
+      </ButtonWrapper>
     </Container>
   );
 };
@@ -41,7 +47,7 @@ const MenuWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
-const MenuDiv = styled.div<{ Discount?: any }>`
+const MenuDiv = styled.div<{ Discount?: boolean }>`
   display: flex;
   width: 200px;
   padding: 15px;
@@ -50,13 +56,14 @@ const MenuDiv = styled.div<{ Discount?: any }>`
   margin-left: 10px;
   border-radius: 10px;
   background-color: ${props => (props.Discount ? ' #FDEFF4' : '#F7F7F7')};
+  color: ${props => (props.Discount ? '#f45dc989' : '#23222241')};
 `;
 
 const ButtonWrapper = styled.div`
   position: fixed;
   bottom: 0;
   left: 410px;
-  height: 100px;
+  height: 140px;
   width: ${({ theme }) => theme.deviceSizes.mobile};
 `;
 
@@ -69,6 +76,6 @@ const Text = styled.div`
   text-align: center;
   width: 50px;
   font-size: 18px;
-  border: solid red 2px;
   font-weight: bold;
+  margin-top: 3px;
 `;
