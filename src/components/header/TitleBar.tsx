@@ -1,15 +1,24 @@
 import React from 'react';
 import { FiX } from 'react-icons/fi';
 import styled from 'styled-components';
-const TitleBar = () => {
+
+const TitleBar = ({ text }: any) => {
   return (
     <Container>
       <IconWrapper>
         <Closed />
       </IconWrapper>
       <TitleWrapper>
-        <Customer>곽지우</Customer>
-        <Day>날짜</Day>
+        {text ? (
+          <>
+            <div>{text}</div>
+          </>
+        ) : (
+          <>
+            <Customer>곽지우</Customer>
+            <Day>날짜</Day>
+          </>
+        )}
       </TitleWrapper>
     </Container>
   );
