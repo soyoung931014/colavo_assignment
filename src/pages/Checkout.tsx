@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { HiPlusCircle } from 'react-icons/hi';
 import TitleBar from '@components/header/TitleBar';
 import Button from '@components/button/Button';
-import theme from '@src/styles/theme';
 
 const Checkout = () => {
   const [modal, setModal] = useState(false);
@@ -23,6 +22,7 @@ const Checkout = () => {
           <Text>할인</Text>
         </MenuDiv>
       </MenuWrapper>
+      <Div></Div>
 
       <ButtonWrapper>
         <Button />
@@ -32,20 +32,22 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
 const Container = styled.div``;
 const HeaderWrapper = styled.div`
   position: fixed;
-  top: 0;
-  left: 410px;
-  height: 100px;
-  width: 480px;
+  height: 80px;
+  width: 478px;
+  background: #fff;
+  z-index: 100;
+  left: 50%;
+  transform: translate(-50%);
 `;
 const MenuWrapper = styled.div`
-  padding-top: 90px;
-  padding-bottom: 90px;
   display: flex;
   justify-content: center;
+  position: sticky;
+  padding-top: 90px;
+  padding-bottom: 90px;
 `;
 const MenuDiv = styled.div<{ Discount?: boolean }>`
   display: flex;
@@ -60,9 +62,9 @@ const MenuDiv = styled.div<{ Discount?: boolean }>`
 `;
 
 const ButtonWrapper = styled.div`
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 410px;
+  left: 0;
   height: 140px;
   width: ${({ theme }) => theme.deviceSizes.mobile};
 `;
@@ -78,4 +80,8 @@ const Text = styled.div`
   font-size: 18px;
   font-weight: bold;
   margin-top: 3px;
+`;
+
+const Div = styled.div`
+  height: 80vh;
 `;
