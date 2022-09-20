@@ -2,7 +2,7 @@ export interface HairList {
   items: {
     [key: string]: Item;
   };
-  discount: {
+  discounts: {
     [key: string]: Discount;
   };
   currency_code: string;
