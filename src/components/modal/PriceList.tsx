@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsCheckLg } from 'react-icons/bs';
-import { AiOutlineEdit } from 'react-icons/ai';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
-const PriceList = (props: any) => {
-  console.log(props, 'props');
+import { Item } from '@src/types/itemList';
+import ItemList from '../itemList/ItemList';
+
+interface priceListInfo {
+  modalHandler: () => void;
+  itemList: Item;
+}
+const PriceList = ({ modalHandler, itemList }: priceListInfo) => {
   //itmeList, modalHandler
-  const { modalHandler } = props;
+  console.log(itemList);
 
   return (
     <Container>
@@ -15,166 +19,7 @@ const PriceList = (props: any) => {
         <TitleBar text="시술메뉴" />
       </HeaderWrapper>
       <ItemWrapper>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>{' '}
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
-        <ItemList>
-          <Item>
-            <ItemTag>
-              <Tag>여성컷</Tag>
-              <EditIcon />
-            </ItemTag>
-            <Price>15,000원</Price>
-          </Item>
-          <BsCheckLg />
-        </ItemList>
+        <ItemList />
       </ItemWrapper>
       <ButtonWrapper>
         <Button
@@ -209,31 +54,4 @@ const ButtonWrapper = styled.div`
   height: 140px;
   background: #fff;
   width: ${({ theme }) => theme.deviceSizes.mobile};
-`;
-
-const ItemList = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  border: solid 2px green;
-`;
-const ItemTag = styled.div`
-  display: flex;
-`;
-const Item = styled.div``;
-const Tag = styled.div`
-  margin-right: 3px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #303030;
-`;
-const Price = styled.div`
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 4px;
-  color: #908e8e;
-`;
-const EditIcon = styled(AiOutlineEdit)`
-  color: #908e8e;
 `;
