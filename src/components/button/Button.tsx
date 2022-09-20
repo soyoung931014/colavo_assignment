@@ -1,16 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = () => {
+const Button = ({ text, buttonName, modalHandler }: any) => {
+  console.log(text, buttonName);
   return (
     <Container>
       <CheckWrapper>
-        <Text>합계</Text>
-        <Total>0원</Total>
+        {text ? (
+          <>
+            <Text>{text}</Text>
+          </>
+        ) : (
+          <>
+            <Text>합계</Text>
+            <Total>0원</Total>
+          </>
+        )}
       </CheckWrapper>
       <NextWrapper>
         <Div></Div>
-        <Next>다음</Next>
+        {buttonName ? (
+          <>
+            <Next onClick={modalHandler}>{buttonName}</Next>
+          </>
+        ) : (
+          <>
+            <Next>다음</Next>
+          </>
+        )}
       </NextWrapper>
     </Container>
   );
