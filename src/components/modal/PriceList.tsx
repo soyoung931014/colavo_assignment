@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
@@ -6,23 +6,38 @@ import { Item } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
 
 interface priceListInfo {
+  itemList: Item[];
   modalHandler: () => void;
-  itemList: Item;
+  setCart: any;
+  cart: number[];
 }
-const PriceList = ({ modalHandler, itemList }: priceListInfo) => {
-  //itmeList, modalHandler
-  console.log(itemList);
-
+const PriceList = ({
+  modalHandler,
+  itemList,
+  cart,
+  setCart,
+}: priceListInfo) => {
+  let count = 0;
   return (
     <Container>
       <HeaderWrapper>
         <TitleBar text="시술메뉴" />
       </HeaderWrapper>
       <ItemWrapper>
-        <ItemList />
+        {itemList.map((item: Item, idx: number) => (
+          <ItemList
+            key={idx}
+            item={item}
+            id={count++}
+            setCart={setCart}
+            cart={cart}
+          />
+        ))}
       </ItemWrapper>
       <ButtonWrapper>
         <Button
+          cart={cart}
+          setCart={setCart}
           text="서비스를 선택하세요(여러 개 가능)"
           buttonName="완료"
           modalHandler={modalHandler}
