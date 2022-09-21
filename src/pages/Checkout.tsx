@@ -31,8 +31,8 @@ const Checkout = () => {
           const { items, discounts, currency_code }: HairList = res.data;
           const itemArray = Object.values(items);
           const discountArray = Object.values(discounts);
-
-          setCartList(itemArray);
+          const newItemArray = addId(itemArray);
+          setCartList(newItemArray);
           setDiscountLsit(discountArray);
           setCurrency(currency_code);
         });
@@ -41,6 +41,11 @@ const Checkout = () => {
     }
   };
 
+  const addId = array => {
+    return array.map((el, idx) => {
+      return { id: idx, ...el };
+    });
+  };
   console.log(cartList, discountList, currency, '----------');
 
   const cartModalHandler = () => {
@@ -73,7 +78,11 @@ const Checkout = () => {
         </>
       ) : (
         <>
-          <PriceList cartList={cartList} modalHandler={cartModalHandler} />
+          <PriceList
+            cartList={cartList}
+            /* setCartList={setCartList} */
+            modalHandler={cartModalHandler}
+          />
         </>
       )}
     </Container>
