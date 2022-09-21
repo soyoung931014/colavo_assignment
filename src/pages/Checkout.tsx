@@ -7,15 +7,15 @@ import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import { Discount, HairList, Info, Item } from '@type/itemList';
+import { AddIdItem, Discount, HairList, Item } from '@type/itemList';
 
 const Checkout = () => {
-  const [cartModal, setCartModal] = useState<boolean>(false);
-  const [discountModal, setDiscountModal] = useState<boolean>(false);
-
-  const [cartList, setCartList] = useState<any>([]); // ✅ Item[]
+  const [cartList, setCartList] = useState<AddIdItem[]>([]);
   const [discountList, setDiscountLsit] = useState<Discount[]>([]);
   const [currency, setCurrency] = useState<string>('');
+
+  const [cartModal, setCartModal] = useState<boolean>(false);
+  const [discountModal, setDiscountModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchPriceList();
@@ -41,11 +41,12 @@ const Checkout = () => {
     }
   };
 
-  const addId = array => {
+  const addId = (array: Item[]) => {
     return array.map((el, idx) => {
       return { id: idx, ...el };
     });
   };
+
   console.log(cartList, discountList, currency, '----------');
 
   const cartModalHandler = () => {
