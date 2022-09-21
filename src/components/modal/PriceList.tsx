@@ -6,14 +6,14 @@ import { Item } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
 
 interface priceListInfo {
-  itemList: Item[];
+  cartList: Item[];
   modalHandler: () => void;
   setCart: any;
   cart: number[];
 }
 const PriceList = ({
   modalHandler,
-  itemList,
+  cartList,
   cart,
   setCart,
 }: priceListInfo) => {
@@ -24,7 +24,7 @@ const PriceList = ({
         <TitleBar text="시술메뉴" />
       </HeaderWrapper>
       <ItemWrapper>
-        {itemList.map((item: Item, idx: number) => (
+        {cartList.map((item: Item, idx: number) => (
           <ItemList
             key={idx}
             item={item}

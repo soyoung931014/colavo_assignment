@@ -14,7 +14,7 @@ const Checkout = () => {
 
   const [cart, setCart] = useState<number[]>([]);
 
-  const [itemList, setItemList] = useState<any>([]); // ✅ Item[]
+  const [cartList, setCartList] = useState<any>([]); // ✅ Item[]
   const [discountList, setDiscountLsit] = useState<Discount[]>([]);
   const [currency, setCurrency] = useState<string>('');
 
@@ -34,7 +34,7 @@ const Checkout = () => {
           const itemArray = Object.values(items);
           const discountArray = Object.values(discounts);
           console.log(itemArray, 'itemArray');
-          setItemList(itemArray);
+          setCartList(itemArray);
           setDiscountLsit(discountArray);
           setCurrency(currency_code);
         });
@@ -43,7 +43,7 @@ const Checkout = () => {
     }
   };
 
-  console.log(itemList, discountList, currency, '----------');
+  console.log(cartList, discountList, currency, '----------');
 
   const modalHandler = () => {
     setPriceListModal(!priceListModal);
@@ -77,7 +77,7 @@ const Checkout = () => {
       ) : (
         <>
           <PriceList
-            itemList={itemList}
+            cartList={cartList}
             cart={cart}
             setCart={setCart}
             modalHandler={modalHandler}
