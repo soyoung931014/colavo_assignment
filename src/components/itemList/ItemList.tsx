@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
-const ItemList = () => {
+
+import { Item } from '@type/itemList';
+interface Info {
+  item: Item;
+  id: number;
+  setCart: any;
+  cart: any;
+}
+
+const ItemList = ({ item, id, setCart, cart }: Info) => {
+  const [check, setCheck] = useState<boolean>(false);
+
+  const checkHandler = () => {
+    setCheck(!check);
+  };
+  if (check && !cart.includes(id)) {
+    setCart([...cart, id]);
+  }
+  if (!check && cart.includes(id)) {
+    const idx = cart.indexOf(id);
+    if (idx > -1) {
+      cart.splice(idx, 1);
+    }
+  }
+
   return (
-    <Container>
-      <Item>
+    <Container onClick={checkHandler}>
+      <ItemContent>
         <ItemTag>
-          <Tag>여성컷</Tag>
+          <Tag>{item.name}</Tag>
           <EditIcon />
         </ItemTag>
-        <Price>15,000원</Price>
-      </Item>
-      <BsCheckLg />
+        <Price>{item.price}원</Price>
+      </ItemContent>
+      {check ? <CheckIcon /> : null}
     </Container>
   );
 };
@@ -24,12 +48,11 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border: solid 2px green;
 `;
 const ItemTag = styled.div`
   display: flex;
 `;
-const Item = styled.div``;
+const ItemContent = styled.div``;
 const Tag = styled.div`
   margin-right: 3px;
   font-size: 18px;
@@ -45,3 +68,4 @@ const Price = styled.div`
 const EditIcon = styled(AiOutlineEdit)`
   color: #908e8e;
 `;
+const CheckIcon = styled(BsCheckLg)``;
