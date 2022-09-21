@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ text, buttonName, modalHandler }: any) => {
-  console.log(text, buttonName);
+const Button = ({ text, buttonName, modalHandler, cart, setCart }: any) => {
+  console.log(text, buttonName, cart);
+  /* const SelectItem = () => {
+    setCart ([])
+    modalHandler()
+
+  } */
   return (
     <Container>
       <CheckWrapper>
