@@ -14,6 +14,10 @@ export interface Item {
   price: number;
 }
 
+export interface AddIdItem extends Item {
+  id: number;
+}
+
 export interface Discount {
   name: string;
   rate: number;

@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { Item } from '@type/itemList';
-interface Info {
-  item: Item;
-  id: number;
+import { AddIdItem } from '@type/itemList';
+
+interface ItemListProps {
+  item: AddIdItem;
 }
 
-const ItemList = ({ item, id }: Info) => {
+const ItemList = ({ item }: ItemListProps) => {
   const [check, setCheck] = useState<boolean>(false);
+  const { id, name, price, count }: AddIdItem = item;
 
   const checkHandler = () => {
     setCheck(!check);

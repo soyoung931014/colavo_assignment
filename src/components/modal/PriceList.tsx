@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
-import { Item } from '@src/types/itemList';
+import { AddIdItem, Item } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
 
-interface priceListInfo {
-  cartList: Item[];
+interface priceListProps {
+  cartList: AddIdItem[];
   modalHandler: () => void;
 }
-const PriceList = ({ modalHandler, cartList }: priceListInfo) => {
+const PriceList = ({ modalHandler, cartList }: priceListProps) => {
   return (
     <Container>
       <HeaderWrapper>
         <TitleBar text="시술메뉴" />
       </HeaderWrapper>
       <ItemWrapper>
-        {cartList.map((item: Item, idx: number) => (
-          <ItemList key={idx} item={item} id={idx} />
+        {cartList.map((item: AddIdItem, idx: number) => (
+          <ItemList key={idx} item={item} />
         ))}
       </ItemWrapper>
       <ButtonWrapper>
