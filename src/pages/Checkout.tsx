@@ -6,13 +6,12 @@ import { HiPlusCircle } from 'react-icons/hi';
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
+
 import { Discount, HairList, Info, Item } from '@type/itemList';
 
 const Checkout = () => {
-  const [priceListModal, setPriceListModal] = useState<boolean>(false);
+  const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
-
-  const [cart, setCart] = useState<number[]>([]);
 
   const [cartList, setCartList] = useState<any>([]); // ✅ Item[]
   const [discountList, setDiscountLsit] = useState<Discount[]>([]);
@@ -29,11 +28,10 @@ const Checkout = () => {
           'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData',
         )
         .then(res => {
-          console.log(res, 'res');
           const { items, discounts, currency_code }: HairList = res.data;
           const itemArray = Object.values(items);
           const discountArray = Object.values(discounts);
-          console.log(itemArray, 'itemArray');
+
           setCartList(itemArray);
           setDiscountLsit(discountArray);
           setCurrency(currency_code);
@@ -45,20 +43,20 @@ const Checkout = () => {
 
   console.log(cartList, discountList, currency, '----------');
 
-  const modalHandler = () => {
-    setPriceListModal(!priceListModal);
+  const cartModalHandler = () => {
+    setCartModal(!cartModal);
   };
 
   return (
     <Container>
-      {!priceListModal ? (
+      {!cartModal ? (
         <>
           <HeaderWrapper>
             <TitleBar />
           </HeaderWrapper>
 
           <MenuWrapper>
-            <MenuDiv onClick={modalHandler}>
+            <MenuDiv onClick={cartModalHandler}>
               <Icon />
               <Text>시술</Text>
             </MenuDiv>
@@ -68,7 +66,6 @@ const Checkout = () => {
             </MenuDiv>
           </MenuWrapper>
           <Div></Div>
-          <div>{cart.length}</div>
 
           <ButtonWrapper>
             <Button />
@@ -76,12 +73,7 @@ const Checkout = () => {
         </>
       ) : (
         <>
-          <PriceList
-            cartList={cartList}
-            cart={cart}
-            setCart={setCart}
-            modalHandler={modalHandler}
-          />
+          <PriceList cartList={cartList} modalHandler={cartModalHandler} />
         </>
       )}
     </Container>

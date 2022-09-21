@@ -8,16 +8,8 @@ import ItemList from '../itemList/ItemList';
 interface priceListInfo {
   cartList: Item[];
   modalHandler: () => void;
-  setCart: any;
-  cart: number[];
 }
-const PriceList = ({
-  modalHandler,
-  cartList,
-  cart,
-  setCart,
-}: priceListInfo) => {
-  let count = 0;
+const PriceList = ({ modalHandler, cartList }: priceListInfo) => {
   return (
     <Container>
       <HeaderWrapper>
@@ -25,19 +17,11 @@ const PriceList = ({
       </HeaderWrapper>
       <ItemWrapper>
         {cartList.map((item: Item, idx: number) => (
-          <ItemList
-            key={idx}
-            item={item}
-            id={count++}
-            setCart={setCart}
-            cart={cart}
-          />
+          <ItemList key={idx} item={item} id={idx} />
         ))}
       </ItemWrapper>
       <ButtonWrapper>
         <Button
-          cart={cart}
-          setCart={setCart}
           text="서비스를 선택하세요(여러 개 가능)"
           buttonName="완료"
           modalHandler={modalHandler}
