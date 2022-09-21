@@ -1,38 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { HiPlusCircle } from 'react-icons/hi';
+
 import TitleBar from '@components/header/TitleBar';
+import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
+import { Discount, HairList, Info, Item } from '@type/itemList';
 
 const Checkout = () => {
-  const [modal, setModal] = useState(false);
+  const [priceListModal, setPriceListModal] = useState<boolean>(false);
+  const [discountModal, setDiscountModal] = useState<boolean>(false);
+
+  const [cart, setCart] = useState<number[]>([]);
+
+  const [itemList, setItemList] = useState<any>([]); // ✅ Item[]
+  const [discountList, setDiscountLsit] = useState<Discount[]>([]);
+  const [currency, setCurrency] = useState<string>('');
+
+  useEffect(() => {
+    fetchPriceList();
+  }, []);
+
+  const fetchPriceList = async () => {
+    try {
+      await axios
+        .get(
+          'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData',
+        )
+        .then(res => {
+          console.log(res, 'res');
+          const { items, discounts, currency_code }: HairList = res.data;
+          const itemArray = Object.values(items);
+          const discountArray = Object.values(discounts);
+          console.log(itemArray, 'itemArray');
+          setItemList(itemArray);
+          setDiscountLsit(discountArray);
+          setCurrency(currency_code);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(itemList, discountList, currency, '----------');
+
+  const modalHandler = () => {
+    setPriceListModal(!priceListModal);
+  };
+
   return (
     <Container>
-      <HeaderWrapper>
-        <TitleBar />
-      </HeaderWrapper>
+      {!priceListModal ? (
+        <>
+          <HeaderWrapper>
+            <TitleBar />
+          </HeaderWrapper>
 
-      <MenuWrapper>
-        <MenuDiv>
-          <Icon />
-          <Text>시술</Text>
-        </MenuDiv>
-        <MenuDiv Discount>
-          <Icon />
-          <Text>할인</Text>
-        </MenuDiv>
-      </MenuWrapper>
-      <Div></Div>
+          <MenuWrapper>
+            <MenuDiv onClick={modalHandler}>
+              <Icon />
+              <Text>시술</Text>
+            </MenuDiv>
+            <MenuDiv Discount>
+              <Icon />
+              <Text>할인</Text>
+            </MenuDiv>
+          </MenuWrapper>
+          <Div></Div>
+          <div>{cart.length}</div>
 
-      <ButtonWrapper>
-        <Button />
-      </ButtonWrapper>
+          <ButtonWrapper>
+            <Button />
+          </ButtonWrapper>
+        </>
+      ) : (
+        <>
+          <PriceList
+            itemList={itemList}
+            cart={cart}
+            setCart={setCart}
+            modalHandler={modalHandler}
+          />
+        </>
+      )}
     </Container>
   );
 };
 
 export default Checkout;
-const Container = styled.div``;
+const Container = styled.section``;
 const HeaderWrapper = styled.div`
   position: fixed;
   height: 80px;
