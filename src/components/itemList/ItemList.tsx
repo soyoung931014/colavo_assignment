@@ -7,25 +7,23 @@ import { Item } from '@type/itemList';
 interface Info {
   item: Item;
   id: number;
-  setCart: any;
-  cart: any;
 }
 
-const ItemList = ({ item, id, setCart, cart }: Info) => {
+const ItemList = ({ item, id }: Info) => {
   const [check, setCheck] = useState<boolean>(false);
 
   const checkHandler = () => {
     setCheck(!check);
   };
-  if (check && !cart.includes(id)) {
-    setCart([...cart, id]);
+  /*  if (check && !selectedList.includes(id)) {
+    setSelectedList([...selectedList, id]);
   }
-  if (!check && cart.includes(id)) {
-    const idx = cart.indexOf(id);
+  if (!check && selectedList.includes(id)) {
+    const idx = selectedList.indexOf(id);
     if (idx > -1) {
-      cart.splice(idx, 1);
+      selectedList.splice(idx, 1);
     }
-  }
+  } */
 
   return (
     <Container onClick={checkHandler}>
