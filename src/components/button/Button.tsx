@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-const Button = ({ text, buttonName, cartModalHandler }: any) => {
-  console.log(text, buttonName);
+const Button = ({ text, buttonName, cartModalHandler, temp }: any) => {
+  console.log(text, buttonName, temp);
 
+  const ButtonHandler = () => {
+    /*   console.log(temp, 'tempfmdlfmdlfmdl');
+    sessionStorage.setItem('temp', temp); */
+
+    cartModalHandler();
+  };
   return (
     <Container>
       <CheckWrapper>
@@ -22,7 +28,7 @@ const Button = ({ text, buttonName, cartModalHandler }: any) => {
         <Div></Div>
         {buttonName ? (
           <>
-            <Next onClick={cartModalHandler}>{buttonName}</Next>
+            <Next onClick={ButtonHandler}>{buttonName}</Next>
           </>
         ) : (
           <>
