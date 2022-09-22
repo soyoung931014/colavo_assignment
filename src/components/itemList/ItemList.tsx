@@ -12,36 +12,28 @@ interface ItemListProps {
 }
 
 const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
-  const [check, setCheck] = useState<boolean>(false);
-  const { id, name, price, count }: AddCheckItem = item;
+  const [selected, setSelected] = useState<boolean>(false);
+  const { id, name, price, count, check }: AddCheckItem = item;
 
   const checkHandler = () => {
-    setCheck(!check);
+    setSelected(!selected);
   };
-  console.log(check, 'check');
-  if (check && !temp.includes(id)) {
-    tempHandler(id, check);
+  console.log('렌더');
+
+  if (selected && !temp.includes(id)) {
+    tempHandler(id, selected);
   }
-  if (!check && temp.includes(id)) {
+  if (!selected && temp.includes(id)) {
     const idx = temp.indexOf(id);
     if (idx > -1) {
-      /*  selectedList.splice(idx, 1); */
-      tempHandler(idx, check);
+      tempHandler(idx, selected);
     }
   }
-
-  /*  if (check && !selectedList.includes(id)) {
-    setSelectedList([...selectedList, id]);
-  }
-  if (!check && selectedList.includes(id)) {
-    const idx = selectedList.indexOf(id);
-    if (idx > -1) {
-      selectedList.splice(idx, 1);
-    }
-  } */
 
   return (
-    <Container onClick={checkHandler}>
+    <Container
+      onClick={!check ? checkHandler : () => alert('이미 담은 목록입니다')}
+    >
       <ItemContent>
         <ItemTag>
           <Tag>{name}</Tag>
@@ -49,7 +41,7 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
         </ItemTag>
         <Price>{price}원</Price>
       </ItemContent>
-      {check ? <CheckIcon /> : null}
+      {selected ? <CheckIcon /> : null}
     </Container>
   );
 };
