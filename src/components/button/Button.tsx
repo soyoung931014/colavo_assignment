@@ -11,6 +11,7 @@ const Button = ({
   temp,
   cart,
   saveCart,
+  totalPrice,
 }: any) => {
   const ButtonHandler = () => {
     if (temp.length === 0) {
@@ -22,8 +23,8 @@ const Button = ({
   };
   const selectedItemList = cart => {
     if (temp.length > 0) {
-      for (const el of temp) {
-        cart[el].check = true;
+      for (const itemId of temp) {
+        cart[itemId].check = true;
       }
       saveCart(cart);
     }
@@ -39,7 +40,7 @@ const Button = ({
         ) : (
           <>
             <Text>합계</Text>
-            <Total>0원</Total>
+            <Total>{totalPrice}원</Total>
           </>
         )}
       </CheckWrapper>
