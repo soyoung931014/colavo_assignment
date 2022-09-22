@@ -5,7 +5,7 @@ import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
-import Discount from '@components/modal/Discount';
+import Discount from '@src/components/modal/DiscountModal';
 import Button from '@components/button/Button';
 
 import { AddCheckItem, StoreInfo } from '@type/itemList';
@@ -16,7 +16,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const [discountModal, setDiscountModal] = useState<boolean>(false);
   const [countModal, setCountModal] = useState<boolean>(false);
   const [temp, setTemp] = useState<number[]>([]);
-
+  console.log(cartModal, 'cartModal');
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
   const totalPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
@@ -25,6 +25,9 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
 
   const cartModalHandler = () => {
     setCartModal(!cartModal);
+  };
+  const discountModalHandler = () => {
+    setDiscountModal(!discountModal);
   };
   const countModalHandler = () => {
     setCountModal(!countModal);
@@ -43,7 +46,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
 
   return (
     <Container>
-      {!cartModal ? (
+      {!cartModal && !discountModal ? (
         <>
           <HeaderWrapper>
             <TitleBar />
@@ -53,7 +56,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               <Icon />
               <Text>시술</Text>
             </MenuDiv>
-            <MenuDiv Discount onClick={() => setDiscountModal(!discountModal)}>
+            <MenuDiv Discount onClick={discountModalHandler}>
               <Icon />
               <Text>할인</Text>
             </MenuDiv>
@@ -71,9 +74,13 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
             <Button totalPrice={totalPrice} />
           </ButtonWrapper>
         </>
-      ) : !cartModal && discountModal ? (
+      ) : discountModal ? (
         <>
-          <Discount />
+          <Discount
+            temp={temp}
+            tempHandler={tempHandler}
+            discountModalHandler={discountModalHandler}
+          />
         </>
       ) : (
         <>

@@ -2,13 +2,17 @@ import React from 'react';
 import { FiX } from 'react-icons/fi';
 import styled from 'styled-components';
 
-const TitleBar = ({ text, cartModalHandler }: any) => {
+const TitleBar = ({ text, cartModalHandler, discountModalHandler }: any) => {
   return (
     <Container>
       <IconWrapper>
-        {text ? (
+        {text === '시술메뉴' ? (
           <Div>
             <Closed onClick={cartModalHandler} />
+          </Div>
+        ) : text === '할인' ? (
+          <Div>
+            <Closed onClick={discountModalHandler} />
           </Div>
         ) : (
           <Closed />

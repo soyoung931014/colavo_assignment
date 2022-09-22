@@ -15,7 +15,7 @@ export interface Item {
 }
 export interface Discount {
   name: string;
-  rate: number;
+  rate: any;
 }
 
 export interface AddCheckItem extends Item {
@@ -24,6 +24,7 @@ export interface AddCheckItem extends Item {
 }
 
 export interface AddCheckDiscount extends Discount {
+  map(arg0: (discount: any) => JSX.Element): import('react').ReactNode;
   id: number;
   check: boolean;
 }
