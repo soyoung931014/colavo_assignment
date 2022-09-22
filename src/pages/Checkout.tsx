@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HiPlusCircle } from 'react-icons/hi';
-import { connect } from 'react-redux';
 
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import { AddCheckItem, Discount, HairList, Item } from '@type/itemList';
-import Modal from '@src/components/modal/Modal';
 import Discout from '@src/components/modal/Discout';
 
 const Checkout = () => {
-  /*  const [cartList, setCartList] = useState<AddCheckItem[]>([]);
-  const [discountList, setDiscountLsit] = useState<Discount[]>([]);
-  const [currency, setCurrency] = useState<string>(''); */
-
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
 
   const [temp, setTemp] = useState<number[]>([]);
 
-  const tempHandler = (id: number, check: boolean) => {
-    if (check) {
+  const tempHandler = (id: number, selected: boolean) => {
+    if (selected) {
       setTemp([...temp, id]);
     }
-    if (!check) {
+    if (!selected) {
       temp.splice(id, 1);
       setTemp([...temp]);
     }
@@ -52,7 +45,6 @@ const Checkout = () => {
               <Icon />
               <Text>할인</Text>
             </MenuDiv>
-            {/*   <Modal cartModalHandler={cartModalHandler} /> */}
           </MenuWrapper>
           {temp.length}
 
@@ -69,7 +61,6 @@ const Checkout = () => {
       ) : (
         <>
           <PriceList
-            cartList={cartList}
             temp={temp}
             tempHandler={tempHandler}
             /* setCartList={setCartList} */
