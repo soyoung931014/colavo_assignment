@@ -1,0 +1,13 @@
+import { FETCH_CURRENCY_CODE } from '../action/currencyCodeAction';
+
+const initialState = '';
+
+const CurrencyCodeReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_CURRENCY_CODE:
+      return [...state, ...action.payload];
+    default:
+      return state;
+  }
+};
+export default CurrencyCodeReducer;
