@@ -7,24 +7,36 @@ import ItemList from '../itemList/ItemList';
 
 interface priceListProps {
   cartList: AddIdItem[];
-  modalHandler: () => void;
+  cartModalHandler: () => void;
+  temp: number[];
+  tempHandler: (id: number, check: boolean) => void;
 }
-const PriceList = ({ modalHandler, cartList }: priceListProps) => {
+const PriceList = ({
+  cartModalHandler,
+  cartList,
+  temp,
+  tempHandler,
+}: priceListProps) => {
   return (
     <Container>
       <HeaderWrapper>
-        <TitleBar text="시술메뉴" />
+        <TitleBar text="시술메뉴" cartModalHandler={cartModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
         {cartList.map((item: AddIdItem, idx: number) => (
-          <ItemList key={idx} item={item} />
+          <ItemList
+            key={idx}
+            item={item}
+            temp={temp}
+            tempHandler={tempHandler}
+          />
         ))}
       </ItemWrapper>
       <ButtonWrapper>
         <Button
           text="서비스를 선택하세요(여러 개 가능)"
           buttonName="완료"
-          modalHandler={modalHandler}
+          cartModalHandler={cartModalHandler}
         />
       </ButtonWrapper>
     </Container>

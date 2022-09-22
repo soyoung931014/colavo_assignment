@@ -7,15 +7,29 @@ import { AddIdItem } from '@type/itemList';
 
 interface ItemListProps {
   item: AddIdItem;
+  temp: number[];
+  tempHandler: (id: number, check: boolean) => void;
 }
 
-const ItemList = ({ item }: ItemListProps) => {
+const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
   const [check, setCheck] = useState<boolean>(false);
   const { id, name, price, count }: AddIdItem = item;
 
   const checkHandler = () => {
     setCheck(!check);
   };
+  console.log(check, 'check');
+  if (check && !temp.includes(id)) {
+    tempHandler(id, check);
+  }
+  if (!check && temp.includes(id)) {
+    const idx = temp.indexOf(id);
+    if (idx > -1) {
+      /*  selectedList.splice(idx, 1); */
+      tempHandler(idx, check);
+    }
+  }
+
   /*  if (check && !selectedList.includes(id)) {
     setSelectedList([...selectedList, id]);
   }
@@ -30,10 +44,10 @@ const ItemList = ({ item }: ItemListProps) => {
     <Container onClick={checkHandler}>
       <ItemContent>
         <ItemTag>
-          <Tag>{item.name}</Tag>
+          <Tag>{name}</Tag>
           <EditIcon />
         </ItemTag>
-        <Price>{item.price}원</Price>
+        <Price>{price}원</Price>
       </ItemContent>
       {check ? <CheckIcon /> : null}
     </Container>
