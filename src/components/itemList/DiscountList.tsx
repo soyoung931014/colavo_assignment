@@ -3,17 +3,29 @@ import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { AddCheckItem } from '@type/itemList';
+import { AddCheckDiscount } from '@type/itemList';
 
-interface ItemListProps {
-  item: AddCheckItem;
+interface DiscountListProps {
+  discount: AddCheckDiscount;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
+  id: number;
+  name: string;
+  rate: number;
+  check: boolean;
 }
 
-const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
+const DiscountList = ({
+  id,
+  name,
+  rate,
+  check,
+  temp,
+  tempHandler,
+  discount,
+}: DiscountListProps) => {
+  console.log(discount, 'discount');
   const [selected, setSelected] = useState<boolean>(false);
-  const { id, name, price, count, check }: AddCheckItem = item;
 
   const checkHandler = () => {
     setSelected(!selected);
@@ -38,14 +50,14 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
           <EditIcon />
           <Tag>{name}</Tag>
         </ItemTag>
-        <Price>{price}원</Price>
+        <Price>{rate}</Price>
       </ItemContent>
       {selected ? <CheckIcon /> : null}
     </Container>
   );
 };
 
-export default ItemList;
+export default DiscountList;
 
 const Container = styled.div`
   display: flex;
