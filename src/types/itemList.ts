@@ -20,12 +20,12 @@ export interface Discount {
 
 export interface AddCheckItem extends Item {
   id: number;
-  check: false;
+  check: boolean;
 }
 
 export interface AddCheckDiscount extends Discount {
   id: number;
-  check: false;
+  check: boolean;
 }
 
 export interface fetchProps {

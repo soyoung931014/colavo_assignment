@@ -1,5 +1,5 @@
 import { AddCheckItem } from '@src/types/itemList';
-import { FETCH_CART_INFO, DELETE_CART } from '../action/cartAction';
+import { FETCH_CART_INFO, SAVE_CART, DELETE_CART } from '../action/cartAction';
 
 const initialState: AddCheckItem[] = [];
 
@@ -7,6 +7,8 @@ const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CART_INFO:
       return [...state, ...action.payload];
+    case SAVE_CART:
+      return [...action.payload];
 
     default:
       return state;
