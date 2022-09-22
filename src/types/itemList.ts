@@ -36,4 +36,5 @@ export interface StoreInfo {
 export interface fetchProps {
   fetchCartInfo: (cartList: AddCheckItem[]) => void;
   fetchDiscountInfo: (discountList: AddCheckDiscount[]) => void;
+  fetchCurrencyCode: (currency_code: string) => void;
 }
