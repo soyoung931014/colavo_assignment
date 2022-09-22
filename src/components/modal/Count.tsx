@@ -1,15 +1,30 @@
+import { saveCart } from '@src/redux/action/cartAction';
+import { AddCheckItem } from '@src/types/itemList';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 export interface CountProps {
   name: string;
   count: number;
-  id?: number;
+  id: number;
+  cart: AddCheckItem[];
+  countModalHandler: () => void;
 }
-const Count = ({ name, count, id }: CountProps) => {
+const Count = ({ name, count, id, cart, countModalHandler }: CountProps) => {
   const [total, setTotal] = useState(count);
-  const handleChangeCount = e => {
-    setTotal(e.target.value);
+
+  const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const onlyNumber = value.replace(/[^0-9]/g, '');
+    setTotal(Number(onlyNumber));
+  };
+  const countHandler = () => {
+    if (cart !== undefined) {
+      cart[id].count = total;
+    }
+    saveCart(cart);
+    countModalHandler();
   };
   return (
     <>
@@ -17,7 +32,11 @@ const Count = ({ name, count, id }: CountProps) => {
         <Container>
           <div>
             <Div>
-              <Writing onChange={handleChangeCount} value={total}></Writing>
+              <Writing
+                type="text"
+                onChange={handleChangeCount}
+                value={total}
+              ></Writing>
               <Text>갯수 입력</Text>
             </Div>
             <ButtonWrapper>
@@ -27,7 +46,7 @@ const Count = ({ name, count, id }: CountProps) => {
                 </Button>
               </Div>
               <Div>
-                <Button onClick={() => console.log('확인')}>확인</Button>
+                <Button onClick={countHandler}>확인</Button>
               </Div>
             </ButtonWrapper>
           </div>
@@ -37,18 +56,20 @@ const Count = ({ name, count, id }: CountProps) => {
   );
 };
 
-export default Count;
+const mapStateToProps = state => {
+  const { cart }: any = state;
+  return {
+    cart,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    saveCart: cart => dispatch(saveCart(cart)),
+  };
+};
 
-const ButtonWrapper = styled.div`
-  display: flex;
-`;
-const Text = styled.div`
-  color: ${({ theme }) => theme.color.grey_02};
-  font-size: 14px;
-  margin-left: 75px;
-  margin-top: 10px;
-`;
-const Div = styled.div``;
+export default connect(mapStateToProps, mapDispatchToProps)(Count);
+
 const BackGround = styled.div`
   position: fixed;
   top: 0;
@@ -59,6 +80,7 @@ const BackGround = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 `;
 const Container = styled.div`
   width: 300px;
@@ -73,8 +95,10 @@ const Container = styled.div`
 
 const Writing = styled.input`
   border-bottom: 2px solid ${({ theme }) => theme.color.grey_02};
-  margin-left: 30px;
-  color: ${({ theme }) => theme.color.grey_02};
+  color: ${({ theme }) => theme.color.grey_01};
+  text-align: center;
+  font-size: 20px;
+  width: 215px;
 `;
 
 const Button = styled.button<{ Delete?: boolean }>`
@@ -92,3 +116,13 @@ const Button = styled.button<{ Delete?: boolean }>`
     color: ${({ theme }) => theme.color.grey_02};
   }
 `;
+const ButtonWrapper = styled.div`
+  display: flex;
+`;
+const Text = styled.div`
+  color: ${({ theme }) => theme.color.grey_02};
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+`;
+const Div = styled.div``;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -14,6 +14,7 @@ import SelectedItemList from '@components/itemList/SelectedItemList';
 const Checkout = ({ cart, discount }: StoreInfo) => {
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
+  const [countModal, setCountModal] = useState<boolean>(false);
   const [temp, setTemp] = useState<number[]>([]);
 
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
@@ -21,8 +22,12 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     (acc, item) => acc + item.price * item.count,
     0,
   );
+
   const cartModalHandler = () => {
     setCartModal(!cartModal);
+  };
+  const countModalHandler = () => {
+    setCountModal(!countModal);
   };
 
   const tempHandler = (id: number, selected: boolean) => {
@@ -54,7 +59,12 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
             </MenuDiv>
           </MenuWrapper>
           {addedItem.map((item: AddCheckItem) => (
-            <SelectedItemList key={item.name} {...item} />
+            <SelectedItemList
+              key={item.name}
+              {...item}
+              countModal={countModal}
+              countModalHandler={countModalHandler}
+            />
           ))}
           <Div></Div>
           <ButtonWrapper>

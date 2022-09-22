@@ -1,22 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import { AddCheckItem } from '@src/types/itemList';
 import Count from '../modal/Count';
-
-const SelectedItemList = ({ id, name, price, count }: AddCheckItem) => {
-  const [countModal, setCountModal] = useState<boolean>(false);
-  console.log(countModal);
+export interface SelectedItemListProps {
+  countModalHandler: () => void;
+  countModal: boolean;
+  id: number;
+  count: number;
+  name: string;
+  price: number;
+}
+const SelectedItemList = ({
+  id,
+  count,
+  name,
+  price,
+  countModalHandler,
+  countModal,
+}: SelectedItemListProps) => {
   return (
     <>
       {countModal ? (
         <>
-          <Count name={name} count={count} id={id} />
+          <Count
+            name={name}
+            count={count}
+            id={id}
+            countModalHandler={countModalHandler}
+          />
         </>
       ) : null}
-      <Container onClick={() => setCountModal(!countModal)}>
+      <Container onClick={countModalHandler}>
         <ItemContent>
           <ItemTag>
             <Tag>{name}</Tag>
