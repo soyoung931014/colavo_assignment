@@ -6,7 +6,7 @@ import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import Discout from '@src/components/modal/Discout';
+import Discout from '@src/components/modal/Discount';
 
 const Checkout = () => {
   const [cartModal, setCartModal] = useState<boolean>(false);
