@@ -37,6 +37,7 @@ const PriceList = ({
           text="서비스를 선택하세요(여러 개 가능)"
           buttonName="완료"
           cartModalHandler={cartModalHandler}
+          temp={temp}
         />
       </ButtonWrapper>
     </Container>
