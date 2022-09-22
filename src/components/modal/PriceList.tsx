@@ -4,28 +4,30 @@ import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
 import { AddCheckItem, Item } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
+import { connect } from 'react-redux';
 
 interface priceListProps {
-  cartList: AddCheckItem[];
+  cart: AddCheckItem[];
   cartModalHandler: () => void;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
 }
 const PriceList = ({
   cartModalHandler,
-  cartList,
+  cart,
   temp,
   tempHandler,
 }: priceListProps) => {
+  console.log('tempButton', temp);
   return (
     <Container>
       <HeaderWrapper>
         <TitleBar text="시술메뉴" cartModalHandler={cartModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
-        {cartList.map((item: AddCheckItem, idx: number) => (
+        {cart.map((item: AddCheckItem) => (
           <ItemList
-            key={idx}
+            key={item.name}
             item={item}
             temp={temp}
             tempHandler={tempHandler}
@@ -43,8 +45,13 @@ const PriceList = ({
     </Container>
   );
 };
+const mapStateToProps = state => {
+  return {
+    cart: state.cart,
+  };
+};
 
-export default PriceList;
+export default connect(mapStateToProps)(PriceList);
 const ItemWrapper = styled.div`
   padding-top: 90px;
   padding-bottom: 90px;
