@@ -36,8 +36,8 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
     >
       <ItemContent>
         <ItemTag>
-          <Tag>{name}</Tag>
           <EditIcon />
+          <Tag>{name}</Tag>
         </ItemTag>
         <Price>{price}원</Price>
       </ItemContent>
@@ -53,6 +53,9 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const ItemTag = styled.div`
   display: flex;
@@ -63,6 +66,10 @@ const Tag = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: #303030;
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const Price = styled.div`
   font-size: 12px;
@@ -72,5 +79,8 @@ const Price = styled.div`
 `;
 const EditIcon = styled(AiOutlineEdit)`
   color: #908e8e;
+  margin-right: 10px;
 `;
-const CheckIcon = styled(BsCheckLg)``;
+const CheckIcon = styled(BsCheckLg)`
+  color: ${({ theme }) => theme.color.purple_02};
+`;

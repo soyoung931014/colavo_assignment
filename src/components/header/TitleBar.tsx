@@ -6,17 +6,23 @@ const TitleBar = ({ text, cartModalHandler }: any) => {
   return (
     <Container>
       <IconWrapper>
-        {text ? <Closed onClick={cartModalHandler} /> : <Closed />}
+        {text ? (
+          <Div>
+            <Closed onClick={cartModalHandler} />
+          </Div>
+        ) : (
+          <Closed />
+        )}
       </IconWrapper>
       <TitleWrapper>
         {text ? (
           <>
-            <div>{text}</div>
+            <Title>{text}</Title>
           </>
         ) : (
           <>
             <Customer>곽지우</Customer>
-            <Day>날짜</Day>
+            <Day>2019.6.14 오후 5:30 </Day>
           </>
         )}
       </TitleWrapper>
@@ -32,15 +38,33 @@ const Container = styled.div`
 `;
 const IconWrapper = styled.div``;
 const TitleWrapper = styled.div`
-  margin-left: 180px;
+  margin-left: 164px;
 `;
 
 const Closed = styled(FiX)`
-  width: 50px;
+  width: 55px;
   height: 70px;
   color: ${({ theme }) => theme.color.grey_02};
 `;
+const Div = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const Customer = styled.div`
   width: 400px;
+  color: ${({ theme }) => theme.color.grey_01};
+  font-size: 23px;
+  font-weight: 500;
 `;
-const Day = styled.div``;
+const Title = styled.div`
+  color: ${({ theme }) => theme.color.grey_01};
+  font-size: 23px;
+  font-weight: 500;
+`;
+const Day = styled.div`
+  color: ${({ theme }) => theme.color.grey_02};
+  position: relative;
+  right: 30px;
+  top: 2px;
+`;

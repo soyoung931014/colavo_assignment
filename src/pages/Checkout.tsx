@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -111,7 +111,9 @@ const MenuWrapper = styled.div`
   justify-content: center;
   position: sticky;
   padding-top: 90px;
-  padding-bottom: 90px;
+  padding-bottom: 17px;
+  border-bottom: dotted 1px ${({ theme }) => theme.color.grey_02};
+  margin-bottom: 10px;
 `;
 const MenuDiv = styled.div<{ Discount?: boolean }>`
   display: flex;
@@ -123,6 +125,9 @@ const MenuDiv = styled.div<{ Discount?: boolean }>`
   border-radius: 10px;
   background-color: ${props => (props.Discount ? ' #FDEFF4' : '#F7F7F7')};
   color: ${props => (props.Discount ? '#f45dc989' : '#23222241')};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ButtonWrapper = styled.div`

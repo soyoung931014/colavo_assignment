@@ -35,7 +35,7 @@ const Button = ({
       <CheckWrapper>
         {text ? (
           <>
-            <Text>{text}</Text>
+            <Text Guide>{text}</Text>
           </>
         ) : (
           <>
@@ -48,7 +48,9 @@ const Button = ({
         <Div></Div>
         {buttonName ? (
           <>
-            <Next onClick={ButtonHandler}>{buttonName}</Next>
+            <Wrapper>
+              <Next onClick={ButtonHandler}>{buttonName}</Next>
+            </Wrapper>
           </>
         ) : (
           <>
@@ -61,7 +63,7 @@ const Button = ({
 };
 
 const mapStateToProps = state => {
-  const { cart }: any = state;
+  const { cart } = state;
   return {
     cart,
   };
@@ -75,7 +77,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Button);
 
 const Container = styled.div``;
-const CheckWrapper = styled.div`
+const CheckWrapper = styled.div<{ Guide?: boolean }>`
   display: flex;
   justify-content: space-between;
   margin-right: 5px;
@@ -84,9 +86,10 @@ const CheckWrapper = styled.div`
   padding-top: 22px;
   border-top: solid 1px ${({ theme }) => theme.color.grey_02}; ;
 `;
-const Text = styled.div`
+const Text = styled.div<{ Guide?: boolean }>`
   font-size: 17px;
   color: ${({ theme }) => theme.color.grey_01};
+  margin-left: ${props => (props.Guide ? '100px' : '0')};
 `;
 const Total = styled.div`
   font-size: 30px;
@@ -108,5 +111,10 @@ const NextWrapper = styled.div`
   height: 60px;
   margin-right: 8px;
   padding: 0 20px;
+`;
+const Wrapper = styled.div`
+  :hover {
+    cursor: pointer;
+  }
 `;
 const Div = styled.div``;
