@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Discout = () => {
+const Discount = () => {
   return <div>Discout</div>;
 };
 
-export default Discout;
+export default Discount;
