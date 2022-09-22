@@ -27,8 +27,9 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       setTemp([...temp, id]);
     }
     if (!selected) {
-      temp.splice(id, 1);
-      setTemp([...temp]);
+      const first = temp.slice(0, id);
+      const rest = temp.slice(id + 1);
+      setTemp([...first, ...rest]);
     }
   };
 
