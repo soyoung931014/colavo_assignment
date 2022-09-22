@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ text, buttonName, modalHandler }: any) => {
+const Button = ({ text, buttonName, cartModalHandler }: any) => {
   console.log(text, buttonName);
 
   return (
@@ -22,7 +22,7 @@ const Button = ({ text, buttonName, modalHandler }: any) => {
         <Div></Div>
         {buttonName ? (
           <>
-            <Next onClick={modalHandler}>{buttonName}</Next>
+            <Next onClick={cartModalHandler}>{buttonName}</Next>
           </>
         ) : (
           <>

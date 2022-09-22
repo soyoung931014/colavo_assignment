@@ -8,6 +8,7 @@ import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
 import { AddIdItem, Discount, HairList, Item } from '@type/itemList';
+import { UsingJoinColumnOnlyOnOneSideAllowedError } from 'typeorm';
 
 const Checkout = () => {
   const [cartList, setCartList] = useState<AddIdItem[]>([]);
@@ -16,6 +17,18 @@ const Checkout = () => {
 
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
+
+  const [temp, setTemp] = useState<number[]>([]);
+
+  const tempHandler = (id: number, check: boolean) => {
+    if (check) {
+      setTemp([...temp, id]);
+    }
+    if (!check) {
+      temp.splice(id, 1);
+      setTemp([...temp]);
+    }
+  };
 
   useEffect(() => {
     fetchPriceList();
@@ -29,9 +42,11 @@ const Checkout = () => {
         )
         .then(res => {
           const { items, discounts, currency_code }: HairList = res.data;
+
           const itemArray = Object.values(items);
           const discountArray = Object.values(discounts);
           const newItemArray = addId(itemArray);
+
           setCartList(newItemArray);
           setDiscountLsit(discountArray);
           setCurrency(currency_code);
@@ -48,7 +63,7 @@ const Checkout = () => {
   };
 
   console.log(cartList, discountList, currency, '----------');
-
+  console.log(temp, 'temp');
   const cartModalHandler = () => {
     setCartModal(!cartModal);
   };
@@ -81,8 +96,10 @@ const Checkout = () => {
         <>
           <PriceList
             cartList={cartList}
+            temp={temp}
+            tempHandler={tempHandler}
             /* setCartList={setCartList} */
-            modalHandler={cartModalHandler}
+            cartModalHandler={cartModalHandler}
           />
         </>
       )}

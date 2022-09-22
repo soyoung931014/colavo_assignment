@@ -2,11 +2,11 @@ import React from 'react';
 import { FiX } from 'react-icons/fi';
 import styled from 'styled-components';
 
-const TitleBar = ({ text }: any) => {
+const TitleBar = ({ text, cartModalHandler }: any) => {
   return (
     <Container>
       <IconWrapper>
-        <Closed />
+        {text ? <Closed onClick={cartModalHandler} /> : <Closed />}
       </IconWrapper>
       <TitleWrapper>
         {text ? (
