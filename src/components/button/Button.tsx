@@ -1,23 +1,34 @@
-import { AddCheckItem } from '@src/types/itemList';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
+
+import { connect } from 'react-redux';
+import { saveCart } from '@src/redux/action/cartAction';
 
 const Button = ({
   text,
   buttonName,
   cartModalHandler,
   temp,
-  everyItem,
+  cart,
+  saveCart,
 }: any) => {
-  console.log(text, buttonName, temp, everyItem);
-
   const ButtonHandler = () => {
-    /*   console.log(temp, 'tempfmdlfmdlfmdl');
-    sessionStorage.setItem('temp', temp); */
-
+    if (temp.length === 0) {
+      alert('1개 이상 선택해주세요');
+      return;
+    }
+    selectedItemList(cart);
     cartModalHandler();
   };
+  const selectedItemList = cart => {
+    if (temp.length > 0) {
+      for (const el of temp) {
+        cart[el].check = true;
+      }
+      saveCart(cart);
+    }
+  };
+
   return (
     <Container>
       <CheckWrapper>
@@ -48,13 +59,19 @@ const Button = ({
   );
 };
 
-const mapStateToProps = (state: AddCheckItem[]) => {
+const mapStateToProps = state => {
+  const { cart }: any = state;
   return {
-    everyItem: state,
+    cart,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    saveCart: cart => dispatch(saveCart(cart)),
   };
 };
 
-export default connect(mapStateToProps)(Button);
+export default connect(mapStateToProps, mapDispatchToProps)(Button);
 
 const Container = styled.div``;
 const CheckWrapper = styled.div`
