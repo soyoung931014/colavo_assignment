@@ -13,14 +13,24 @@ export interface Item {
   name: string;
   price: number;
 }
-
-export interface AddIdItem extends Item {
-  id: number;
-}
-
 export interface Discount {
   name: string;
   rate: number;
+}
+
+export interface AddCheckItem extends Item {
+  id: number;
+  check: false;
+}
+
+export interface AddCheckDiscount extends Discount {
+  id: number;
+  check: false;
+}
+
+export interface fetchProps {
+  fetchCartInfo: (cartList: AddCheckItem[]) => void;
+  fetchDiscountInfo: (discountList: AddCheckDiscount[]) => void;
 }
 
 export interface Info {
@@ -28,28 +38,3 @@ export interface Info {
   name: string;
   price: number;
 }
-// export interface HairList {
-//   items: Item;
-//   discounts: Discount;
-//   currency_code: string;
-// }
-
-// export interface Item {
-//   [key: string]: {
-//     count: number;
-//     name: string;
-//     price: number;
-//   };
-// }
-// export interface Discount {
-//   [key: string]: {
-//     name: string;
-//     rate: number;
-//   };
-// }
-
-// export interface Info {
-//   count: number;
-//   name: string;
-//   price: number;
-// }
