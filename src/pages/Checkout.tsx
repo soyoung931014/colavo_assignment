@@ -8,7 +8,8 @@ import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
 import { AddIdItem, Discount, HairList, Item } from '@type/itemList';
-import { UsingJoinColumnOnlyOnOneSideAllowedError } from 'typeorm';
+import Modal from '@src/components/modal/Modal';
+import Discout from '@src/components/modal/Discout';
 
 const Checkout = () => {
   const [cartList, setCartList] = useState<AddIdItem[]>([]);
@@ -63,7 +64,7 @@ const Checkout = () => {
   };
 
   console.log(cartList, discountList, currency, '----------');
-  console.log(temp, 'temp');
+
   const cartModalHandler = () => {
     setCartModal(!cartModal);
   };
@@ -81,16 +82,23 @@ const Checkout = () => {
               <Icon />
               <Text>시술</Text>
             </MenuDiv>
-            <MenuDiv Discount>
+            <MenuDiv Discount onClick={() => setDiscountModal(!discountModal)}>
               <Icon />
               <Text>할인</Text>
             </MenuDiv>
+            {/*   <Modal cartModalHandler={cartModalHandler} /> */}
           </MenuWrapper>
+          {temp.length}
+
           <Div></Div>
 
           <ButtonWrapper>
             <Button />
           </ButtonWrapper>
+        </>
+      ) : !cartModal && discountModal ? (
+        <>
+          <Discout />
         </>
       ) : (
         <>
