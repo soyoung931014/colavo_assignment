@@ -6,7 +6,6 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { AddCheckDiscount } from '@type/itemList';
 
 interface DiscountListProps {
-  discount: AddCheckDiscount;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
   id: number;
@@ -22,11 +21,9 @@ const DiscountList = ({
   check,
   temp,
   tempHandler,
-  discount,
 }: DiscountListProps) => {
-  console.log(discount, 'discount');
   const [selected, setSelected] = useState<boolean>(false);
-
+  rate = Math.floor(rate * 100);
   const checkHandler = () => {
     setSelected(!selected);
   };
@@ -41,6 +38,8 @@ const DiscountList = ({
     }
   }
 
+  // 할인율 구하기
+
   return (
     <Container
       onClick={!check ? checkHandler : () => alert('이미 담은 목록입니다')}
@@ -50,7 +49,7 @@ const DiscountList = ({
           <EditIcon />
           <Tag>{name}</Tag>
         </ItemTag>
-        <Price>{rate}</Price>
+        <Price>{rate}%</Price>
       </ItemContent>
       {selected ? <CheckIcon /> : null}
     </Container>
@@ -85,8 +84,9 @@ const Tag = styled.div`
 const Price = styled.div`
   font-size: 12px;
   font-weight: 600;
-  margin-top: 4px;
-  color: #908e8e;
+  margin-top: 10px;
+  margin-left: 30px;
+  color: #f59292;
 `;
 const EditIcon = styled(AiOutlineEdit)`
   color: #908e8e;
