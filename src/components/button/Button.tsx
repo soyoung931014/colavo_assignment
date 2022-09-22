@@ -1,8 +1,16 @@
+import { AddCheckItem } from '@src/types/itemList';
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-const Button = ({ text, buttonName, cartModalHandler, temp }: any) => {
-  console.log(text, buttonName, temp);
+const Button = ({
+  text,
+  buttonName,
+  cartModalHandler,
+  temp,
+  everyItem,
+}: any) => {
+  console.log(text, buttonName, temp, everyItem);
 
   const ButtonHandler = () => {
     /*   console.log(temp, 'tempfmdlfmdlfmdl');
@@ -40,7 +48,13 @@ const Button = ({ text, buttonName, cartModalHandler, temp }: any) => {
   );
 };
 
-export default Button;
+const mapStateToProps = (state: AddCheckItem[]) => {
+  return {
+    everyItem: state,
+  };
+};
+
+export default connect(mapStateToProps)(Button);
 
 const Container = styled.div``;
 const CheckWrapper = styled.div`

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
-import { AddIdItem, Item } from '@src/types/itemList';
+import { AddCheckItem, Item } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
 
 interface priceListProps {
-  cartList: AddIdItem[];
+  cartList: AddCheckItem[];
   cartModalHandler: () => void;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
@@ -23,7 +23,7 @@ const PriceList = ({
         <TitleBar text="시술메뉴" cartModalHandler={cartModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
-        {cartList.map((item: AddIdItem, idx: number) => (
+        {cartList.map((item: AddCheckItem, idx: number) => (
           <ItemList
             key={idx}
             item={item}
