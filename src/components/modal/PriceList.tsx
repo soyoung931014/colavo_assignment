@@ -18,7 +18,6 @@ const PriceList = ({
   temp,
   tempHandler,
 }: priceListProps) => {
-  console.log('tempButton', temp);
   return (
     <Container>
       <HeaderWrapper>
@@ -56,9 +55,7 @@ const ItemWrapper = styled.div`
   padding-top: 90px;
   padding-bottom: 90px;
 `;
-const Container = styled.div`
-  border: solid red 2px;
-`;
+const Container = styled.div``;
 const HeaderWrapper = styled.div`
   position: fixed;
   height: 80px;
@@ -73,4 +70,5 @@ const ButtonWrapper = styled.div`
   height: 140px;
   background: #fff;
   width: ${({ theme }) => theme.deviceSizes.mobile};
+  z-index: 300;
 `;
