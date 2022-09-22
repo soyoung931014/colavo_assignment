@@ -16,8 +16,11 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const [discountModal, setDiscountModal] = useState<boolean>(false);
   const [temp, setTemp] = useState<number[]>([]);
 
-  const filterItem: AddCheckItem[] = cart.filter(el => el.check === true);
-
+  const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
+  const totalPrice: number = addedItem.reduce(
+    (acc, cur) => acc + cur.price * cur.count,
+    0,
+  );
   const cartModalHandler = () => {
     setCartModal(!cartModal);
   };
@@ -50,12 +53,12 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               <Text>할인</Text>
             </MenuDiv>
           </MenuWrapper>
-          {filterItem.map((item: AddCheckItem) => (
+          {addedItem.map((item: AddCheckItem) => (
             <SelectedItemList key={item.name} {...item} />
           ))}
           <Div></Div>
           <ButtonWrapper>
-            <Button />
+            <Button totalPrice={totalPrice} />
           </ButtonWrapper>
         </>
       ) : !cartModal && discountModal ? (
