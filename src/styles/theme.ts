@@ -2,6 +2,8 @@ const color = {
   grey_01: '#6A697C',
   grey_02: '#C6D1DE',
   grey_03: '#B8BDC7',
+  grey_04: '#4f4f4f',
+  grey_05: '#908e8e',
   purple_01: '#A69EFC',
   purple_02: '#9886F0',
   purple_03: '#9885EF',
