@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { HiPlusCircle } from 'react-icons/hi';
+import { connect } from 'react-redux';
 
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import { AddIdItem, Discount, HairList, Item } from '@type/itemList';
+import { AddCheckItem, Discount, HairList, Item } from '@type/itemList';
 import Modal from '@src/components/modal/Modal';
 import Discout from '@src/components/modal/Discout';
 
 const Checkout = () => {
-  const [cartList, setCartList] = useState<AddIdItem[]>([]);
+  /*  const [cartList, setCartList] = useState<AddCheckItem[]>([]);
   const [discountList, setDiscountLsit] = useState<Discount[]>([]);
-  const [currency, setCurrency] = useState<string>('');
+  const [currency, setCurrency] = useState<string>(''); */
 
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
@@ -30,40 +31,6 @@ const Checkout = () => {
       setTemp([...temp]);
     }
   };
-
-  useEffect(() => {
-    fetchPriceList();
-  }, []);
-
-  const fetchPriceList = async () => {
-    try {
-      await axios
-        .get(
-          'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData',
-        )
-        .then(res => {
-          const { items, discounts, currency_code }: HairList = res.data;
-
-          const itemArray = Object.values(items);
-          const discountArray = Object.values(discounts);
-          const newItemArray = addId(itemArray);
-
-          setCartList(newItemArray);
-          setDiscountLsit(discountArray);
-          setCurrency(currency_code);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const addId = (array: Item[]) => {
-    return array.map((el, idx) => {
-      return { id: idx, ...el };
-    });
-  };
-
-  console.log(cartList, discountList, currency, '----------');
 
   const cartModalHandler = () => {
     setCartModal(!cartModal);
