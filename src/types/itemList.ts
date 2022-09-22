@@ -28,13 +28,12 @@ export interface AddCheckDiscount extends Discount {
   check: boolean;
 }
 
+export interface StoreInfo {
+  cart: AddCheckItem[];
+  discount: AddCheckDiscount[];
+}
+
 export interface fetchProps {
   fetchCartInfo: (cartList: AddCheckItem[]) => void;
   fetchDiscountInfo: (discountList: AddCheckDiscount[]) => void;
-}
-
-export interface Info {
-  count: number;
-  name: string;
-  price: number;
 }

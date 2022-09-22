@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
+import Discount from '@components/modal/Discount';
 import Button from '@components/button/Button';
 
-import Discout from '@src/components/modal/Discount';
+import { AddCheckItem, StoreInfo } from '@type/itemList';
+import SelectedItemList from '@components/itemList/SelectedItemList';
 
-const Checkout = () => {
+const Checkout = ({ cart, discount }: StoreInfo) => {
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
-
   const [temp, setTemp] = useState<number[]>([]);
+
+  const filterItem: AddCheckItem[] = cart.filter(el => el.check === true);
+
+  const cartModalHandler = () => {
+    setCartModal(!cartModal);
+  };
 
   const tempHandler = (id: number, selected: boolean) => {
     if (selected) {
@@ -24,10 +32,6 @@ const Checkout = () => {
     }
   };
 
-  const cartModalHandler = () => {
-    setCartModal(!cartModal);
-  };
-
   return (
     <Container>
       {!cartModal ? (
@@ -35,7 +39,6 @@ const Checkout = () => {
           <HeaderWrapper>
             <TitleBar />
           </HeaderWrapper>
-
           <MenuWrapper>
             <MenuDiv onClick={cartModalHandler}>
               <Icon />
@@ -46,24 +49,23 @@ const Checkout = () => {
               <Text>할인</Text>
             </MenuDiv>
           </MenuWrapper>
-          {temp.length}
-
+          {filterItem.map((item: AddCheckItem) => (
+            <SelectedItemList key={item.name} {...item} />
+          ))}
           <Div></Div>
-
           <ButtonWrapper>
             <Button />
           </ButtonWrapper>
         </>
       ) : !cartModal && discountModal ? (
         <>
-          <Discout />
+          <Discount />
         </>
       ) : (
         <>
           <PriceList
             temp={temp}
             tempHandler={tempHandler}
-            /* setCartList={setCartList} */
             cartModalHandler={cartModalHandler}
           />
         </>
@@ -71,8 +73,14 @@ const Checkout = () => {
     </Container>
   );
 };
-
-export default Checkout;
+const mapStateToProps = state => {
+  const { cart, discount }: any = state;
+  return {
+    cart,
+    discount,
+  };
+};
+export default connect(mapStateToProps)(Checkout);
 const Container = styled.section``;
 const HeaderWrapper = styled.div`
   position: fixed;
