@@ -26,6 +26,14 @@ const Count = ({ name, count, id, cart, countModalHandler }: CountProps) => {
     saveCart(cart);
     countModalHandler();
   };
+
+  const deleteHandler = () => {
+    if (cart !== undefined) {
+      cart[id].check = false;
+    }
+    saveCart(cart);
+    countModalHandler();
+  };
   return (
     <>
       <BackGround>
@@ -41,7 +49,7 @@ const Count = ({ name, count, id, cart, countModalHandler }: CountProps) => {
             </Div>
             <ButtonWrapper>
               <Div>
-                <Button Delete onClick={() => console.log('삭제')}>
+                <Button Delete onClick={deleteHandler}>
                   삭제
                 </Button>
               </Div>
