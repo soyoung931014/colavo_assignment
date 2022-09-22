@@ -31,6 +31,7 @@ export interface AddCheckDiscount extends Discount {
 export interface StoreInfo {
   cart: AddCheckItem[];
   discount: AddCheckDiscount[];
+  currency_code: string;
 }
 
 export interface fetchProps {

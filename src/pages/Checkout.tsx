@@ -18,7 +18,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
 
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
   const totalPrice: number = addedItem.reduce(
-    (acc, cur) => acc + cur.price * cur.count,
+    (acc, item) => acc + item.price * item.count,
     0,
   );
   const cartModalHandler = () => {
@@ -78,10 +78,11 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   );
 };
 const mapStateToProps = state => {
-  const { cart, discount }: any = state;
+  const { cart, discount, currency_code }: StoreInfo = state;
   return {
     cart,
     discount,
+    currency_code,
   };
 };
 export default connect(mapStateToProps)(Checkout);
