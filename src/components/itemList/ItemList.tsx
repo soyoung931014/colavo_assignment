@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { AddIdItem } from '@type/itemList';
+import { AddCheckItem } from '@type/itemList';
 
 interface ItemListProps {
-  item: AddIdItem;
+  item: AddCheckItem;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
 }
 
 const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
   const [check, setCheck] = useState<boolean>(false);
-  const { id, name, price, count }: AddIdItem = item;
+  const { id, name, price, count }: AddCheckItem = item;
 
   const checkHandler = () => {
     setCheck(!check);
