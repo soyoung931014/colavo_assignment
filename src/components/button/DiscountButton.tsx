@@ -11,8 +11,6 @@ const DiscountButton = ({
   totalPrice,
   discount,
 }: any) => {
-  console.log(discount);
-  console.log(temp);
   const ButtonHandler = () => {
     if (temp.length === 0) {
       alert('1개 이상 선택해주세요');

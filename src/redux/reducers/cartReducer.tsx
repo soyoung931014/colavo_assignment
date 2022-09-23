@@ -1,5 +1,5 @@
 import { AddCheckItem } from '@src/types/itemList';
-import { FETCH_CART_INFO, SAVE_CART, DELETE_CART } from '../action/cartAction';
+import { FETCH_CART_INFO, SAVE_CART } from '../action/cartAction';
 
 const initialState: AddCheckItem[] = [];
 

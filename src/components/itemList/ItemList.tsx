@@ -13,7 +13,7 @@ interface ItemListProps {
 
 const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
   const [selected, setSelected] = useState<boolean>(false);
-  const { id, name, price, count, check }: AddCheckItem = item;
+  const { id, name, price, check }: AddCheckItem = item;
 
   const checkHandler = () => {
     setSelected(!selected);

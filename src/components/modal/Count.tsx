@@ -11,7 +11,7 @@ export interface CountProps {
   cart: AddCheckItem[];
   countModalHandler: () => void;
 }
-const Count = ({ name, count, id, cart, countModalHandler }: CountProps) => {
+const Count = ({ count, id, cart, countModalHandler }: CountProps) => {
   const [total, setTotal] = useState(count);
 
   const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ const Count = ({ name, count, id, cart, countModalHandler }: CountProps) => {
 };
 
 const mapStateToProps = state => {
-  const { cart }: any = state;
+  const { cart } = state;
   return {
     cart,
   };

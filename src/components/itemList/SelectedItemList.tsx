@@ -4,6 +4,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import Count from '../modal/Count';
+
 export interface SelectedItemListProps {
   countModalHandler: () => void;
   countModal: boolean;

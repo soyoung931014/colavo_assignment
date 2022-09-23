@@ -41,10 +41,12 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const discountedPrice = addedDiscount.map(el =>
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
   );
+  // 할인된값 합
   const SumDiscountedPrice = discountedPrice.reduce(
     (acc, discountPrice) => acc + discountPrice,
     0,
   );
+  // 총 가격
   const totalPrice = SumItemPrice - SumDiscountedPrice;
 
   // addedItem의 목록 이름
@@ -54,6 +56,8 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     }
     return `${el.name}, `;
   });
+
+  //적용된 할인 리스트
   const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
     return {
       name: el.name,

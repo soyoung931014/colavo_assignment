@@ -15,7 +15,7 @@ export interface Item {
 }
 export interface Discount {
   name: string;
-  rate: any;
+  rate: number;
 }
 
 export interface AddCheckItem extends Item {
