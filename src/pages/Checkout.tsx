@@ -25,7 +25,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const [temp, setTemp] = useState<number[]>([]);
 
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
-  const totalPrice: number = addedItem.reduce(
+  const SumItemPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
     0,
   );
@@ -41,13 +41,18 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const discountedPrice = addedDiscount.map(el =>
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
   );
+  const SumDiscountedPrice = discountedPrice.reduce(
+    (acc, discountPrice) => acc + discountPrice,
+    0,
+  );
+  const totalPrice = SumItemPrice - SumDiscountedPrice;
 
   // addedItem의 목록 이름
   const discountedItemList = addedItem.map(el => {
     if (el.count > 1) {
-      return `${el.name} x ${el.count}`;
+      return ` ${el.name} x ${el.count}, `;
     }
-    return el.name;
+    return `${el.name}, `;
   });
   const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
     return {
@@ -56,6 +61,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       discountedPrice: -discountedPrice[idx],
     };
   });
+
   const cartModalHandler = () => {
     setCartModal(!cartModal);
   };

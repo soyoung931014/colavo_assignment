@@ -20,7 +20,7 @@ const SelectedDiscountList = ({
         <div>{discountedPrice}원</div>
       </ItemContent>
       <CountWrapper>
-        <Price>수정</Price>
+        <Edit>수정</Edit>
         <DropDown>
           <DropDownIcon />
         </DropDown>
@@ -59,7 +59,7 @@ const Tag = styled.div`
   font-weight: 500;
   color: ${({ theme }) => theme.color.grey_04};
 `;
-const Price = styled.div`
+const Edit = styled.div`
   font-size: 12px;
   font-weight: 600;
   margin-top: 4px;
