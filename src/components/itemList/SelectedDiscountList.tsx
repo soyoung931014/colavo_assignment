@@ -2,56 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import { appliedDiscount } from '@src/pages/Checkout';
 
-import Count from '../modal/Count';
-export interface SelectedItemListProps {
-  countModalHandler: () => void;
-  countModal: boolean;
-  id: number;
-  count: number;
-  name: string;
-  price: number;
-}
-const SelectedItemList = ({
-  id,
-  count,
+const SelectedDiscountList = ({
   name,
-  price,
-  countModalHandler,
-  countModal,
-}: SelectedItemListProps) => {
+  appliedItem,
+  discountedPrice,
+}: appliedDiscount) => {
   return (
-    <>
-      {countModal ? (
-        <>
-          <Count
-            name={name}
-            count={count}
-            id={id}
-            countModalHandler={countModalHandler}
-          />
-        </>
-      ) : null}
-      <Container onClick={countModalHandler}>
-        <ItemContent>
-          <ItemTag>
-            <Tag>{name}</Tag>
-            <EditIcon />
-          </ItemTag>
-          <Price>{price}원</Price>
-        </ItemContent>
-        <CountWrapper>
-          <Total>{count}</Total>
-          <DropDown>
-            <DropDownIcon />
-          </DropDown>
-        </CountWrapper>
-      </Container>
-    </>
+    <Container>
+      <ItemContent>
+        <ItemTag>
+          <Tag>{name}</Tag>
+          <EditIcon />
+        </ItemTag>
+        <Total>{appliedItem}</Total>
+        <div>{discountedPrice}원</div>
+      </ItemContent>
+      <CountWrapper>
+        <Price>수정</Price>
+        <DropDown>
+          <DropDownIcon />
+        </DropDown>
+      </CountWrapper>
+    </Container>
   );
 };
 
-export default SelectedItemList;
+export default SelectedDiscountList;
 
 const Container = styled.div`
   display: flex;
