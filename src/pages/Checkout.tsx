@@ -7,23 +7,55 @@ import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import { AddCheckItem, StoreInfo } from '@type/itemList';
+import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
 import SelectedItemList from '@components/itemList/SelectedItemList';
-import DiscountModal from '@src/components/modal/DiscountModal';
+import DiscountModal from '@components/modal/DiscountModal';
+import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
+
+export interface appliedDiscount {
+  name: string;
+  appliedItem: string[];
+  discountedPrice: number;
+}
 
 const Checkout = ({ cart, discount }: StoreInfo) => {
-  console.log(discount, 'discount');
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
   const [countModal, setCountModal] = useState<boolean>(false);
   const [temp, setTemp] = useState<number[]>([]);
-  console.log(cartModal, 'cartModal');
+
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
   const totalPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
     0,
   );
+  const copyAddedItem = addedItem; // 원본배열 복사
+  //할인목록 체크된거 저장된 배열[{},{}]
+  const addedDiscount: AddCheckDiscount[] = discount.filter(
+    el => el.check === true,
+  );
 
+  //수량 무시하고 선택된 가격 합
+  const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
+  // 할인율에 따른 할인된 가격 배열로 나타냄
+  const discountedPrice = addedDiscount.map(el =>
+    Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
+  );
+
+  // addedItem의 목록 이름
+  const discountedItemList = addedItem.map(el => {
+    if (el.count > 1) {
+      return `${el.name} x ${el.count}`;
+    }
+    return el.name;
+  });
+  const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
+    return {
+      name: el.name,
+      appliedItem: discountedItemList,
+      discountedPrice: -discountedPrice[idx],
+    };
+  });
   const cartModalHandler = () => {
     setCartModal(!cartModal);
   };
@@ -62,6 +94,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               <Text>할인</Text>
             </MenuDiv>
           </MenuWrapper>
+
           {addedItem.map((item: AddCheckItem) => (
             <SelectedItemList
               key={item.name}
@@ -70,7 +103,9 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               countModalHandler={countModalHandler}
             />
           ))}
-
+          {appliedDiscount.map((discount, idx) => (
+            <SelectedDiscountList key={idx} {...discount} />
+          ))}
           <Div></Div>
           <ButtonWrapper>
             <Button totalPrice={totalPrice} />
