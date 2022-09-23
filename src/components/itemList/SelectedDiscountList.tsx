@@ -17,7 +17,7 @@ const SelectedDiscountList = ({
           <EditIcon />
         </ItemTag>
         <Total>{appliedItem}</Total>
-        <div>{discountedPrice}원</div>
+        <Price>{discountedPrice}원</Price>
       </ItemContent>
       <CountWrapper>
         <Edit>수정</Edit>
@@ -30,7 +30,11 @@ const SelectedDiscountList = ({
 };
 
 export default SelectedDiscountList;
-
+const Price = styled.div`
+  margin-top: 5px;
+  color: ${({ theme }) => theme.color.pink_02};
+  font-size: 12px;
+`;
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -76,10 +80,11 @@ const DropDown = styled.div`
   left: 5px;
 `;
 const Total = styled.div`
-  margin-left: 3px;
+  margin-top: 3px;
   position: relative;
   left: 1px;
-  color: ${({ theme }) => theme.color.grey_04};
+  font-size: 11px;
+  color: ${({ theme }) => theme.color.grey_02};
 `;
 
 const ItemContent = styled.div``;

@@ -26,7 +26,7 @@ const DiscountModal = ({
         <TitleBar text="할인" discountModalHandler={discountModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
-        {discount.map((discount: any) => (
+        {discount.map((discount: AddCheckDiscount) => (
           <DiscountList
             key={discount.name}
             {...discount}
@@ -35,6 +35,7 @@ const DiscountModal = ({
           />
         ))}
       </ItemWrapper>
+      <Div></Div>
       <ButtonWrapper>
         <DiscountButton
           discountModalHandler={discountModalHandler}
@@ -55,10 +56,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(DiscountModal);
-const ItemWrapper = styled.div`
-  padding-top: 90px;
-  padding-bottom: 90px;
-`;
 const Container = styled.div``;
 const HeaderWrapper = styled.div`
   position: fixed;
@@ -66,6 +63,10 @@ const HeaderWrapper = styled.div`
   width: 478px;
   background: #fff;
   z-index: 100;
+`;
+const ItemWrapper = styled.div`
+  padding-top: 90px;
+  padding-bottom: 90px;
 `;
 const ButtonWrapper = styled.div`
   position: sticky;
@@ -75,4 +76,7 @@ const ButtonWrapper = styled.div`
   background: #fff;
   width: ${({ theme }) => theme.deviceSizes.mobile};
   z-index: 300;
+`;
+const Div = styled.div`
+  height: 40vh;
 `;

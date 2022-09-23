@@ -90,6 +90,7 @@ const Text = styled.div<{ Guide?: boolean }>`
   font-size: 17px;
   color: ${({ theme }) => theme.color.grey_01};
   margin-left: ${props => (props.Guide ? '100px' : '0')};
+  padding-bottom: 10px;
 `;
 const Total = styled.div`
   font-size: 30px;
@@ -97,7 +98,7 @@ const Total = styled.div`
 const Next = styled.div`
   font-size: 20px;
   padding: 15px;
-  width: 468px;
+  width: 440px;
   text-align: center;
   background-color: ${({ theme }) => theme.color.purple_02};
   color: #ffff;
