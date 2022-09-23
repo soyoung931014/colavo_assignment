@@ -79,7 +79,7 @@ const Total = styled.div`
 const Next = styled.div`
   font-size: 20px;
   padding: 15px;
-  width: 468px;
+  width: 435px;
   text-align: center;
   background-color: ${({ theme }) => theme.color.purple_02};
   color: #ffff;

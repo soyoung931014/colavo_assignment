@@ -69,6 +69,7 @@ const CountWrapper = styled.div`
   align-items: center;
   font-size: 20px;
   padding: 7px 12px;
+  width: 70px;
   color: ${({ theme }) => theme.color.grey_04};
   border-radius: 20px;
   border: solid 2px #4f4b4b54;
