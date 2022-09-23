@@ -36,8 +36,6 @@ const DiscountList = ({
     }
   }
 
-  console.log(temp, 'temp');
-
   return (
     <Container
       onClick={!check ? checkHandler : () => alert('이미 담은 목록입니다')}

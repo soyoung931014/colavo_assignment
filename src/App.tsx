@@ -42,7 +42,7 @@ const App = ({
           fetchCurrencyCode(currency_code);
         });
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 

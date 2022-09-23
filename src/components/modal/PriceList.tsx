@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
-import { AddCheckItem, Item } from '@src/types/itemList';
+import { AddCheckItem } from '@src/types/itemList';
 import ItemList from '../itemList/ItemList';
 import { connect } from 'react-redux';
 
