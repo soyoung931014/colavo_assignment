@@ -5,13 +5,14 @@ import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
-import Discount from '@src/components/modal/DiscountModal';
 import Button from '@components/button/Button';
 
 import { AddCheckItem, StoreInfo } from '@type/itemList';
 import SelectedItemList from '@components/itemList/SelectedItemList';
+import DiscountModal from '@src/components/modal/DiscountModal';
 
 const Checkout = ({ cart, discount }: StoreInfo) => {
+  console.log(discount, 'discount');
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
   const [countModal, setCountModal] = useState<boolean>(false);
@@ -69,6 +70,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               countModalHandler={countModalHandler}
             />
           ))}
+
           <Div></Div>
           <ButtonWrapper>
             <Button totalPrice={totalPrice} />
@@ -76,10 +78,11 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
         </>
       ) : discountModal ? (
         <>
-          <Discount
+          <DiscountModal
             temp={temp}
             tempHandler={tempHandler}
             discountModalHandler={discountModalHandler}
+            totalPrice={totalPrice}
           />
         </>
       ) : (

@@ -1,22 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import TitleBar from '../header/TitleBar';
-import Button from '../button/Button';
 import { AddCheckDiscount } from '@src/types/itemList';
 import { connect } from 'react-redux';
 import DiscountList from '../itemList/DiscountList';
+import DiscountButton from '../button/DiscountButton';
 
 interface DiscountProps {
   discount: AddCheckDiscount;
   discountModalHandler: () => void;
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
+  totalPrice: number;
 }
 const DiscountModal = ({
   discount,
   temp,
   tempHandler,
   discountModalHandler,
+  totalPrice,
 }: DiscountProps) => {
   return (
     <Container>
@@ -34,7 +36,12 @@ const DiscountModal = ({
         ))}
       </ItemWrapper>
       <ButtonWrapper>
-        <Button />
+        <DiscountButton
+          discountModalHandler={discountModalHandler}
+          totalPrice={totalPrice}
+          temp={temp}
+          tempHandler={tempHandler}
+        />
       </ButtonWrapper>
     </Container>
   );
