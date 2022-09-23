@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { AddCheckDiscount } from '@type/itemList';
-
 interface DiscountListProps {
   temp: number[];
   tempHandler: (id: number, check: boolean) => void;
@@ -38,7 +36,7 @@ const DiscountList = ({
     }
   }
 
-  // 할인율 구하기
+  console.log(temp, 'temp');
 
   return (
     <Container
