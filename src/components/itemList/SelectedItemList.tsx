@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
@@ -6,7 +6,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import Count from '../modal/Count';
 
 export interface SelectedItemListProps {
-  countModalHandler: () => void;
+  countUpdateHandler: () => void;
   countModal: boolean;
   id: number;
   count: number;
@@ -18,36 +18,43 @@ const SelectedItemList = ({
   count,
   name,
   price,
-  countModalHandler,
+  countUpdateHandler,
   countModal,
 }: SelectedItemListProps) => {
+  console.log(id, 'select');
+  const countModalHandler = () => {
+    setModal(!modal);
+  };
+  const [modal, setModal] = useState(false);
   return (
     <>
-      {countModal ? (
-        <>
-          <Count
-            name={name}
-            count={count}
-            id={id}
-            countModalHandler={countModalHandler}
-          />
-        </>
-      ) : null}
-      <Container onClick={countModalHandler}>
-        <ItemContent>
-          <ItemTag>
-            <Tag>{name}</Tag>
-            <EditIcon />
-          </ItemTag>
-          <Price>{price}원</Price>
-        </ItemContent>
-        <CountWrapper>
-          <Total>{count}</Total>
-          <DropDown>
-            <DropDownIcon />
-          </DropDown>
-        </CountWrapper>
-      </Container>
+      <div>
+        {modal ? (
+          <>
+            <Count
+              count={count}
+              id={id}
+              countUpdateHandler={countUpdateHandler}
+              countModalHandler={countModalHandler}
+            />
+          </>
+        ) : null}
+        <Container onClick={() => setModal(!modal)}>
+          <ItemContent>
+            <ItemTag>
+              <Tag>{name}</Tag>
+              <EditIcon />
+            </ItemTag>
+            <Price>{price}원</Price>
+          </ItemContent>
+          <CountWrapper>
+            <Total>{count}</Total>
+            <DropDown>
+              <DropDownIcon />
+            </DropDown>
+          </CountWrapper>
+        </Container>
+      </div>
     </>
   );
 };

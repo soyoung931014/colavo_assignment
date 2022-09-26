@@ -5,33 +5,44 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 export interface CountProps {
-  name: string;
   count: number;
   id: number;
   cart: AddCheckItem[];
+  countUpdateHandler: () => void;
   countModalHandler: () => void;
 }
-const Count = ({ count, id, cart, countModalHandler }: CountProps) => {
-  const [total, setTotal] = useState(count);
-
-  const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+const Count = ({
+  count,
+  id,
+  cart,
+  countUpdateHandler,
+  countModalHandler,
+}: CountProps) => {
+  const [quantity, setQuantity] = useState(count);
+  const handleQuantity = (e: any) => {
     const { value } = e.target;
     const onlyNumber = value.replace(/[^0-9]/g, '');
-    setTotal(Number(onlyNumber));
+    setQuantity(Number(onlyNumber));
   };
-  const countHandler = () => {
-    if (cart !== undefined) {
-      cart[id].count = total;
+  const saveHandler = () => {
+    if (quantity === 0) {
+      deleteHandler();
+    }
+    if (quantity !== undefined) {
+      cart[id].count = quantity;
     }
     saveCart(cart);
+    countUpdateHandler();
     countModalHandler();
   };
 
   const deleteHandler = () => {
     if (cart !== undefined) {
       cart[id].check = false;
+      cart[id].count = 1;
     }
     saveCart(cart);
+    countUpdateHandler();
     countModalHandler();
   };
   return (
@@ -42,8 +53,8 @@ const Count = ({ count, id, cart, countModalHandler }: CountProps) => {
             <Div>
               <Writing
                 type="text"
-                onChange={handleChangeCount}
-                value={total}
+                value={quantity}
+                onChange={handleQuantity}
               ></Writing>
               <Text>갯수 입력</Text>
             </Div>
@@ -54,7 +65,7 @@ const Count = ({ count, id, cart, countModalHandler }: CountProps) => {
                 </Button>
               </Div>
               <Div>
-                <Button onClick={countHandler}>확인</Button>
+                <Button onClick={saveHandler}>확인</Button>
               </Div>
             </ButtonWrapper>
           </div>
