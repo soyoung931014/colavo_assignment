@@ -31,7 +31,14 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
 
   return (
     <Container
-      onClick={!check ? checkHandler : () => alert('이미 담은 목록입니다')}
+      onClick={
+        !check
+          ? checkHandler
+          : () =>
+              alert(
+                '이미 담은 목록입니다. 삭제를 원하시면 뒤로 돌아가서 삭제해주세요.',
+              )
+      }
     >
       <ItemContent>
         <ItemTag>
@@ -40,7 +47,7 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
         </ItemTag>
         <Price>{price}원</Price>
       </ItemContent>
-      {selected ? <CheckIcon /> : null}
+      {selected ? <CheckIcon /> : check && !selected ? <CheckIcon /> : null}
     </Container>
   );
 };
@@ -60,11 +67,12 @@ const ItemTag = styled.div`
   display: flex;
 `;
 const ItemContent = styled.div``;
-const Tag = styled.div`
+const Tag = styled.div<{ Checked?: boolean }>`
   margin-right: 3px;
   font-size: 18px;
   font-weight: 500;
-  color: #303030;
+  color: ${props => (props.Checked ? 'red' : ' #303030')};
+  // color: #303030;
   width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
