@@ -107,6 +107,10 @@ const Total = styled.div`
   left: 1px;
   font-size: 11px;
   color: ${({ theme }) => theme.color.grey_02};
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const ItemContent = styled.div``;

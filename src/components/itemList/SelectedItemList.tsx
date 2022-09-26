@@ -21,7 +21,6 @@ const SelectedItemList = ({
   countUpdateHandler,
   countModal,
 }: SelectedItemListProps) => {
-  console.log(id, 'select');
   const countModalHandler = () => {
     setModal(!modal);
   };
@@ -42,8 +41,8 @@ const SelectedItemList = ({
         <Container onClick={() => setModal(!modal)}>
           <ItemContent>
             <ItemTag>
-              <Tag>{name}</Tag>
               <EditIcon />
+              <Tag>{name}</Tag>
             </ItemTag>
             <Price>{price}원</Price>
           </ItemContent>
@@ -89,6 +88,10 @@ const Tag = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: ${({ theme }) => theme.color.grey_04};
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const Price = styled.div`
   font-size: 12px;
@@ -98,6 +101,7 @@ const Price = styled.div`
 `;
 const EditIcon = styled(AiOutlineEdit)`
   color: ${({ theme }) => theme.color.grey_05};
+  margin-right: 5px;
 `;
 const DropDownIcon = styled(RiArrowDropDownLine)`
   color: ${({ theme }) => theme.color.grey_05};

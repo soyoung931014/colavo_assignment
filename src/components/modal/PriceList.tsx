@@ -21,7 +21,7 @@ const PriceList = ({
   return (
     <Container>
       <HeaderWrapper>
-        <TitleBar text="시술메뉴" cartModalHandler={cartModalHandler} />
+        <TitleBar text="시술 메뉴" cartModalHandler={cartModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
         {cart.map((item: AddCheckItem) => (
