@@ -19,6 +19,8 @@ export interface appliedDiscount {
 }
 
 const Checkout = ({ cart, discount }: StoreInfo) => {
+  console.log(cart, 'cart');
+  console.log(discount, 'discount');
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
   const [countModal, setCountModal] = useState<boolean>(false);
@@ -30,6 +32,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     0,
   );
   const copyAddedItem = addedItem; // 원본배열 복사
+  console.log(copyAddedItem);
   //할인목록 체크된거 저장된 배열[{},{}]
   const addedDiscount: AddCheckDiscount[] = discount.filter(
     el => el.check === true,
@@ -37,10 +40,13 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
 
   //수량 무시하고 선택된 가격 합
   const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
+  console.log(oneSum);
   // 할인율에 따른 할인된 가격 배열로 나타냄
   const discountedPrice = addedDiscount.map(el =>
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
   );
+  console.log(addedDiscount);
+  console.log(discountedPrice);
   // 할인된값 합
   const SumDiscountedPrice = discountedPrice.reduce(
     (acc, discountPrice) => acc + discountPrice,

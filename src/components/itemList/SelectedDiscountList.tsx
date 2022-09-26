@@ -1,31 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { appliedDiscount } from '@src/pages/Checkout';
+import DiscountTarget from '../modal/DiscountTarget';
 
 const SelectedDiscountList = ({
   name,
   appliedItem,
   discountedPrice,
 }: appliedDiscount) => {
+  const [modal, setModal] = useState(false);
+  const modalHandler = () => {
+    setModal(!modal);
+  };
   return (
-    <Container>
-      <ItemContent>
-        <ItemTag>
-          <Tag>{name}</Tag>
-          <EditIcon />
-        </ItemTag>
-        <Total>{appliedItem}</Total>
-        <Price>{discountedPrice}원</Price>
-      </ItemContent>
-      <CountWrapper>
-        <Edit>수정</Edit>
-        <DropDown>
-          <DropDownIcon />
-        </DropDown>
-      </CountWrapper>
-    </Container>
+    <>
+      {modal ? (
+        <DiscountTarget
+          name={name}
+          appliedItem={appliedItem}
+          modalHandler={modalHandler}
+        />
+      ) : null}
+      <Container onClick={modalHandler}>
+        <ItemContent>
+          <ItemTag>
+            <Tag>{name}</Tag>
+            <EditIcon />
+          </ItemTag>
+          <Total>{appliedItem}</Total>
+          <Price>{discountedPrice}원</Price>
+        </ItemContent>
+        <CountWrapper>
+          <Edit>수정</Edit>
+          <DropDown>
+            <DropDownIcon />
+          </DropDown>
+        </CountWrapper>
+      </Container>
+    </>
   );
 };
 
