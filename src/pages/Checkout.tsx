@@ -23,7 +23,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   console.log(discount, 'discount');
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
-  const [countModal, setCountModal] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
   const [temp, setTemp] = useState<number[]>([]);
 
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
@@ -78,8 +78,8 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const discountModalHandler = () => {
     setDiscountModal(!discountModal);
   };
-  const countUpdateHandler = () => {
-    setCountModal(!countModal);
+  const updateHandler = () => {
+    setUpdate(!update);
   };
 
   const tempHandler = (id: number, selected: boolean) => {
@@ -122,18 +122,22 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
             </MenuDiv>
           </MenuWrapper>
 
-          {addedItem.map((item: AddCheckItem) => (
+          {addedItem.map((item: AddCheckItem, idx: number) => (
             <>
               <SelectedItemList
-                key={item.name}
+                key={idx}
                 {...item}
-                countModal={countModal}
-                countUpdateHandler={countUpdateHandler}
+                countUpdateHandler={updateHandler}
+                countModal={cartModal}
               />
             </>
           ))}
           {appliedDiscount.map((discount, idx) => (
-            <SelectedDiscountList key={idx} {...discount} />
+            <SelectedDiscountList
+              key={idx}
+              {...discount}
+              updateHandler={updateHandler}
+            />
           ))}
           <Div></Div>
           <ButtonWrapper>

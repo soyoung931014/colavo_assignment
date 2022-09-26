@@ -5,11 +5,18 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { appliedDiscount } from '@src/pages/Checkout';
 import DiscountTarget from '../modal/DiscountTarget';
 
+export interface SelectedDiscountListProps {
+  name: string;
+  appliedItem: any;
+  discountedPrice: any;
+  updateHandler: () => void;
+}
 const SelectedDiscountList = ({
   name,
   appliedItem,
   discountedPrice,
-}: appliedDiscount) => {
+  updateHandler,
+}: SelectedDiscountListProps) => {
   const [modal, setModal] = useState(false);
   const modalHandler = () => {
     setModal(!modal);
@@ -21,6 +28,7 @@ const SelectedDiscountList = ({
           name={name}
           appliedItem={appliedItem}
           modalHandler={modalHandler}
+          updateHandler={updateHandler}
         />
       ) : null}
       <Container onClick={modalHandler}>

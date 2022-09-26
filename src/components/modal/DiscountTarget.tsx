@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import { applyDiscount } from '@src/redux/action/discountAction';
+import { AddCheckDiscount } from '@src/types/itemList';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import DiscountTargetList from '../itemList/DiscountTargetList';
 export interface DiscountTargetProps {
   name: string;
   appliedItem: string[];
   modalHandler: () => void;
+  updateHandler: () => void;
+  discount: AddCheckDiscount[];
 }
 const DiscountTarget = ({
   name,
   appliedItem,
   modalHandler,
+  discount,
+  updateHandler,
 }: DiscountTargetProps) => {
   console.log(appliedItem, 'applied');
+  console.log(discount, 'discount');
+  const findDiscount = discount.filter(el => el.name === name);
+  const { id } = findDiscount[0];
   const deleteHandler = () => {
+    if (discount !== undefined) {
+      discount[id].check = false;
+    }
+    applyDiscount(discount);
     modalHandler();
+    updateHandler();
   };
+  console.log(discount, 'd8');
   const saveHandler = () => {
     console.log('저장');
     modalHandler();
@@ -46,8 +62,19 @@ const DiscountTarget = ({
     </>
   );
 };
-
-export default DiscountTarget;
+const mapStateToProps = state => {
+  const { discount } = state;
+  console.log(discount, 'dfdfd');
+  return {
+    discount,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    applyDiscount: discount => dispatch(applyDiscount(discount)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DiscountTarget);
 const Title = styled.div`
   font-size: 25px;
   position: fixed;
