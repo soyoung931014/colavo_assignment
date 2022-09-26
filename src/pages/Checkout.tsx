@@ -11,7 +11,6 @@ import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
 import SelectedItemList from '@components/itemList/SelectedItemList';
 import DiscountModal from '@components/modal/DiscountModal';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
-import Count from '@src/components/modal/Count';
 
 export interface appliedDiscount {
   name: string;
@@ -87,6 +86,17 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       setTemp([...first, ...rest]);
     }
   };
+  const [tempDiscount, setTempDiscount] = useState<number[]>([]);
+  const tempDiscountHandler = (id: number, selected: boolean) => {
+    if (selected) {
+      setTempDiscount([...tempDiscount, id]);
+    }
+    if (!selected) {
+      const first = tempDiscount.slice(0, id);
+      const rest = tempDiscount.slice(id + 1);
+      setTempDiscount([...first, ...rest]);
+    }
+  };
 
   return (
     <Container>
@@ -136,8 +146,8 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       ) : (
         <>
           <PriceList
-            temp={temp}
-            tempHandler={tempHandler}
+            temp={tempDiscount}
+            tempHandler={tempDiscountHandler}
             cartModalHandler={cartModalHandler}
           />
         </>
