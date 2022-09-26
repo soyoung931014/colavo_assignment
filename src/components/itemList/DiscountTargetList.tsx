@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
-const DiscountTargetList = ({ item, id }: any) => {
-  //console.log(item.id, 'id');
-  console.log(item, id);
+
+export interface DiscountTargetList {
+  item: string;
+  id?: number;
+}
+const DiscountTargetList = ({ item }: DiscountTargetList) => {
+  item = item.slice(0, item.length - 2);
 
   const [checked, setChecked] = useState<boolean>(false);
   const checkedHandler = () => {
@@ -12,7 +16,7 @@ const DiscountTargetList = ({ item, id }: any) => {
 
   return (
     <Container onClick={checkedHandler}>
-      <div>{item}</div>
+      <Tag>{item}</Tag>
       {!checked ? (
         <div>
           <CheckIcon />
@@ -35,4 +39,11 @@ const Container = styled.div`
 `;
 const CheckIcon = styled(BsCheckLg)`
   color: ${({ theme }) => theme.color.purple_02};
+`;
+const Tag = styled.div`
+  width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.color.grey_01};
 `;

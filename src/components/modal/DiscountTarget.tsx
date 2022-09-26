@@ -75,18 +75,13 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(DiscountTarget);
 const Title = styled.div`
   font-size: 25px;
-  position: fixed;
-  top: 10%;
-  z-index: 200;
-  left: 50%;
-  transform: translate(-50%);
-  background: #fff;
-  border-bottom: solid 2px red;
-  margin-top: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.color.grey_01};
+  font-weight: 600;
 `;
-const ListWrapper = styled.div`
-  //position: sticky;
-`;
+const ListWrapper = styled.div``;
 
 const BackGround = styled.div`
   position: fixed;
@@ -102,7 +97,7 @@ const BackGround = styled.div`
 `;
 const Container = styled.div`
   width: 300px;
-  height: 70%;
+  padding: 70px 0;
   background: #ffffff;
   box-shadow: 0px 4px 15px 3px rgba(220, 220, 220, 0.5);
   border-radius: 10px;
@@ -132,6 +127,7 @@ const ButtonWrapper = styled.div`
   position: sticky;
   box-sizing: border-box;
   bottom: 20%;
+  margin-left: 6%;
 `;
 
 const Div = styled.div``;
