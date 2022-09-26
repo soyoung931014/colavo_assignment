@@ -1,9 +1,11 @@
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 import { applyDiscount } from '@src/redux/action/discountAction';
 import { AddCheckDiscount } from '@src/types/itemList';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import DiscountTargetList from '../itemList/DiscountTargetList';
+import DiscountTargetList from '@components/itemList/DiscountTargetList';
+
 export interface DiscountTargetProps {
   name: string;
   appliedItem: string[];
@@ -18,10 +20,9 @@ const DiscountTarget = ({
   discount,
   updateHandler,
 }: DiscountTargetProps) => {
-  console.log(appliedItem, 'applied');
-  console.log(discount, 'discount');
   const findDiscount = discount.filter(el => el.name === name);
   const { id } = findDiscount[0];
+
   const deleteHandler = () => {
     if (discount !== undefined) {
       discount[id].check = false;
@@ -30,9 +31,7 @@ const DiscountTarget = ({
     modalHandler();
     updateHandler();
   };
-  console.log(discount, 'd8');
   const saveHandler = () => {
-    console.log('저장');
     modalHandler();
   };
   return (
@@ -64,7 +63,6 @@ const DiscountTarget = ({
 };
 const mapStateToProps = state => {
   const { discount } = state;
-  console.log(discount, 'dfdfd');
   return {
     discount,
   };
@@ -78,6 +76,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(DiscountTarget);
 const Title = styled.div`
   font-size: 25px;
   position: fixed;
+  top: 10%;
   z-index: 200;
   left: 50%;
   transform: translate(-50%);
@@ -86,8 +85,7 @@ const Title = styled.div`
   margin-top: 10px;
 `;
 const ListWrapper = styled.div`
-  padding-top: 50px;
-  position: sticky;
+  //position: sticky;
 `;
 
 const BackGround = styled.div`
@@ -100,11 +98,11 @@ const BackGround = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 500;
 `;
 const Container = styled.div`
   width: 300px;
-  height: 200px;
+  height: 70%;
   background: #ffffff;
   box-shadow: 0px 4px 15px 3px rgba(220, 220, 220, 0.5);
   border-radius: 10px;
@@ -118,9 +116,10 @@ const Button = styled.button<{ Delete?: boolean }>`
   font-size: 20px;
   font-weight: 500;
   border-radius: 5px;
-  padding: 8px 35px;
+  padding: 8px 0;
   position: relative;
   top: 30px;
+  width: 100px;
   margin-right: ${props => (props.Delete ? '10px' : '0')};
   &:hover {
     cursor: pointer;
@@ -130,10 +129,9 @@ const Button = styled.button<{ Delete?: boolean }>`
 `;
 const ButtonWrapper = styled.div`
   display: flex;
-  border: solid red 2px;
   position: sticky;
-  bottom: 0;
-  left: 0;
+  box-sizing: border-box;
+  bottom: 20%;
 `;
 
 const Div = styled.div``;
