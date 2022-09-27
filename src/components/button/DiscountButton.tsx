@@ -34,7 +34,6 @@ const DiscountButton = ({
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
 
-
   return (
     <Container>
       <CheckWrapper>

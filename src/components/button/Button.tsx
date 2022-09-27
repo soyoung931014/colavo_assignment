@@ -51,7 +51,6 @@ const Button = ({
             ) : (
               <Total>{totalPrice}원</Total>
             )}
-
           </>
         )}
       </CheckWrapper>
