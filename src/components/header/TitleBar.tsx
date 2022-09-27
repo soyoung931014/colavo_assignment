@@ -16,7 +16,7 @@ const TitleBar = ({
   return (
     <Container>
       <IconWrapper>
-        {text === '시술메뉴' ? (
+        {text === '시술 메뉴' ? (
           <Div>
             <Closed onClick={cartModalHandler} />
           </Div>
