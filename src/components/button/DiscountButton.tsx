@@ -10,6 +10,7 @@ const DiscountButton = ({
   discountModalHandler,
   totalPrice,
   discount,
+  currency_code,
 }: any) => {
   const ButtonHandler = () => {
     if (temp.length === 0) {
@@ -27,12 +28,20 @@ const DiscountButton = ({
       applyDiscount(discount);
     }
   };
+  if (currency_code === 'USD') {
+    totalPrice = String(totalPrice * 7);
+    totalPrice = totalPrice.slice(0, totalPrice.length - 4);
+  }
 
   return (
     <Container>
       <CheckWrapper>
         <Text>합계</Text>
-        <Total>{totalPrice}원</Total>
+        {currency_code === 'USD' ? (
+          <Total>${totalPrice}</Total>
+        ) : (
+          <Total>{totalPrice}원</Total>
+        )}
       </CheckWrapper>
       <NextWrapper>
         <Div></Div>
@@ -45,9 +54,10 @@ const DiscountButton = ({
 };
 
 const mapStateToProps = state => {
-  const { discount } = state;
+  const { discount, currency_code } = state;
   return {
     discount,
+    currency_code,
   };
 };
 const mapDispatchToProps = dispatch => {
