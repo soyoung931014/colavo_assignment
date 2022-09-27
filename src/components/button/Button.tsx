@@ -30,10 +30,12 @@ const Button = ({
       saveCart(cart);
     }
   };
+
   if (currency_code === 'USD') {
     totalPrice = String(totalPrice * 7);
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
+
   return (
     <Container>
       <CheckWrapper>
@@ -49,6 +51,7 @@ const Button = ({
             ) : (
               <Total>{totalPrice}원</Total>
             )}
+
           </>
         )}
       </CheckWrapper>

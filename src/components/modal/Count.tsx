@@ -48,6 +48,7 @@ const Count = ({
     countModalHandler();
   };
 
+
   return (
     <>
       <BackGround>

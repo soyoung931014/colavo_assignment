@@ -12,6 +12,7 @@ export interface SelectedDiscountListProps {
   updateHandler: () => void;
 }
 
+
 const SelectedDiscountList = ({
   name,
   appliedItem,
@@ -114,6 +115,7 @@ const Total = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
 `;
 
 const ItemContent = styled.div``;

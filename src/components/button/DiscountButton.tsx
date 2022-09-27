@@ -28,10 +28,12 @@ const DiscountButton = ({
       applyDiscount(discount);
     }
   };
+
   if (currency_code === 'USD') {
     totalPrice = String(totalPrice * 7);
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
+
 
   return (
     <Container>
