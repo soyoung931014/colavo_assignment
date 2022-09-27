@@ -8,7 +8,6 @@ import ItemList from '@components/itemList/ItemList';
 
 import { AddCheckItem } from '@src/types/itemList';
 
-
 interface priceListProps {
   cart: AddCheckItem[];
   cartModalHandler: () => void;

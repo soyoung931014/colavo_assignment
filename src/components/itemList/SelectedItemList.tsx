@@ -93,7 +93,6 @@ const Tag = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
 `;
 const Price = styled.div`
   font-size: 12px;
@@ -104,7 +103,6 @@ const Price = styled.div`
 const EditIcon = styled(AiOutlineEdit)`
   color: ${({ theme }) => theme.color.grey_05};
   margin-right: 5px;
-
 `;
 const DropDownIcon = styled(RiArrowDropDownLine)`
   color: ${({ theme }) => theme.color.grey_05};

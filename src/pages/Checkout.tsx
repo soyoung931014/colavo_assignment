@@ -28,7 +28,6 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const [temp, setTemp] = useState<number[]>([]);
   const [tempDiscount, setTempDiscount] = useState<number[]>([]);
 
-
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
   const SumItemPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
@@ -47,7 +46,6 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
   );
 
-
   const SumDiscountedPrice = discountedPrice.reduce(
     (acc, discountPrice) => acc + discountPrice,
     0,
@@ -61,7 +59,6 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     }
     return `${el.name}, `;
   });
-
 
   const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
     return {
@@ -101,7 +98,6 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       setTempDiscount([...first, ...rest]);
     }
   };
-
 
   return (
     <Container>
@@ -156,7 +152,6 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
           <PriceList
             temp={tempDiscount}
             tempHandler={tempDiscountHandler}
-
             cartModalHandler={cartModalHandler}
           />
         </>

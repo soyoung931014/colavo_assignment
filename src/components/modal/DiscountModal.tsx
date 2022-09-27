@@ -8,7 +8,6 @@ import DiscountButton from '@components/button/DiscountButton';
 
 import { AddCheckDiscount } from '@src/types/itemList';
 
-
 interface DiscountProps {
   discount: AddCheckDiscount;
   discountModalHandler: () => void;

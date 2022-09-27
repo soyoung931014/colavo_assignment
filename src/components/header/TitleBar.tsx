@@ -13,7 +13,6 @@ const TitleBar = ({
   cartModalHandler,
   discountModalHandler,
 }: TitleBar) => {
-
   return (
     <Container>
       <IconWrapper>
