@@ -12,6 +12,7 @@ const Button = ({
   cart,
   saveCart,
   totalPrice,
+  currency_code,
 }: any) => {
   const ButtonHandler = () => {
     if (temp.length === 0) {
@@ -30,6 +31,11 @@ const Button = ({
     }
   };
 
+  if (currency_code === 'USD') {
+    totalPrice = String(totalPrice * 7);
+    totalPrice = totalPrice.slice(0, totalPrice.length - 4);
+  }
+
   return (
     <Container>
       <CheckWrapper>
@@ -40,7 +46,12 @@ const Button = ({
         ) : (
           <>
             <Text>합계</Text>
-            <Total>{totalPrice}원</Total>
+            {currency_code === 'USD' ? (
+              <Total>${totalPrice}</Total>
+            ) : (
+              <Total>{totalPrice}원</Total>
+            )}
+
           </>
         )}
       </CheckWrapper>
@@ -63,9 +74,10 @@ const Button = ({
 };
 
 const mapStateToProps = state => {
-  const { cart } = state;
+  const { cart, currency_code } = state;
   return {
     cart,
+    currency_code,
   };
 };
 const mapDispatchToProps = dispatch => {

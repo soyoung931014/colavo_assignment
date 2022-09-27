@@ -38,7 +38,14 @@ const DiscountList = ({
 
   return (
     <Container
-      onClick={!check ? checkHandler : () => alert('이미 담은 목록입니다')}
+      onClick={
+        !check
+          ? checkHandler
+          : () =>
+              alert(
+                '이미 담은 목록입니다. 삭제를 원하시면 뒤로 돌아가서 삭제해주세요.',
+              )
+      }
     >
       <ItemContent>
         <ItemTag>
@@ -47,7 +54,7 @@ const DiscountList = ({
         </ItemTag>
         <Price>{rate}%</Price>
       </ItemContent>
-      {selected ? <CheckIcon /> : null}
+      {selected ? <CheckIcon /> : check && !selected ? <CheckIcon /> : null}
     </Container>
   );
 };

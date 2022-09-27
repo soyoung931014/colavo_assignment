@@ -1,31 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import { appliedDiscount } from '@src/pages/Checkout';
+
+import DiscountTarget from '@components/modal/DiscountTarget';
+
+export interface SelectedDiscountListProps {
+  name: string;
+  appliedItem: string[];
+  discountedPrice: number;
+  updateHandler: () => void;
+}
+
 
 const SelectedDiscountList = ({
   name,
   appliedItem,
   discountedPrice,
-}: appliedDiscount) => {
+  updateHandler,
+}: SelectedDiscountListProps) => {
+  const [modal, setModal] = useState(false);
+
+  const modalHandler = () => {
+    setModal(!modal);
+  };
+
   return (
-    <Container>
-      <ItemContent>
-        <ItemTag>
-          <Tag>{name}</Tag>
-          <EditIcon />
-        </ItemTag>
-        <Total>{appliedItem}</Total>
-        <Price>{discountedPrice}원</Price>
-      </ItemContent>
-      <CountWrapper>
-        <Edit>수정</Edit>
-        <DropDown>
-          <DropDownIcon />
-        </DropDown>
-      </CountWrapper>
-    </Container>
+    <>
+      {modal ? (
+        <DiscountTarget
+          name={name}
+          appliedItem={appliedItem}
+          modalHandler={modalHandler}
+          updateHandler={updateHandler}
+        />
+      ) : null}
+      <Container onClick={modalHandler}>
+        <ItemContent>
+          <ItemTag>
+            <Tag>{name}</Tag>
+            <EditIcon />
+          </ItemTag>
+          <Total>{appliedItem}</Total>
+          <Price>{discountedPrice}원</Price>
+        </ItemContent>
+        <CountWrapper>
+          <Edit>수정</Edit>
+          <DropDown>
+            <DropDownIcon />
+          </DropDown>
+        </CountWrapper>
+      </Container>
+    </>
   );
 };
 
@@ -85,6 +111,11 @@ const Total = styled.div`
   left: 1px;
   font-size: 11px;
   color: ${({ theme }) => theme.color.grey_02};
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
 `;
 
 const ItemContent = styled.div``;

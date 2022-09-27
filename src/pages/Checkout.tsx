@@ -7,10 +7,11 @@ import TitleBar from '@components/header/TitleBar';
 import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
-import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
 import SelectedItemList from '@components/itemList/SelectedItemList';
 import DiscountModal from '@components/modal/DiscountModal';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
+
+import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
 
 export interface appliedDiscount {
   name: string;
@@ -21,35 +22,39 @@ export interface appliedDiscount {
 const Checkout = ({ cart, discount }: StoreInfo) => {
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
-  const [countModal, setCountModal] = useState<boolean>(false);
+
+  const [update, setUpdate] = useState<boolean>(false);
+
   const [temp, setTemp] = useState<number[]>([]);
+  const [tempDiscount, setTempDiscount] = useState<number[]>([]);
+
 
   const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
   const SumItemPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
     0,
   );
-  const copyAddedItem = addedItem; // 원본배열 복사
-  //할인목록 체크된거 저장된 배열[{},{}]
+
+  const copyAddedItem = addedItem;
+
   const addedDiscount: AddCheckDiscount[] = discount.filter(
     el => el.check === true,
   );
 
-  //수량 무시하고 선택된 가격 합
   const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
-  // 할인율에 따른 할인된 가격 배열로 나타냄
+
   const discountedPrice = addedDiscount.map(el =>
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
   );
-  // 할인된값 합
+
+
   const SumDiscountedPrice = discountedPrice.reduce(
     (acc, discountPrice) => acc + discountPrice,
     0,
   );
-  // 총 가격
+
   const totalPrice = SumItemPrice - SumDiscountedPrice;
 
-  // addedItem의 목록 이름
   const discountedItemList = addedItem.map(el => {
     if (el.count > 1) {
       return ` ${el.name} x ${el.count}, `;
@@ -57,7 +62,7 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
     return `${el.name}, `;
   });
 
-  //적용된 할인 리스트
+
   const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
     return {
       name: el.name,
@@ -72,8 +77,8 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
   const discountModalHandler = () => {
     setDiscountModal(!discountModal);
   };
-  const countModalHandler = () => {
-    setCountModal(!countModal);
+  const updateHandler = () => {
+    setUpdate(!update);
   };
 
   const tempHandler = (id: number, selected: boolean) => {
@@ -86,6 +91,17 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       setTemp([...first, ...rest]);
     }
   };
+  const tempDiscountHandler = (id: number, selected: boolean) => {
+    if (selected) {
+      setTempDiscount([...tempDiscount, id]);
+    }
+    if (!selected) {
+      const first = tempDiscount.slice(0, id);
+      const rest = tempDiscount.slice(id + 1);
+      setTempDiscount([...first, ...rest]);
+    }
+  };
+
 
   return (
     <Container>
@@ -104,17 +120,22 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
               <Text>할인</Text>
             </MenuDiv>
           </MenuWrapper>
-
-          {addedItem.map((item: AddCheckItem) => (
-            <SelectedItemList
-              key={item.name}
-              {...item}
-              countModal={countModal}
-              countModalHandler={countModalHandler}
-            />
+          {addedItem.map((item: AddCheckItem, idx: number) => (
+            <>
+              <SelectedItemList
+                key={idx}
+                {...item}
+                countUpdateHandler={updateHandler}
+                countModal={cartModal}
+              />
+            </>
           ))}
           {appliedDiscount.map((discount, idx) => (
-            <SelectedDiscountList key={idx} {...discount} />
+            <SelectedDiscountList
+              key={idx}
+              {...discount}
+              updateHandler={updateHandler}
+            />
           ))}
           <Div></Div>
           <ButtonWrapper>
@@ -133,8 +154,9 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
       ) : (
         <>
           <PriceList
-            temp={temp}
-            tempHandler={tempHandler}
+            temp={tempDiscount}
+            tempHandler={tempDiscountHandler}
+
             cartModalHandler={cartModalHandler}
           />
         </>

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
-import Count from '../modal/Count';
+import Count from '@components/modal/Count';
 
 export interface SelectedItemListProps {
-  countModalHandler: () => void;
-  countModal: boolean;
+  countUpdateHandler: () => void;
+  countModal?: boolean;
   id: number;
   count: number;
   name: string;
@@ -18,36 +18,43 @@ const SelectedItemList = ({
   count,
   name,
   price,
-  countModalHandler,
-  countModal,
+  countUpdateHandler,
 }: SelectedItemListProps) => {
+  const [modal, setModal] = useState(false);
+
+  const countModalHandler = () => {
+    setModal(!modal);
+  };
+
   return (
     <>
-      {countModal ? (
-        <>
-          <Count
-            name={name}
-            count={count}
-            id={id}
-            countModalHandler={countModalHandler}
-          />
-        </>
-      ) : null}
-      <Container onClick={countModalHandler}>
-        <ItemContent>
-          <ItemTag>
-            <Tag>{name}</Tag>
-            <EditIcon />
-          </ItemTag>
-          <Price>{price}원</Price>
-        </ItemContent>
-        <CountWrapper>
-          <Total>{count}</Total>
-          <DropDown>
-            <DropDownIcon />
-          </DropDown>
-        </CountWrapper>
-      </Container>
+      <div>
+        {modal ? (
+          <>
+            <Count
+              count={count}
+              id={id}
+              countUpdateHandler={countUpdateHandler}
+              countModalHandler={countModalHandler}
+            />
+          </>
+        ) : null}
+        <Container onClick={() => setModal(!modal)}>
+          <ItemContent>
+            <ItemTag>
+              <EditIcon />
+              <Tag>{name}</Tag>
+            </ItemTag>
+            <Price>{price}원</Price>
+          </ItemContent>
+          <CountWrapper>
+            <Total>{count}</Total>
+            <DropDown>
+              <DropDownIcon />
+            </DropDown>
+          </CountWrapper>
+        </Container>
+      </div>
     </>
   );
 };
@@ -82,6 +89,11 @@ const Tag = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: ${({ theme }) => theme.color.grey_04};
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
 `;
 const Price = styled.div`
   font-size: 12px;
@@ -91,6 +103,8 @@ const Price = styled.div`
 `;
 const EditIcon = styled(AiOutlineEdit)`
   color: ${({ theme }) => theme.color.grey_05};
+  margin-right: 5px;
+
 `;
 const DropDownIcon = styled(RiArrowDropDownLine)`
   color: ${({ theme }) => theme.color.grey_05};
