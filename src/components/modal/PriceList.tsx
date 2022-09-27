@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import TitleBar from '../header/TitleBar';
-import Button from '../button/Button';
-import { AddCheckItem } from '@src/types/itemList';
-import ItemList from '../itemList/ItemList';
 import { connect } from 'react-redux';
+
+import TitleBar from '@components/header/TitleBar';
+import Button from '@components/button/Button';
+import ItemList from '@components/itemList/ItemList';
+
+import { AddCheckItem } from '@src/types/itemList';
 
 interface priceListProps {
   cart: AddCheckItem[];

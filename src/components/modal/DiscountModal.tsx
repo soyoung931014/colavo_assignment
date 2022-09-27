@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import TitleBar from '../header/TitleBar';
-import { AddCheckDiscount } from '@src/types/itemList';
 import { connect } from 'react-redux';
-import DiscountList from '../itemList/DiscountList';
-import DiscountButton from '../button/DiscountButton';
+
+import TitleBar from '@components/header/TitleBar';
+import DiscountList from '@components/itemList/DiscountList';
+import DiscountButton from '@components/button/DiscountButton';
+
+import { AddCheckDiscount } from '@src/types/itemList';
 
 interface DiscountProps {
   discount: AddCheckDiscount;

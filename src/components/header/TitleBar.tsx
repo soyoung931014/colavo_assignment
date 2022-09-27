@@ -1,8 +1,18 @@
 import React from 'react';
-import { FiX } from 'react-icons/fi';
 import styled from 'styled-components';
+import { FiX } from 'react-icons/fi';
 
-const TitleBar = ({ text, cartModalHandler, discountModalHandler }: any) => {
+export interface TitleBar {
+  text?: string;
+  cartModalHandler?: () => void;
+  discountModalHandler?: () => void;
+}
+
+const TitleBar = ({
+  text,
+  cartModalHandler,
+  discountModalHandler,
+}: TitleBar) => {
   return (
     <Container>
       <IconWrapper>

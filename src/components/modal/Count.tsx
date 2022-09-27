@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { saveCart } from '@src/redux/action/cartAction';
 import { AddCheckItem } from '@src/types/itemList';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
 
 export interface CountProps {
   count: number;
@@ -19,11 +19,13 @@ const Count = ({
   countModalHandler,
 }: CountProps) => {
   const [quantity, setQuantity] = useState(count);
-  const handleQuantity = (e: any) => {
+
+  const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const onlyNumber = value.replace(/[^0-9]/g, '');
     setQuantity(Number(onlyNumber));
   };
+
   const saveHandler = () => {
     if (quantity === 0) {
       deleteHandler();
@@ -45,6 +47,7 @@ const Count = ({
     countUpdateHandler();
     countModalHandler();
   };
+
   return (
     <>
       <BackGround>

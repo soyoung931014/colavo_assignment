@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
-import Count from '../modal/Count';
+import Count from '@components/modal/Count';
 
 export interface SelectedItemListProps {
   countUpdateHandler: () => void;
-  countModal: boolean;
+  countModal?: boolean;
   id: number;
   count: number;
   name: string;
@@ -19,12 +19,13 @@ const SelectedItemList = ({
   name,
   price,
   countUpdateHandler,
-  countModal,
 }: SelectedItemListProps) => {
+  const [modal, setModal] = useState(false);
+
   const countModalHandler = () => {
     setModal(!modal);
   };
-  const [modal, setModal] = useState(false);
+
   return (
     <>
       <div>

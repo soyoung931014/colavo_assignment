@@ -31,9 +31,11 @@ const DiscountTarget = ({
     modalHandler();
     updateHandler();
   };
+
   const saveHandler = () => {
     modalHandler();
   };
+
   return (
     <>
       <BackGround>

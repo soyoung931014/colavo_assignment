@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import { appliedDiscount } from '@src/pages/Checkout';
-import DiscountTarget from '../modal/DiscountTarget';
+
+import DiscountTarget from '@components/modal/DiscountTarget';
 
 export interface SelectedDiscountListProps {
   name: string;
-  appliedItem: any;
-  discountedPrice: any;
+  appliedItem: string[];
+  discountedPrice: number;
   updateHandler: () => void;
 }
+
 const SelectedDiscountList = ({
   name,
   appliedItem,
@@ -18,9 +19,11 @@ const SelectedDiscountList = ({
   updateHandler,
 }: SelectedDiscountListProps) => {
   const [modal, setModal] = useState(false);
+
   const modalHandler = () => {
     setModal(!modal);
   };
+
   return (
     <>
       {modal ? (
