@@ -45,7 +45,7 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
           <EditIcon />
           <Tag>{name}</Tag>
         </ItemTag>
-        <Price>{price}원</Price>
+        <Price>{price.toLocaleString()}원</Price>
       </ItemContent>
       {selected ? <CheckIcon /> : check && !selected ? <CheckIcon /> : null}
     </Container>
