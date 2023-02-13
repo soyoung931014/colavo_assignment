@@ -49,7 +49,7 @@ const Button = ({
             {currency_code === 'USD' ? (
               <Total>${totalPrice}</Total>
             ) : (
-              <Total>{totalPrice}원</Total>
+              <Total>{totalPrice.toLocaleString()}원</Total>
             )}
           </>
         )}
