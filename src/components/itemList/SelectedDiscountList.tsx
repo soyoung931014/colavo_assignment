@@ -41,7 +41,7 @@ const SelectedDiscountList = ({
             <EditIcon />
           </ItemTag>
           <Total>{appliedItem}</Total>
-          <Price>{discountedPrice}원</Price>
+          <Price>{discountedPrice.toLocaleString()}원</Price>
         </ItemContent>
         <CountWrapper>
           <Edit>수정</Edit>
