@@ -24,6 +24,11 @@ const SelectedDiscountList = ({
     setModal(!modal);
   };
 
+  const sliceAppliedItem = appliedItem.map((el, idx) => {
+    if (appliedItem.length - 1 === idx) return el.slice(0, -2);
+    else return el;
+  });
+
   return (
     <>
       {modal ? (
@@ -40,7 +45,7 @@ const SelectedDiscountList = ({
             <Tag>{name}</Tag>
             <EditIcon />
           </ItemTag>
-          <Total>{appliedItem}</Total>
+          <Total>{sliceAppliedItem}</Total>
           <Price>{discountedPrice.toLocaleString()}원</Price>
         </ItemContent>
         <CountWrapper>
