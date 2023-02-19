@@ -21,7 +21,9 @@ const DiscountTargetList = ({ item }: DiscountTargetList) => {
         <div>
           <CheckIcon />
         </div>
-      ) : null}
+      ) : (
+        <Nothing />
+      )}
     </Container>
   );
 };
@@ -39,6 +41,10 @@ const Container = styled.div`
 `;
 const CheckIcon = styled(BsCheckLg)`
   color: ${({ theme }) => theme.color.purple_02};
+  width: 30px;
+`;
+const Nothing = styled.div`
+  width: 30px;
 `;
 const Tag = styled.div`
   width: 220px;
