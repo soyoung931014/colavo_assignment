@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { saveCart } from '@src/redux/action/cartAction';
 import { AddCheckItem } from '@src/types/itemList';
+import { on } from 'events';
 
 export interface CountProps {
   count: number;
@@ -23,6 +24,7 @@ const Count = ({
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const onlyNumber = value.replace(/[^0-9]/g, '');
+    if (onlyNumber.length >= 3) return;
     setQuantity(Number(onlyNumber));
   };
 
