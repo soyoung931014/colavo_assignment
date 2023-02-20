@@ -1,35 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { connect } from 'react-redux';
 import { saveCart } from '@src/redux/action/cartAction';
 
 const Button = ({
   text,
   buttonName,
   cartModalHandler,
-  temp,
   cart,
   saveCart,
   totalPrice,
   currency_code,
 }: any) => {
   const ButtonHandler = () => {
-    if (temp.length === 0) {
+    /*  if (temp.length === 0) {
       alert('1개 이상 선택해주세요');
       return;
-    }
-    selectedItemList(cart);
+    } */
+    //selectedItemList(cart);
     cartModalHandler();
   };
-  const selectedItemList = cart => {
-    if (temp.length > 0) {
-      for (const itemId of temp) {
-        cart[itemId].check = true;
-      }
-      saveCart(cart);
-    }
-  };
+  // const selectedItemList = cart => {
+  //   if (temp.length > 0) {
+  //     for (const itemId of temp) {
+  //       cart[itemId].check = true;
+  //     }
+  //     saveCart(cart);
+  //   }
+  // };
 
   if (currency_code === 'USD') {
     totalPrice = String(totalPrice * 7);
@@ -72,20 +70,7 @@ const Button = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { cart, currency_code } = state;
-  return {
-    cart,
-    currency_code,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    saveCart: cart => dispatch(saveCart(cart)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default Button;
 
 const Container = styled.div``;
 const CheckWrapper = styled.div<{ Guide?: boolean }>`

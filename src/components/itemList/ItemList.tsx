@@ -7,27 +7,20 @@ import { AddCheckItem } from '@type/itemList';
 
 interface ItemListProps {
   item: AddCheckItem;
-  temp: number[];
-  tempHandler: (id: number, check: boolean) => void;
+  tempCartList: (idx: number, selected: boolean) => void;
 }
+/*  temp: number[];
+  tempHandler: (id: number, check: boolean) => void; */
 
-const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
+const ItemList = ({ item, tempCartList }: ItemListProps) => {
   const [selected, setSelected] = useState<boolean>(false);
   const { id, name, price, check }: AddCheckItem = item;
+  // tempCartList(id, selected);
 
   const checkHandler = () => {
     setSelected(!selected);
+    tempCartList(id, !selected);
   };
-
-  if (selected && !temp.includes(id)) {
-    tempHandler(id, selected);
-  }
-  if (!selected && temp.includes(id)) {
-    const idx = temp.indexOf(id);
-    if (idx > -1) {
-      tempHandler(idx, selected);
-    }
-  }
 
   return (
     <Container

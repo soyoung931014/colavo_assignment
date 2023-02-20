@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
@@ -12,6 +12,7 @@ import DiscountModal from '@components/modal/DiscountModal';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
 
 import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
+import ListModal from '@src/components/modal/ListModal';
 
 export interface appliedDiscount {
   name: string;
@@ -19,7 +20,9 @@ export interface appliedDiscount {
   discountedPrice: number;
 }
 
-const Checkout = ({ cart, discount }: StoreInfo) => {
+const Checkout = () => {
+  const { cart, discount }: any = useSelector(selector => selector);
+  console.log(cart, 'cartttttt');
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
 
@@ -149,11 +152,12 @@ const Checkout = ({ cart, discount }: StoreInfo) => {
         </>
       ) : (
         <>
-          <PriceList
+          {/*   <PriceList
             temp={tempDiscount}
             tempHandler={tempDiscountHandler}
             cartModalHandler={cartModalHandler}
-          />
+          /> */}
+          <ListModal cartModalHandler={cartModalHandler} />
         </>
       )}
     </Container>

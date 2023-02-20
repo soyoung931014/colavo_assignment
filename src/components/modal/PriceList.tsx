@@ -11,7 +11,7 @@ import { AddCheckItem } from '@src/types/itemList';
 interface priceListProps {
   cart: AddCheckItem[];
   cartModalHandler: () => void;
-  temp: number[];
+  temp?: number[];
   tempHandler: (id: number, check: boolean) => void;
 }
 const PriceList = ({
@@ -30,8 +30,8 @@ const PriceList = ({
           <ItemList
             key={item.name}
             item={item}
-            temp={temp}
-            tempHandler={tempHandler}
+            /*    temp={temp}
+            tempHandler={tempHandler} */
           />
         ))}
       </ItemWrapper>
