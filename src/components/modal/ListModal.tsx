@@ -16,7 +16,7 @@ const ListModal = ({ cartModalHandler }: any) => {
   const dispatch = useDispatch();
   const [cartList, setCartList] = useState<AddCheckItem[]>([]);
   useEffect(() => {
-    if (cart.length === 0) fetchPriceList();
+    fetchPriceList();
   }, []);
   console.log(cart);
 
@@ -49,7 +49,7 @@ const ListModal = ({ cartModalHandler }: any) => {
   function list(cartList, cart) {
     for (const item of cart) {
       for (const list of cartList) {
-        if (item.id === list.id) cartList.check = true;
+        if (item.id === list.id) list.check = true;
       }
     }
     return cartList;

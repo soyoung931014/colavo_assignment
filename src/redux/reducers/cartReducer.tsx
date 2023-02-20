@@ -8,7 +8,7 @@ const cartReducer = (state = initialState, action) => {
     case FETCH_CART_INFO:
       return [...state, ...action.payload];
     case SAVE_CART:
-      return [...action.payload];
+      return [...state, ...action.payload];
 
     default:
       return state;
