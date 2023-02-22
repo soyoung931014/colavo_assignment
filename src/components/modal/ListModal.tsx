@@ -54,7 +54,7 @@ const ListModal = ({ cartModalHandler }: any) => {
     }
     return cartList;
   }
-  const itemList = list(cartList, cart);
+  const itemList = list(cartList, cart); // cart이름 헷갈리니까 usercart로바꾸기
   console.log(itemList);
 
   let checkDataList: AddCheckItem[] = [];

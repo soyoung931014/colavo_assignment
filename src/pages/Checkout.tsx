@@ -109,34 +109,36 @@ const Checkout = () => {
           <HeaderWrapper>
             <TitleBar />
           </HeaderWrapper>
-          <MenuWrapper>
-            <MenuDiv onClick={cartModalHandler}>
-              <Icon />
-              <Text>시술</Text>
-            </MenuDiv>
-            <MenuDiv Discount onClick={discountModalHandler}>
-              <Icon />
-              <Text>할인</Text>
-            </MenuDiv>
-          </MenuWrapper>
-          {addedItem.map((item: AddCheckItem, idx: number) => (
-            <>
-              <SelectedItemList
+          <ListWrapper>
+            <MenuWrapper>
+              <MenuDiv onClick={cartModalHandler}>
+                <Icon />
+                <Text>시술</Text>
+              </MenuDiv>
+              <MenuDiv Discount onClick={discountModalHandler}>
+                <Icon />
+                <Text>할인</Text>
+              </MenuDiv>
+            </MenuWrapper>
+            {addedItem.map((item: AddCheckItem, idx: number) => (
+              <>
+                <SelectedItemList
+                  key={idx}
+                  {...item}
+                  countUpdateHandler={updateHandler}
+                  countModal={cartModal}
+                />
+              </>
+            ))}
+            {appliedDiscount.map((discount, idx) => (
+              <SelectedDiscountList
                 key={idx}
-                {...item}
-                countUpdateHandler={updateHandler}
-                countModal={cartModal}
+                {...discount}
+                updateHandler={updateHandler}
               />
-            </>
-          ))}
-          {appliedDiscount.map((discount, idx) => (
-            <SelectedDiscountList
-              key={idx}
-              {...discount}
-              updateHandler={updateHandler}
-            />
-          ))}
-          <Div></Div>
+            ))}
+            <Div></Div>
+          </ListWrapper>
           <ButtonWrapper>
             <Button totalPrice={totalPrice} />
           </ButtonWrapper>
@@ -207,11 +209,14 @@ const MenuDiv = styled.div<{ Discount?: boolean }>`
 `;
 
 const ButtonWrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   height: 140px;
   width: ${({ theme }) => theme.deviceSizes.mobile};
+  background: #fff;
+  left: 50%;
+  transform: translate(-50%);
 `;
 
 const Icon = styled(HiPlusCircle)`
@@ -229,4 +234,9 @@ const Text = styled.div`
 
 const Div = styled.div`
   height: 80vh;
+`;
+
+const ListWrapper = styled.div`
+  /*  height: 100vh; */
+  overflow: auto;
 `;
