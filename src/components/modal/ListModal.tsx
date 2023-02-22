@@ -12,13 +12,12 @@ import Button from '../button/Button';
 import { check } from 'prettier';
 
 const ListModal = ({ cartModalHandler }: any) => {
-  const { cart, discount }: any = useSelector(selector => selector); // 체크 true된 데이터 가져오기
+  const { selectedCart, discount }: any = useSelector(selector => selector); // 체크 true된 데이터 가져오기
   const dispatch = useDispatch();
   const [cartList, setCartList] = useState<AddCheckItem[]>([]);
   useEffect(() => {
     fetchPriceList();
   }, []);
-  console.log(cart);
 
   const fetchPriceList = async () => {
     try {
@@ -46,15 +45,15 @@ const ListModal = ({ cartModalHandler }: any) => {
     });
   };
 
-  function list(cartList, cart) {
-    for (const item of cart) {
+  function list(cartList, selectedCart) {
+    for (const item of selectedCart) {
       for (const list of cartList) {
         if (item.id === list.id) list.check = true;
       }
     }
     return cartList;
   }
-  const itemList = list(cartList, cart); // cart이름 헷갈리니까 usercart로바꾸기
+  const itemList = list(cartList, selectedCart); // cart이름 헷갈리니까 usercart로바꾸기
   console.log(itemList);
 
   let checkDataList: AddCheckItem[] = [];
@@ -64,13 +63,11 @@ const ListModal = ({ cartModalHandler }: any) => {
     } else {
       checkDataList = checkDataList.filter(el => el.id !== idx);
     }
-    console.log(checkDataList);
   };
   const saveCartHandler = () => {
     dispatch(saveCart(checkDataList));
     cartModalHandler();
   };
-  console.log(cart, 'cartttt');
 
   return (
     <Container>

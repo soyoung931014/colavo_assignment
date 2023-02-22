@@ -21,8 +21,7 @@ export interface appliedDiscount {
 }
 
 const Checkout = () => {
-  const { cart, discount }: any = useSelector(selector => selector);
-  console.log(cart, 'cartttttt');
+  const { selectedCart, discount }: any = useSelector(selector => selector);
   const [cartModal, setCartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
 
@@ -31,7 +30,9 @@ const Checkout = () => {
   const [temp, setTemp] = useState<number[]>([]);
   const [tempDiscount, setTempDiscount] = useState<number[]>([]);
 
-  const addedItem: AddCheckItem[] = cart.filter(el => el.check === true);
+  const addedItem: AddCheckItem[] = selectedCart.filter(
+    el => el.check === true,
+  );
   const SumItemPrice: number = addedItem.reduce(
     (acc, item) => acc + item.price * item.count,
     0,
@@ -109,6 +110,7 @@ const Checkout = () => {
           <HeaderWrapper>
             <TitleBar />
           </HeaderWrapper>
+
           <ListWrapper>
             <MenuWrapper>
               <MenuDiv onClick={cartModalHandler}>
@@ -139,6 +141,7 @@ const Checkout = () => {
             ))}
             <Div></Div>
           </ListWrapper>
+
           <ButtonWrapper>
             <Button totalPrice={totalPrice} />
           </ButtonWrapper>
