@@ -33,7 +33,7 @@ const SelectedDiscountList = ({
   function discountedInfo() {
     let list = '';
     let discountedPrice = 0;
-    const discountedRate = `${Number(rate) * 100}%`;
+    const discountedRate = parseInt(`${Number(rate) * 100}`) + '%';
     for (const item of appliedItem) {
       const { count, name, price } = item;
       if (count > 1) list += `${name} X ${count},`;
