@@ -28,6 +28,10 @@ export interface appliedDiscount {
 }
 
 const Checkout = () => {
+  const { selectedCart, selectedDiscount }: any = useSelector(
+    selector => selector,
+  );
+
   useEffect(() => {
     fetchPriceList();
   }, []);
@@ -65,14 +69,23 @@ const Checkout = () => {
     });
   };
 
-  const { selectedCart, selectedDiscount }: any = useSelector(
-    selector => selector,
-  );
   console.log(selectedDiscount);
+  // 모달 열고 닫고, 업데이트 하는 useState
   const [cartModal, setcartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
-
   const [update, setUpdate] = useState<boolean>(false);
+
+  // 모달 여닫는 핸들러들..
+  const cartModalHandler = () => {
+    setcartModal(!cartModal);
+  };
+  const discountModalHandler = () => {
+    setDiscountModal(!discountModal);
+  };
+  const updateHandler = () => {
+    setUpdate(!update);
+  };
+  console.log(selectedCart);
 
   // const selectedCart: AddCheckItem[] = selectedCart.filter(
   //   el => el.check === true,
@@ -119,17 +132,6 @@ const Checkout = () => {
       discountedPrice: -discountedPrice[idx],
     };
   }); */
-
-  // 모달 여닫는 핸들러들..
-  const cartModalHandler = () => {
-    setcartModal(!cartModal);
-  };
-  const discountModalHandler = () => {
-    setDiscountModal(!discountModal);
-  };
-  const updateHandler = () => {
-    setUpdate(!update);
-  };
 
   return (
     <Container>

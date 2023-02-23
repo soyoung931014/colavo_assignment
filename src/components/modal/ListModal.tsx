@@ -36,6 +36,7 @@ const ListModal = ({
 }: ListModalProps) => {
   //cartData: 페칭된 전체 cartData
   //selectedCart: 선택된 카트
+  //discountData: 할인데이터
   //cartItemList: 페칭된 전체와, 선택된 카트를 비교해 cartData에 체크시키기
 
   // 체크 true된 데이터 가져오기
@@ -71,14 +72,13 @@ const ListModal = ({
       checkCartList = checkCartList.filter(el => el.id !== idx);
     }
   };
+
   let checkDiscountList: AddCheckDiscount[] = [];
   const tempDiscountList = (idx: number, value: boolean) => {
-    console.log(idx, value);
     if (value && discountData) {
       checkDiscountList = [...checkDiscountList, discountData[idx]];
     } else {
       checkDiscountList = checkDiscountList.filter(el => el.id !== idx);
-      console.log(checkDiscountList);
     }
   };
 

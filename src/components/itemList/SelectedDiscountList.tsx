@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 export interface SelectedDiscountListProps {
   name: string;
   rate: number;
-  appliedItem: string[];
   discountedPrice?: number;
   updateHandler: () => void;
 }
@@ -17,21 +16,34 @@ export interface SelectedDiscountListProps {
 const SelectedDiscountList = ({
   name,
   rate,
-  appliedItem,
   discountedPrice,
   updateHandler,
 }: SelectedDiscountListProps) => {
   const [modal, setModal] = useState(false);
   const { selectedCart }: any = useSelector(selector => selector);
-  console.log(selectedCart);
+  const [appliedItem, setAppliedItem] = useState(selectedCart);
+
   const modalHandler = () => {
     setModal(!modal);
   };
 
-  // const sliceAppliedItem = appliedItem.map((el, idx) => {
-  //   if (appliedItem.length - 1 === idx) return el.slice(0, -2);
-  //   else return el;
-  // });
+  console.log(selectedCart);
+
+  // 할인 목록, 할인된 가격, 할인율을 내보내자.
+  function discountedInfo() {
+    let list = '';
+    let discountedPrice = 0;
+    const discountedRate = `${Number(rate) * 100}%`;
+    for (const item of appliedItem) {
+      const { count, name, price } = item;
+      if (count > 1) list += `${name} X ${count},`;
+      else list += `${name},`;
+      discountedPrice += Number(price) * Number(rate);
+    }
+    list = list.slice(0, list.length - 1);
+    return [list, discountedPrice, discountedRate];
+  }
+  const discountedList = discountedInfo();
 
   return (
     <>
@@ -47,17 +59,13 @@ const SelectedDiscountList = ({
       <Container onClick={modalHandler}>
         <ItemContent>
           <ItemTag>
-            <Tag>
-              {name}
-              {rate}
-            </Tag>
+            <Tag>{name}</Tag>
             <EditIcon />
           </ItemTag>
-          {selectedCart.map((el, idx) => (
-            <div key={idx}>{el.name}</div>
-          ))}
-          {/*    <Total>{sliceAppliedItem}</Total> */}
-          {/*  <Price>{discountedPrice.toLocaleString()}원</Price> */}
+          <Total>{discountedList[0]}</Total>
+          <Price>
+            -{discountedList[1].toLocaleString()}원 ( {discountedList[2]} )
+          </Price>
         </ItemContent>
         <CountWrapper>
           <Edit>수정</Edit>

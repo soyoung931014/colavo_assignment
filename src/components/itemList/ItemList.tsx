@@ -4,6 +4,7 @@ import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
 import { AddCheckDiscount, AddCheckItem } from '@type/itemList';
+import { useSelector } from 'react-redux';
 
 interface ItemListProps {
   item?: AddCheckItem;
@@ -12,6 +13,7 @@ interface ItemListProps {
 }
 
 const ItemList = ({ item, discountItem, tempCartList }: ItemListProps) => {
+  const { selectedCart }: any = useSelector(selector => selector);
   const [selected, setSelected] = useState<boolean>(false);
   let list;
   if (!item) list = discountItem;
