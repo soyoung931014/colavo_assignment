@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
@@ -11,8 +11,17 @@ import SelectedItemList from '@components/itemList/SelectedItemList';
 import DiscountModal from '@components/modal/DiscountModal';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
 
-import { AddCheckDiscount, AddCheckItem, StoreInfo } from '@type/itemList';
+import {
+  AddCheckDiscount,
+  AddCheckItem,
+  Discount,
+  HairList,
+  Item,
+  StoreInfo,
+} from '@type/itemList';
 import ListModal from '@src/components/modal/ListModal';
+import axios from 'axios';
+import { fetchCurrencyCode } from '@src/redux/action/currencyCodeAction';
 
 export interface appliedDiscount {
   name: string;
@@ -21,14 +30,46 @@ export interface appliedDiscount {
 }
 
 const Checkout = () => {
+  useEffect(() => {
+    fetchPriceList();
+  }, []);
+
+  const [cartData, setcartData] = useState<AddCheckItem[]>([]);
+  const dispatch = useDispatch();
+
+  // 데이터 페칭
+  const fetchPriceList = async () => {
+    try {
+      await axios
+        .get(
+          'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData',
+        )
+        .then(res => {
+          const { items, discounts, currency_code }: HairList = res.data;
+          const itemArray = addId(Object.values(items));
+          const discountArray = addId(Object.values(discounts));
+          setcartData([...itemArray]);
+          /*  dispatch(fetchCartInfo(itemArray));
+          dispatch(fetchDiscountInfo(discountArray)); */
+          dispatch(fetchCurrencyCode(currency_code));
+        });
+    } catch (error) {
+      error;
+    }
+  };
+
+  // 데이터 페칭 과정에서 true/false 넣어주어 가공
+  const addId = (list: Item[] | Discount[]) => {
+    return list.map((item, idx) => {
+      return { id: idx, check: false, ...item };
+    });
+  };
+
   const { selectedCart, discount }: any = useSelector(selector => selector);
-  const [cartModal, setCartModal] = useState<boolean>(false);
+  const [cartModal, setcartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
 
   const [update, setUpdate] = useState<boolean>(false);
-
-  const [temp, setTemp] = useState<number[]>([]);
-  const [tempDiscount, setTempDiscount] = useState<number[]>([]);
 
   const addedItem: AddCheckItem[] = selectedCart.filter(
     el => el.check === true,
@@ -73,34 +114,13 @@ const Checkout = () => {
   });
 
   const cartModalHandler = () => {
-    setCartModal(!cartModal);
+    setcartModal(!cartModal);
   };
   const discountModalHandler = () => {
     setDiscountModal(!discountModal);
   };
   const updateHandler = () => {
     setUpdate(!update);
-  };
-
-  const tempHandler = (id: number, selected: boolean) => {
-    if (selected) {
-      setTemp([...temp, id]);
-    }
-    if (!selected) {
-      const first = temp.slice(0, id);
-      const rest = temp.slice(id + 1);
-      setTemp([...first, ...rest]);
-    }
-  };
-  const tempDiscountHandler = (id: number, selected: boolean) => {
-    if (selected) {
-      setTempDiscount([...tempDiscount, id]);
-    }
-    if (!selected) {
-      const first = tempDiscount.slice(0, id);
-      const rest = tempDiscount.slice(id + 1);
-      setTempDiscount([...first, ...rest]);
-    }
   };
 
   return (
@@ -122,10 +142,10 @@ const Checkout = () => {
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {addedItem.map((item: AddCheckItem, idx: number) => (
+            {selectedCart.map((item: AddCheckItem) => (
               <>
                 <SelectedItemList
-                  key={idx}
+                  key={item.name}
                   {...item}
                   countUpdateHandler={updateHandler}
                   countModal={cartModal}
@@ -148,35 +168,22 @@ const Checkout = () => {
         </>
       ) : discountModal ? (
         <>
-          <DiscountModal
-            temp={temp}
-            tempHandler={tempHandler}
-            discountModalHandler={discountModalHandler}
-            totalPrice={totalPrice}
-          />
+          <ListModal cartModalHandler={cartModalHandler} text="할인" />
         </>
       ) : (
         <>
-          {/*   <PriceList
-            temp={tempDiscount}
-            tempHandler={tempDiscountHandler}
+          <ListModal
             cartModalHandler={cartModalHandler}
-          /> */}
-          <ListModal cartModalHandler={cartModalHandler} />
+            text="시술메뉴"
+            cartData={cartData}
+          />
         </>
       )}
     </Container>
   );
 };
-const mapStateToProps = state => {
-  const { cart, discount, currency_code }: StoreInfo = state;
-  return {
-    cart,
-    discount,
-    currency_code,
-  };
-};
-export default connect(mapStateToProps)(Checkout);
+
+export default Checkout;
 const Container = styled.section``;
 const HeaderWrapper = styled.div`
   position: fixed;

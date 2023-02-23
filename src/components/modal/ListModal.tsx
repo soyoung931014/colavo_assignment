@@ -9,57 +9,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import ItemList from '../itemList/ItemList';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
-import { check } from 'prettier';
 
-const ListModal = ({ cartModalHandler }: any) => {
+const ListModal = ({ cartModalHandler, text, cartData }: any) => {
+  //cartData: 페칭된 전체 cartData
+  //selectedCart: 선택된 카트
+  //cartItemList: 페칭된 전체와, 선택된 카트를 비교해 cartData에 체크시키기
   const { selectedCart, discount }: any = useSelector(selector => selector); // 체크 true된 데이터 가져오기
   const dispatch = useDispatch();
-  const [cartList, setCartList] = useState<AddCheckItem[]>([]);
-  useEffect(() => {
-    fetchPriceList();
-  }, []);
 
-  const fetchPriceList = async () => {
-    try {
-      await axios
-        .get(
-          'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData',
-        )
-        .then(res => {
-          const { items, discounts, currency_code }: HairList = res.data;
-          const itemArray = addId(Object.values(items));
-          const discountArray = addId(Object.values(discounts));
-          setCartList([...itemArray]);
-          /*  dispatch(fetchCartInfo(itemArray));
-          dispatch(fetchDiscountInfo(discountArray)); */
-          dispatch(fetchCurrencyCode(currency_code));
-        });
-    } catch (error) {
-      error;
-    }
-  };
+  const cartItemList = list(selectedCart, cartData); // cart이름 헷갈리니까 usercart로바꾸기
 
-  const addId = (list: Item[] | Discount[]) => {
-    return list.map((item, idx) => {
-      return { id: idx, check: false, ...item };
-    });
-  };
-
-  function list(cartList, selectedCart) {
-    for (const item of selectedCart) {
-      for (const list of cartList) {
+  function list(selectedItem, lists) {
+    for (const list of lists) {
+      for (const item of selectedItem) {
         if (item.id === list.id) list.check = true;
       }
     }
-    return cartList;
+    return lists;
   }
-  const itemList = list(cartList, selectedCart); // cart이름 헷갈리니까 usercart로바꾸기
-  console.log(itemList);
+  console.log(cartItemList);
 
   let checkDataList: AddCheckItem[] = [];
   const tempCartList = (idx: number, value: boolean) => {
     if (value) {
-      checkDataList = [...checkDataList, cartList[idx]];
+      checkDataList = [...checkDataList, cartData[idx]];
     } else {
       checkDataList = checkDataList.filter(el => el.id !== idx);
     }
@@ -72,10 +45,10 @@ const ListModal = ({ cartModalHandler }: any) => {
   return (
     <Container>
       <HeaderWrapper>
-        <TitleBar text="시술 메뉴" cartModalHandler={cartModalHandler} />
+        <TitleBar text={text} cartModalHandler={cartModalHandler} />
       </HeaderWrapper>
       <ItemWrapper>
-        {itemList.map((item: AddCheckItem, idx: number) => (
+        {cartItemList.map((item: AddCheckItem, idx: number) => (
           <ItemList key={item.name} item={item} tempCartList={tempCartList} />
         ))}
       </ItemWrapper>
