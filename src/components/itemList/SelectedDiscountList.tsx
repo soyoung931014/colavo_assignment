@@ -4,49 +4,60 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import DiscountTarget from '@components/modal/DiscountTarget';
+import { useSelector } from 'react-redux';
 
 export interface SelectedDiscountListProps {
   name: string;
+  rate: number;
   appliedItem: string[];
-  discountedPrice: number;
+  discountedPrice?: number;
   updateHandler: () => void;
 }
 
 const SelectedDiscountList = ({
   name,
+  rate,
   appliedItem,
   discountedPrice,
   updateHandler,
 }: SelectedDiscountListProps) => {
   const [modal, setModal] = useState(false);
-
+  const { selectedCart }: any = useSelector(selector => selector);
+  console.log(selectedCart);
   const modalHandler = () => {
     setModal(!modal);
   };
 
-  const sliceAppliedItem = appliedItem.map((el, idx) => {
-    if (appliedItem.length - 1 === idx) return el.slice(0, -2);
-    else return el;
-  });
+  // const sliceAppliedItem = appliedItem.map((el, idx) => {
+  //   if (appliedItem.length - 1 === idx) return el.slice(0, -2);
+  //   else return el;
+  // });
 
   return (
     <>
       {modal ? (
-        <DiscountTarget
+        <div>모달</div>
+      ) : /*  <DiscountTarget
           name={name}
-          appliedItem={appliedItem}
+           appliedItem={appliedItem} 
           modalHandler={modalHandler}
           updateHandler={updateHandler}
-        />
-      ) : null}
+        /> */
+      null}
       <Container onClick={modalHandler}>
         <ItemContent>
           <ItemTag>
-            <Tag>{name}</Tag>
+            <Tag>
+              {name}
+              {rate}
+            </Tag>
             <EditIcon />
           </ItemTag>
-          <Total>{sliceAppliedItem}</Total>
-          <Price>{discountedPrice.toLocaleString()}원</Price>
+          {selectedCart.map((el, idx) => (
+            <div key={idx}>{el.name}</div>
+          ))}
+          {/*    <Total>{sliceAppliedItem}</Total> */}
+          {/*  <Price>{discountedPrice.toLocaleString()}원</Price> */}
         </ItemContent>
         <CountWrapper>
           <Edit>수정</Edit>

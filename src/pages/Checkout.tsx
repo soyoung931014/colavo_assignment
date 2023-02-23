@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { HiPlusCircle } from 'react-icons/hi';
 
 import TitleBar from '@components/header/TitleBar';
-import PriceList from '@components/modal/PriceList';
 import Button from '@components/button/Button';
 
 import SelectedItemList from '@components/itemList/SelectedItemList';
-import DiscountModal from '@components/modal/DiscountModal';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
 
 import {
@@ -35,6 +33,7 @@ const Checkout = () => {
   }, []);
 
   const [cartData, setcartData] = useState<AddCheckItem[]>([]);
+  const [discountData, setDiscountData] = useState<AddCheckDiscount[]>([]);
   const dispatch = useDispatch();
 
   // 데이터 페칭
@@ -49,6 +48,7 @@ const Checkout = () => {
           const itemArray = addId(Object.values(items));
           const discountArray = addId(Object.values(discounts));
           setcartData([...itemArray]);
+          setDiscountData([...discountArray]);
           /*  dispatch(fetchCartInfo(itemArray));
           dispatch(fetchDiscountInfo(discountArray)); */
           dispatch(fetchCurrencyCode(currency_code));
@@ -65,13 +65,20 @@ const Checkout = () => {
     });
   };
 
-  const { selectedCart, discount }: any = useSelector(selector => selector);
+  const { selectedCart, selectedDiscount }: any = useSelector(
+    selector => selector,
+  );
+  console.log(selectedDiscount);
   const [cartModal, setcartModal] = useState<boolean>(false);
   const [discountModal, setDiscountModal] = useState<boolean>(false);
 
   const [update, setUpdate] = useState<boolean>(false);
 
-  const addedItem: AddCheckItem[] = selectedCart.filter(
+  // const selectedCart: AddCheckItem[] = selectedCart.filter(
+  //   el => el.check === true,
+  // );
+
+  /*  const addedItem: AddCheckItem[] = selectedCart.filter(
     el => el.check === true,
   );
   const SumItemPrice: number = addedItem.reduce(
@@ -79,13 +86,13 @@ const Checkout = () => {
     0,
   );
 
-  const copyAddedItem = addedItem;
+  const copyAddedItem = addedItem; */
 
-  const addedDiscount: AddCheckDiscount[] = discount.filter(
+  /*  const addedDiscount: AddCheckDiscount[] = discount.filter(
     el => el.check === true,
-  );
+  ); */
 
-  const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
+  /*  const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
 
   const discountedPrice = addedDiscount.map(el =>
     Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
@@ -111,8 +118,9 @@ const Checkout = () => {
       appliedItem: discountedItemList,
       discountedPrice: -discountedPrice[idx],
     };
-  });
+  }); */
 
+  // 모달 여닫는 핸들러들..
   const cartModalHandler = () => {
     setcartModal(!cartModal);
   };
@@ -142,7 +150,7 @@ const Checkout = () => {
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {selectedCart.map((item: AddCheckItem) => (
+            {selectedCart?.map((item: AddCheckItem) => (
               <>
                 <SelectedItemList
                   key={item.name}
@@ -152,33 +160,47 @@ const Checkout = () => {
                 />
               </>
             ))}
-            {appliedDiscount.map((discount, idx) => (
+            {selectedDiscount.map((item, idx) => (
+              <>
+                <SelectedDiscountList
+                  key={idx}
+                  {...item}
+                  updateHandler={updateHandler}
+                />
+              </>
+            ))}
+
+            {/*  {discountData.map((discount, idx) => (
               <SelectedDiscountList
                 key={idx}
                 {...discount}
                 updateHandler={updateHandler}
               />
-            ))}
+            ))} */}
             <Div></Div>
           </ListWrapper>
 
           <ButtonWrapper>
-            <Button totalPrice={totalPrice} />
+            <Button /* totalPrice={totalPrice} */ />
           </ButtonWrapper>
         </>
       ) : discountModal ? (
         <>
-          <ListModal cartModalHandler={cartModalHandler} text="할인" />
+          <ListModal
+            discountModalHandler={discountModalHandler}
+            text="할인"
+            discountData={discountData}
+          />
         </>
-      ) : (
+      ) : cartModal && cartData ? (
         <>
           <ListModal
             cartModalHandler={cartModalHandler}
-            text="시술메뉴"
+            text="시술 메뉴"
             cartData={cartData}
           />
         </>
-      )}
+      ) : null}
     </Container>
   );
 };

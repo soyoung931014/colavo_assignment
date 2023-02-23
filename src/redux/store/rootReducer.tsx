@@ -5,7 +5,7 @@ import discountReducer from '../reducers/discountReducer';
 
 const rootReducer = combineReducers({
   selectedCart: cartReducer,
-  discount: discountReducer,
+  selectedDiscount: discountReducer,
   currency_code: CurrencyCodeReducer,
 });
 

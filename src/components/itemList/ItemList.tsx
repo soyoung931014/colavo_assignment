@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { AddCheckItem } from '@type/itemList';
+import { AddCheckDiscount, AddCheckItem } from '@type/itemList';
 
 interface ItemListProps {
-  item: AddCheckItem;
+  item?: AddCheckItem;
+  discountItem?: AddCheckDiscount;
   tempCartList: (idx: number, selected: boolean) => void;
 }
-/*  temp: number[];
-  tempHandler: (id: number, check: boolean) => void; */
 
-const ItemList = ({ item, tempCartList }: ItemListProps) => {
+const ItemList = ({ item, discountItem, tempCartList }: ItemListProps) => {
   const [selected, setSelected] = useState<boolean>(false);
-  const { id, name, price, check }: AddCheckItem = item;
-  // tempCartList(id, selected);
+  let list;
+  if (!item) list = discountItem;
+  if (!discountItem) list = item;
+
+  const { id, name, check } = list;
 
   const checkHandler = () => {
     setSelected(!selected);
@@ -38,7 +40,7 @@ const ItemList = ({ item, tempCartList }: ItemListProps) => {
           <EditIcon />
           <Tag>{name}</Tag>
         </ItemTag>
-        <Price>{price.toLocaleString()}원</Price>
+        <Price>{list.price ? `${list.price}원` : `${list.rate} %`}</Price>
       </ItemContent>
       {selected ? <CheckIcon /> : check && !selected ? <CheckIcon /> : null}
     </Container>

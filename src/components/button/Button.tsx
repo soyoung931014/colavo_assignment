@@ -45,9 +45,9 @@ const Button = ({
           <>
             <Text>합계</Text>
             {currency_code === 'USD' ? (
-              <Total>${totalPrice}</Total>
+              <Total>{/* ${totalPrice} */}</Total>
             ) : (
-              <Total>{totalPrice.toLocaleString()}원</Total>
+              <Total>{/* {totalPrice.toLocaleString()} */}원</Total>
             )}
           </>
         )}
