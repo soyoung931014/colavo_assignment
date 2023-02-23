@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
-import DiscountTarget from '@components/modal/DiscountTarget';
 import { useSelector } from 'react-redux';
+import DiscountTarget from '../modal/DiscountTarget';
+import { AddCheckItem } from '@src/types/itemList';
 
 export interface SelectedDiscountListProps {
   name: string;
@@ -21,7 +22,7 @@ const SelectedDiscountList = ({
 }: SelectedDiscountListProps) => {
   const [modal, setModal] = useState(false);
   const { selectedCart }: any = useSelector(selector => selector);
-  const [appliedItem, setAppliedItem] = useState(selectedCart);
+  const [appliedItem, setAppliedItem] = useState<AddCheckItem[]>(selectedCart);
 
   const modalHandler = () => {
     setModal(!modal);
@@ -43,19 +44,20 @@ const SelectedDiscountList = ({
     list = list.slice(0, list.length - 1);
     return [list, discountedPrice, discountedRate];
   }
+
   const discountedList = discountedInfo();
 
   return (
     <>
       {modal ? (
-        <div>모달</div>
-      ) : /*  <DiscountTarget
+        <DiscountTarget
           name={name}
-           appliedItem={appliedItem} 
+          appliedItem={appliedItem}
+          setAppliedItem={setAppliedItem}
           modalHandler={modalHandler}
           updateHandler={updateHandler}
-        /> */
-      null}
+        />
+      ) : null}
       <Container onClick={modalHandler}>
         <ItemContent>
           <ItemTag>

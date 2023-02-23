@@ -1,39 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
-import { applyDiscount } from '@src/redux/action/discountAction';
-import { AddCheckDiscount } from '@src/types/itemList';
+import { AddCheckItem } from '@src/types/itemList';
 import DiscountTargetList from '@components/itemList/DiscountTargetList';
 
 export interface DiscountTargetProps {
   name: string;
-  appliedItem: string[];
+  appliedItem: AddCheckItem[];
+  setAppliedItem: any;
   modalHandler: () => void;
   updateHandler: () => void;
-  discount: AddCheckDiscount[];
 }
 const DiscountTarget = ({
   name,
   appliedItem,
+  setAppliedItem,
   modalHandler,
-  discount,
   updateHandler,
 }: DiscountTargetProps) => {
-  const findDiscount = discount.filter(el => el.name === name);
-  const { id } = findDiscount[0];
-
   const deleteHandler = () => {
-    if (discount !== undefined) {
-      discount[id].check = false;
-    }
-    applyDiscount(discount);
     modalHandler();
     updateHandler();
   };
 
   const saveHandler = () => {
+    setAppliedItem(updateAppliedList());
     modalHandler();
+  };
+
+  // 수정 버튼에서 카트리스트 선택 여부 배열
+  let checkId: number[] = appliedItem?.map(item => item.id);
+
+  const tempCartList = (id: number) => {
+    if (checkId.includes(id)) checkId = checkId.filter(el => el !== id);
+    else checkId = [...checkId, id];
+  };
+  // 새로 checkId와 appliedItem을 이용해 수정한 할인 리스트 가져오기
+  const updateAppliedList = () => {
+    let updateList: AddCheckItem[] = [];
+    for (const item of appliedItem) {
+      for (const id of checkId) {
+        if (item.id === id) {
+          updateList = [...updateList, { ...item }];
+        }
+      }
+    }
+    return updateList;
   };
 
   return (
@@ -44,7 +56,13 @@ const DiscountTarget = ({
             <Title>{name}</Title>
             <ListWrapper>
               {appliedItem.map((list, idx) => (
-                <DiscountTargetList key={idx} item={list} />
+                <DiscountTargetList
+                  key={idx}
+                  idx={idx}
+                  id={list.id}
+                  name={list.name}
+                  tempCartList={tempCartList}
+                />
               ))}
             </ListWrapper>
             <ButtonWrapper>
@@ -63,18 +81,8 @@ const DiscountTarget = ({
     </>
   );
 };
-const mapStateToProps = state => {
-  const { discount } = state;
-  return {
-    discount,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    applyDiscount: discount => dispatch(applyDiscount(discount)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(DiscountTarget);
+
+export default DiscountTarget;
 const Title = styled.div`
   font-size: 25px;
   text-align: center;
@@ -98,6 +106,7 @@ const BackGround = styled.div`
   z-index: 500;
 `;
 const Container = styled.div`
+  border: solid red 2px;
   width: 300px;
   padding: 70px 0;
   background: #ffffff;
