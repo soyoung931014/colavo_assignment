@@ -16,9 +16,10 @@ export const saveCart = data => {
   };
 };
 
-export const deleteCart = () => {
+export const deleteCart = data => {
   return {
     type: 'DELETE_CART',
+    payload: data,
   };
 };
 
