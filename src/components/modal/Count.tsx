@@ -41,6 +41,8 @@ const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
   };
 
   const deleteHandler = () => {
+    updateHandler();
+    modalHandler();
     /*   if (cart !== undefined) {
       cart[id].check = false;
       cart[id].count = 1;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
@@ -24,14 +24,18 @@ const SelectedDiscountList = ({
   const { selectedCart }: any = useSelector(selector => selector);
   const [appliedItem, setAppliedItem] = useState<AddCheckItem[]>(selectedCart);
 
+  useEffect(() => {
+    setAppliedItem(selectedCart);
+  }, [selectedCart]);
+
   const modalHandler = () => {
     setModal(!modal);
   };
 
-  console.log(selectedCart);
-
   // 할인 목록, 할인된 가격, 할인율을 내보내자.
-  function discountedInfo() {
+  const discountedList = discountedInfo(appliedItem);
+
+  function discountedInfo(appliedItem) {
     let list = '';
     let discountedPrice = 0;
     const discountedRate = parseInt(`${Number(rate) * 100}`) + '%';
@@ -44,8 +48,6 @@ const SelectedDiscountList = ({
     list = list.slice(0, list.length - 1);
     return [list, discountedPrice, discountedRate];
   }
-
-  const discountedList = discountedInfo();
 
   return (
     <>
