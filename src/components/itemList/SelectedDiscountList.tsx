@@ -96,6 +96,7 @@ const Container = styled.div`
   &:hover {
     cursor: pointer;
   }
+  border: solid red 2px;
 `;
 const CountWrapper = styled.div`
   display: flex;

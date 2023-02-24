@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 import { AddCheckItem } from '@src/types/itemList';
 import DiscountTargetList from '@components/itemList/DiscountTargetList';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCart } from '@src/redux/action/cartAction';
+import { deleteDiscount } from '@src/redux/action/discountAction';
 
 export interface DiscountTargetProps {
   name: string;
@@ -10,15 +13,22 @@ export interface DiscountTargetProps {
   setAppliedItem: any;
   modalHandler: () => void;
   updateHandler: () => void;
+  id?: number;
 }
 const DiscountTarget = ({
+  id,
   name,
   appliedItem,
   setAppliedItem,
   modalHandler,
   updateHandler,
 }: DiscountTargetProps) => {
+  const { selectedDiscount }: any = useSelector(selector => selector);
+  const dispatch = useDispatch();
+  console.log(selectedDiscount, name);
   const deleteHandler = () => {
+    const item = selectedDiscount.filter(item => item.name !== name);
+    dispatch(deleteDiscount(item));
     modalHandler();
     updateHandler();
   };
@@ -45,6 +55,7 @@ const DiscountTarget = ({
         }
       }
     }
+    console.log(updateList);
     return updateList;
   };
 
