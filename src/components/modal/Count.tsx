@@ -3,21 +3,20 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { saveCart } from '@src/redux/action/cartAction';
 import { AddCheckItem } from '@src/types/itemList';
-import { on } from 'events';
 
 export interface CountProps {
   count: number;
   id: number;
   cart: AddCheckItem[];
-  countUpdateHandler: () => void;
-  countModalHandler: () => void;
+  updateHandler: () => void;
+  modalHandler: () => void;
 }
 const Count = ({
   count,
   id,
   cart,
-  countUpdateHandler,
-  countModalHandler,
+  updateHandler,
+  modalHandler,
 }: CountProps) => {
   const [quantity, setQuantity] = useState(count);
 
@@ -36,8 +35,8 @@ const Count = ({
       cart[id].count = quantity;
     }
     saveCart(cart);
-    countUpdateHandler();
-    countModalHandler();
+    updateHandler();
+    modalHandler();
   };
 
   const deleteHandler = () => {
@@ -46,8 +45,8 @@ const Count = ({
       cart[id].count = 1;
     }
     saveCart(cart);
-    countUpdateHandler();
-    countModalHandler();
+    updateHandler();
+    modalHandler();
   };
 
   return (

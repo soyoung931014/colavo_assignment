@@ -108,8 +108,8 @@ const Checkout = () => {
                 <SelectedItemList
                   key={item.name}
                   {...item}
-                  countUpdateHandler={updateHandler}
-                  countModal={cartModal}
+                  updateHandler={updateHandler}
+                  /* countModal={cartModal} */
                 />
               </>
             ))}
