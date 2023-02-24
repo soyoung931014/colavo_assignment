@@ -53,7 +53,6 @@ const Button = ({
         )}
       </CheckWrapper>
       <NextWrapper>
-        <Div></Div>
         {buttonName ? (
           <>
             <Wrapper>
@@ -62,7 +61,9 @@ const Button = ({
           </>
         ) : (
           <>
-            <Next>다음</Next>
+            <Wrapper>
+              <Next>다음</Next>
+            </Wrapper>
           </>
         )}
       </NextWrapper>
@@ -78,7 +79,7 @@ const CheckWrapper = styled.div<{ Guide?: boolean }>`
   justify-content: space-between;
   margin-right: 5px;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 23px;
   padding-top: 22px;
   border-top: solid 1px ${({ theme }) => theme.color.grey_02}; ;
 `;
@@ -89,7 +90,7 @@ const Text = styled.div<{ Guide?: boolean }>`
   padding-bottom: 10px;
 `;
 const Total = styled.div`
-  font-size: 30px;
+  font-size: 25px;
 `;
 const Next = styled.div`
   font-size: 20px;
@@ -114,4 +115,3 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
 `;
-const Div = styled.div``;

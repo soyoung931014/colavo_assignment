@@ -200,6 +200,7 @@ const ButtonWrapper = styled.div`
   background: #fff;
   left: 50%;
   transform: translate(-50%);
+  margin: auto;
 `;
 
 const Icon = styled(HiPlusCircle)`
@@ -220,6 +221,5 @@ const Div = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  /*  height: 100vh; */
   overflow: auto;
 `;
