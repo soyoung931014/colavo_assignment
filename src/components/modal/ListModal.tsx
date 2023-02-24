@@ -153,11 +153,13 @@ const HeaderWrapper = styled.div`
   z-index: 100;
 `;
 const ButtonWrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   height: 140px;
   background: #fff;
   width: ${({ theme }) => theme.deviceSizes.mobile};
   z-index: 300;
+  left: 50%;
+  transform: translate(-50%);
 `;
