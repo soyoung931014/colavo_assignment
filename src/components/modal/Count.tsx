@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveCart, updateCart } from '@src/redux/action/cartAction';
-import { AddCheckItem } from '@src/types/itemList';
+import { deleteCart, updateCart } from '@src/redux/action/cartAction';
 
 export interface CountProps {
   count: number;
@@ -13,8 +12,7 @@ export interface CountProps {
 const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
   const { selectedCart }: any = useSelector(selector => selector);
   const dispatch = useDispatch();
-  console.log(selectedCart, 'selector');
-  console.log(id);
+
   const [quantity, setQuantity] = useState(count);
 
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,31 +23,30 @@ const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
   };
 
   const saveHandler = () => {
-    let cart;
     if (quantity === 0) {
       deleteHandler();
+      return;
     }
+    updateCountHandler();
+  };
+
+  const deleteHandler = () => {
+    const undelectedCart = selectedCart.filter(item => item.id !== id);
+    dispatch(deleteCart(undelectedCart));
+    updateHandler();
+    modalHandler();
+  };
+
+  const updateCountHandler = () => {
+    let cart;
     if (quantity !== undefined) {
       cart = selectedCart.map(item =>
         item.id === id ? { ...item, count: quantity } : { ...item },
       );
     }
-    console.log(cart);
     dispatch(updateCart(cart));
     updateHandler();
     modalHandler();
-  };
-
-  const deleteHandler = () => {
-    updateHandler();
-    modalHandler();
-    /*   if (cart !== undefined) {
-      cart[id].check = false;
-      cart[id].count = 1;
-    }
-    saveCart(cart);
-    updateHandler();
-    modalHandler(); */
   };
 
   return (

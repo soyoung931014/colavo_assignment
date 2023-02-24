@@ -19,6 +19,7 @@ import {
 import ListModal from '@src/components/modal/ListModal';
 import axios from 'axios';
 import { fetchCurrencyCode } from '@src/redux/action/currencyCodeAction';
+import { saveCart } from '@src/redux/action/cartAction';
 
 export interface appliedDiscount {
   name: string;
@@ -30,6 +31,7 @@ const Checkout = () => {
   const { selectedCart, selectedDiscount }: any = useSelector(
     selector => selector,
   );
+  const [cartList, setCartList] = useState(selectedCart);
 
   useEffect(() => {
     fetchPriceList();
@@ -83,6 +85,9 @@ const Checkout = () => {
     setUpdate(!update);
   };
   console.log(selectedCart);
+  useEffect(() => {
+    setCartList(selectedCart);
+  }, [update, cartModal, discountModal]);
 
   return (
     <Container>
@@ -103,7 +108,7 @@ const Checkout = () => {
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {selectedCart?.map((item: AddCheckItem) => (
+            {cartList?.map((item: AddCheckItem) => (
               <>
                 <SelectedItemList
                   key={item.name}
