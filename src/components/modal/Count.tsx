@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { saveCart } from '@src/redux/action/cartAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveCart, updateCart } from '@src/redux/action/cartAction';
 import { AddCheckItem } from '@src/types/itemList';
 
 export interface CountProps {
   count: number;
   id: number;
-  cart: AddCheckItem[];
   updateHandler: () => void;
   modalHandler: () => void;
 }
-const Count = ({
-  count,
-  id,
-  cart,
-  updateHandler,
-  modalHandler,
-}: CountProps) => {
+const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
+  const { selectedCart }: any = useSelector(selector => selector);
+  const dispatch = useDispatch();
+  console.log(selectedCart, 'selector');
+  console.log(id);
   const [quantity, setQuantity] = useState(count);
 
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,25 +25,29 @@ const Count = ({
   };
 
   const saveHandler = () => {
+    let cart;
     if (quantity === 0) {
       deleteHandler();
     }
     if (quantity !== undefined) {
-      cart[id].count = quantity;
+      cart = selectedCart.map(item =>
+        item.id === id ? { ...item, count: quantity } : { ...item },
+      );
     }
-    saveCart(cart);
+    console.log(cart);
+    dispatch(updateCart(cart));
     updateHandler();
     modalHandler();
   };
 
   const deleteHandler = () => {
-    if (cart !== undefined) {
+    /*   if (cart !== undefined) {
       cart[id].check = false;
       cart[id].count = 1;
     }
     saveCart(cart);
     updateHandler();
-    modalHandler();
+    modalHandler(); */
   };
 
   return (
@@ -79,19 +80,7 @@ const Count = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { cart } = state;
-  return {
-    cart,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    saveCart: cart => dispatch(saveCart(cart)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Count);
+export default Count;
 
 const BackGround = styled.div`
   position: fixed;
