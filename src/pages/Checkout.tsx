@@ -15,7 +15,6 @@ import {
   Discount,
   HairList,
   Item,
-  StoreInfo,
 } from '@type/itemList';
 import ListModal from '@src/components/modal/ListModal';
 import axios from 'axios';
@@ -53,8 +52,6 @@ const Checkout = () => {
           const discountArray = addId(Object.values(discounts));
           setcartData([...itemArray]);
           setDiscountData([...discountArray]);
-          /*  dispatch(fetchCartInfo(itemArray));
-          dispatch(fetchDiscountInfo(discountArray)); */
           dispatch(fetchCurrencyCode(currency_code));
         });
     } catch (error) {
@@ -86,52 +83,6 @@ const Checkout = () => {
     setUpdate(!update);
   };
   console.log(selectedCart);
-
-  // const selectedCart: AddCheckItem[] = selectedCart.filter(
-  //   el => el.check === true,
-  // );
-
-  /*  const addedItem: AddCheckItem[] = selectedCart.filter(
-    el => el.check === true,
-  );
-  const SumItemPrice: number = addedItem.reduce(
-    (acc, item) => acc + item.price * item.count,
-    0,
-  );
-
-  const copyAddedItem = addedItem; */
-
-  /*  const addedDiscount: AddCheckDiscount[] = discount.filter(
-    el => el.check === true,
-  ); */
-
-  /*  const oneSum = copyAddedItem.reduce((acc, item) => acc + item.price, 0);
-
-  const discountedPrice = addedDiscount.map(el =>
-    Math.floor((Math.floor(el.rate * 100) / 100) * oneSum),
-  );
-
-  const SumDiscountedPrice = discountedPrice.reduce(
-    (acc, discountPrice) => acc + discountPrice,
-    0,
-  );
-
-  const totalPrice = SumItemPrice - SumDiscountedPrice;
-
-  const discountedItemList = addedItem.map(el => {
-    if (el.count > 1) {
-      return ` ${el.name} x ${el.count}, `;
-    }
-    return `${el.name}, `;
-  });
-
-  const appliedDiscount: appliedDiscount[] = addedDiscount.map((el, idx) => {
-    return {
-      name: el.name,
-      appliedItem: discountedItemList,
-      discountedPrice: -discountedPrice[idx],
-    };
-  }); */
 
   return (
     <Container>
@@ -171,14 +122,6 @@ const Checkout = () => {
                 />
               </>
             ))}
-
-            {/*  {discountData.map((discount, idx) => (
-              <SelectedDiscountList
-                key={idx}
-                {...discount}
-                updateHandler={updateHandler}
-              />
-            ))} */}
             <Div></Div>
           </ListWrapper>
 
