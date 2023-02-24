@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import {
-  AddCheckDiscount,
-  AddCheckItem,
-  Discount,
-  HairList,
-  Item,
-} from '@src/types/itemList';
-import axios from 'axios';
-import { fetchCartInfo, saveCart } from '@src/redux/action/cartAction';
+import { AddCheckDiscount, AddCheckItem } from '@src/types/itemList';
+import { saveCart } from '@src/redux/action/cartAction';
 import {
   applyDiscount,
   fetchDiscountInfo,
@@ -25,6 +18,7 @@ export interface ListModalProps {
   text: string;
   cartData?: AddCheckItem[];
   discountData?: AddCheckDiscount[];
+  cartModal?: boolean;
 }
 
 const ListModal = ({
@@ -33,6 +27,7 @@ const ListModal = ({
   text,
   cartData,
   discountData,
+  cartModal,
 }: ListModalProps) => {
   //cartData: 페칭된 전체 cartData
   //selectedCart: 선택된 카트
@@ -47,19 +42,33 @@ const ListModal = ({
 
   // 시술 메뉴, 할인에 목록으로 내려줄 데이터
   // props로 내려오는 cartData가 처음에 undefined를 내 에러 발생시킴. 에러처리해야함
-  const cartItemList = cartData ? lists(selectedCart, cartData) : null;
-  const discountItemList = discountData
+  let cartItemList = cartData ? lists(selectedCart, cartData) : null;
+  let discountItemList = discountData
     ? lists(selectedDiscount, discountData)
     : null;
 
+  useEffect(() => {
+    if (cartItemList) {
+      cartItemList = lists(selectedCart, cartData);
+    }
+    if (discountItemList) {
+      discountItemList = lists(selectedDiscount, discountData);
+    }
+  }, [cartData, discountData]);
+
   // cartData와 개인 store(=selectedItem = 장바구니에 담은거)  담김 처리해줌
-  function lists(selectedItem, lists) {
-    for (const list of lists) {
-      for (const item of selectedItem) {
-        if (list.id === item.id) list.check = true;
+  function lists(currentSelected, lists) {
+    const tmp = lists.map(el => {
+      return { ...el, check: false };
+    });
+    for (const list of tmp) {
+      for (const item of currentSelected) {
+        if (list.id === item.id) {
+          list.check = true;
+        }
       }
     }
-    return lists;
+    return tmp;
   }
 
   // 체크된 리스트, 여기는 상태 변경을 (체크 부분만하고(체크부분은 체크컴포넌트 부분에서 렌더링됨)) 굳이 안해줘도 되니까 state에 안담아줌.

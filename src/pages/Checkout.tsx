@@ -84,7 +84,7 @@ const Checkout = () => {
   const updateHandler = () => {
     setUpdate(!update);
   };
-  console.log(selectedCart);
+
   useEffect(() => {
     setCartList(selectedCart);
   }, [update, cartModal, discountModal]);
@@ -148,6 +148,7 @@ const Checkout = () => {
             cartModalHandler={cartModalHandler}
             text="시술 메뉴"
             cartData={cartData}
+            cartModal={cartModal}
           />
         </>
       ) : null}
