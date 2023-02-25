@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { saveCart } from '@src/redux/action/cartAction';
+import { useSelector } from 'react-redux';
 
 const Button = ({
   text,
   buttonName,
   cartModalHandler,
-  cart,
-  saveCart,
   totalPrice,
   currency_code,
 }: any) => {
@@ -33,7 +31,8 @@ const Button = ({
     totalPrice = String(totalPrice * 7);
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
-
+  const { discountedPrice }: any = useSelector(selector => selector);
+  console.log(discountedPrice, 'didididi');
   return (
     <Container>
       <CheckWrapper>
@@ -45,9 +44,9 @@ const Button = ({
           <>
             <Text>합계</Text>
             {currency_code === 'USD' ? (
-              <Total>{/* ${totalPrice} */}</Total>
+              <Total> ${totalPrice} </Total>
             ) : (
-              <Total>{/* {totalPrice.toLocaleString()} */}원</Total>
+              <Total>{totalPrice.toLocaleString()}원</Total>
             )}
           </>
         )}

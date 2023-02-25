@@ -156,7 +156,7 @@ const Checkout = () => {
             <Button totalPrice={totalPrice} />
           </ButtonWrapper>
         </>
-      ) : discountModal && !cartModal ? (
+      ) : discountModal ? (
         <>
           <ListModal
             discountModalHandler={discountModalHandler}
@@ -164,7 +164,7 @@ const Checkout = () => {
             discountData={discountData}
           />
         </>
-      ) : cartModal && cartData ? (
+      ) : (
         <>
           <ListModal
             cartModalHandler={cartModalHandler}
@@ -173,7 +173,7 @@ const Checkout = () => {
             cartModal={cartModal}
           />
         </>
-      ) : null}
+      )}
     </Container>
   );
 };

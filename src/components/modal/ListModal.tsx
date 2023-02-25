@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+
 import { AddCheckDiscount, AddCheckItem } from '@src/types/itemList';
-import { saveCart } from '@src/redux/action/cartAction';
-import {
-  applyDiscount,
-  fetchDiscountInfo,
-} from '@src/redux/action/discountAction';
-import { fetchCurrencyCode } from '@src/redux/action/currencyCodeAction';
+
 import { useSelector, useDispatch } from 'react-redux';
+import { saveCart } from '@src/redux/action/cartAction';
+import { applyDiscount } from '@src/redux/action/discountAction';
+
 import ItemList from '../itemList/ItemList';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
@@ -18,7 +17,6 @@ export interface ListModalProps {
   text: string;
   cartData?: AddCheckItem[];
   discountData?: AddCheckDiscount[];
-  cartModal?: boolean;
 }
 
 const ListModal = ({
@@ -27,14 +25,12 @@ const ListModal = ({
   text,
   cartData,
   discountData,
-  cartModal,
 }: ListModalProps) => {
-  //cartData: 페칭된 전체 cartData
-  //selectedCart: 선택된 카트
-  //discountData: 할인데이터
-  //cartItemList: 페칭된 전체와, 선택된 카트를 비교해 cartData에 체크시키기
+  //cartData: 시술 데이터
+  //selectedCart: 선택된 시술 목록
+  //discountData: 할인 데이터
+  //selectedDiscount: 선택된 할인 목록
 
-  // 체크 true된 데이터 가져오기
   const { selectedCart, selectedDiscount }: any = useSelector(
     selector => selector,
   );
@@ -56,22 +52,20 @@ const ListModal = ({
     }
   }, [cartData, discountData]);
 
-  // cartData와 개인 store(=selectedItem = 장바구니에 담은거)  담김 처리해줌
-  function lists(currentSelected, lists) {
-    const tmp = lists.map(el => {
+  // cartData/discountData, store랑 비교해서 체크된 배열 반환
+  function lists(currentSelected, data) {
+    const dataList = data.map(el => {
       return { ...el, check: false };
     });
-    for (const list of tmp) {
+    for (const list of dataList) {
       for (const item of currentSelected) {
-        if (list.id === item.id) {
-          list.check = true;
-        }
+        if (list.id === item.id) list.check = true;
       }
     }
-    return tmp;
+    return dataList;
   }
 
-  // 체크된 리스트, 여기는 상태 변경을 (체크 부분만하고(체크부분은 체크컴포넌트 부분에서 렌더링됨)) 굳이 안해줘도 되니까 state에 안담아줌.
+  // 체크된 리스트, 여기는 상태 변경을 (체크 부분만하고(체크부분은 체크컴포넌트 부분에서 상태변경)) 굳이 안해줘도 되니까 state에 안담아줌.
   // 이게 store에 저장될 배열
   let checkCartList: AddCheckItem[] = [];
   const tempCartList = (idx: number, value: boolean) => {
@@ -83,11 +77,11 @@ const ListModal = ({
   };
 
   let checkDiscountList: AddCheckDiscount[] = [];
-  const tempDiscountList = (idx: number, value: boolean) => {
+  const tempDiscountList = (id: number, value: boolean) => {
     if (value && discountData) {
-      checkDiscountList = [...checkDiscountList, discountData[idx]];
+      checkDiscountList = [...checkDiscountList, discountData[id]];
     } else {
-      checkDiscountList = checkDiscountList.filter(el => el.id !== idx);
+      checkDiscountList = checkDiscountList.filter(el => el.id !== id);
     }
   };
 
@@ -107,7 +101,11 @@ const ListModal = ({
   return (
     <Container>
       <HeaderWrapper>
-        <TitleBar text={text} cartModalHandler={cartModalHandler} />
+        <TitleBar
+          text={text}
+          cartModalHandler={cartModalHandler}
+          discountModalHandler={discountModalHandler}
+        />
       </HeaderWrapper>
       <ItemWrapper>
         {cartItemList
