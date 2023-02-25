@@ -57,6 +57,8 @@ const Container = styled.div`
   padding: 10px 20px;
   &:hover {
     cursor: pointer;
+    background-color: #fefcfc;
+    border-radius: 10px;
   }
 `;
 const ItemTag = styled.div`

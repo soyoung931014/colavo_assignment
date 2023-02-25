@@ -81,7 +81,7 @@ const Checkout = () => {
 
   useEffect(() => {
     setDiscountedInfo(discountTmp);
-  }, [update]);
+  }, [update, cartModal, discountModal]);
 
   //적용된 할인목록과, 할인 가격을 담은 state
   const [discountedInfo, setDiscountedInfo] = useState<[string, number][]>([]);
@@ -96,9 +96,10 @@ const Checkout = () => {
     (acc, price) => acc + price[1],
     0,
   );
+
   const totalPrice: number = sumPrice === 0 ? 0 : sumPrice - sumDiscountPrice;
 
-  // 할인 목록과 할인된 가격 함수
+  // 할인 목록과 할인된 가격
   let discountTmp: [string, number][] = [];
   const sumDiscount = (name, discountPrice) => {
     if (discountTmp.length >= 1) {
@@ -139,10 +140,10 @@ const Checkout = () => {
                 />
               </>
             ))}
-            {selectedDiscount.map((item, idx) => (
+            {selectedDiscount.map(item => (
               <>
                 <SelectedDiscountList
-                  key={idx}
+                  key={item.name}
                   {...item}
                   updateHandler={updateHandler}
                   sumDiscount={sumDiscount}
@@ -170,7 +171,6 @@ const Checkout = () => {
             cartModalHandler={cartModalHandler}
             text="시술 메뉴"
             cartData={cartData}
-            cartModal={cartModal}
           />
         </>
       )}
@@ -210,6 +210,7 @@ const MenuDiv = styled.div<{ Discount?: boolean }>`
   color: ${props => (props.Discount ? '#f45dc989' : '#23222241')};
   &:hover {
     cursor: pointer;
+    color: ${props => (props.Discount ? '#fbc9c9' : '#b5bcc4')};
   }
 `;
 
