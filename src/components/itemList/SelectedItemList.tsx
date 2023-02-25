@@ -68,6 +68,8 @@ const Container = styled.div`
   padding: 10px 39px;
   &:hover {
     cursor: pointer;
+    background-color: #fefcfc;
+    border-radius: 10px;
   }
 `;
 const CountWrapper = styled.div`
