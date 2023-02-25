@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { AddCheckItem } from '@src/types/itemList';
-import DiscountTargetList from '@components/itemList/DiscountTargetList';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCart } from '@src/redux/action/cartAction';
 import { deleteDiscount } from '@src/redux/action/discountAction';
+
+import DiscountTargetList from '@components/itemList/DiscountTargetList';
 
 export interface DiscountTargetProps {
   name: string;
   appliedItem: AddCheckItem[];
-  setAppliedItem: any;
+  setAppliedItem: (itme: AddCheckItem[]) => void;
   modalHandler: () => void;
   updateHandler: () => void;
   id?: number;
@@ -25,7 +26,7 @@ const DiscountTarget = ({
 }: DiscountTargetProps) => {
   const { selectedDiscount }: any = useSelector(selector => selector);
   const dispatch = useDispatch();
-  console.log(selectedDiscount, name);
+
   const deleteHandler = () => {
     const item = selectedDiscount.filter(item => item.name !== name);
     dispatch(deleteDiscount(item));
@@ -36,6 +37,7 @@ const DiscountTarget = ({
   const saveHandler = () => {
     setAppliedItem(updateAppliedList());
     modalHandler();
+    updateHandler();
   };
 
   // 수정 버튼에서 카트리스트 선택 여부 배열
@@ -55,7 +57,7 @@ const DiscountTarget = ({
         }
       }
     }
-    console.log(updateList);
+
     return updateList;
   };
 
@@ -102,7 +104,9 @@ const Title = styled.div`
   color: ${({ theme }) => theme.color.grey_01};
   font-weight: 600;
 `;
-const ListWrapper = styled.div``;
+const ListWrapper = styled.div`
+  width: 252px;
+`;
 
 const BackGround = styled.div`
   position: fixed;
@@ -117,9 +121,8 @@ const BackGround = styled.div`
   z-index: 500;
 `;
 const Container = styled.div`
-  border: solid red 2px;
   width: 300px;
-  padding: 70px 0;
+  padding: 50px 0;
   background: #ffffff;
   box-shadow: 0px 4px 15px 3px rgba(220, 220, 220, 0.5);
   border-radius: 10px;
@@ -137,7 +140,7 @@ const Button = styled.button<{ Delete?: boolean }>`
   position: relative;
   top: 30px;
   width: 100px;
-  margin-right: ${props => (props.Delete ? '10px' : '0')};
+  margin-right: ${props => (props.Delete ? '20px' : '0')};
   &:hover {
     cursor: pointer;
     background-color: ${({ theme }) => theme.color.purple_02};
@@ -149,7 +152,7 @@ const ButtonWrapper = styled.div`
   position: sticky;
   box-sizing: border-box;
   bottom: 20%;
-  margin-left: 6%;
+  margin-left: 15px;
 `;
 
 const Div = styled.div``;
