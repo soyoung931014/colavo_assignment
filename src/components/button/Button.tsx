@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useSelector } from 'react-redux';
+export interface ButtonProps {
+  text?: string;
+  buttonName?: string;
+  cartModalHandler?: any;
+  totalPrice?: any;
+  currency_code?: string;
+}
 
 const Button = ({
   text,
@@ -9,30 +15,15 @@ const Button = ({
   cartModalHandler,
   totalPrice,
   currency_code,
-}: any) => {
+}: ButtonProps) => {
   const ButtonHandler = () => {
-    /*  if (temp.length === 0) {
-      alert('1개 이상 선택해주세요');
-      return;
-    } */
-    //selectedItemList(cart);
     cartModalHandler();
   };
-  // const selectedItemList = cart => {
-  //   if (temp.length > 0) {
-  //     for (const itemId of temp) {
-  //       cart[itemId].check = true;
-  //     }
-  //     saveCart(cart);
-  //   }
-  // };
 
   if (currency_code === 'USD') {
     totalPrice = String(totalPrice * 7);
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
-  const { discountedPrice }: any = useSelector(selector => selector);
-  console.log(discountedPrice, 'didididi');
   return (
     <Container>
       <CheckWrapper>
