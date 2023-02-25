@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import Count from '@components/modal/Count';
 
+import { AiOutlineEdit } from 'react-icons/ai';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+
 export interface SelectedItemListProps {
   updateHandler: () => void;
-  countModal?: boolean;
   id: number;
   count: number;
   name: string;
@@ -69,7 +69,6 @@ const Container = styled.div`
   &:hover {
     cursor: pointer;
   }
-  border: solid red 2px;
 `;
 const CountWrapper = styled.div`
   display: flex;
@@ -98,7 +97,8 @@ const Tag = styled.div`
 const Price = styled.div`
   font-size: 12px;
   font-weight: 600;
-  margin-top: 4px;
+  margin-top: 5px;
+  padding-top: 2px;
   color: ${({ theme }) => theme.color.grey_05};
 `;
 const EditIcon = styled(AiOutlineEdit)`
@@ -119,4 +119,6 @@ const Total = styled.div`
   color: ${({ theme }) => theme.color.grey_04};
 `;
 
-const ItemContent = styled.div``;
+const ItemContent = styled.div`
+  margin-top: 5px;
+`;
