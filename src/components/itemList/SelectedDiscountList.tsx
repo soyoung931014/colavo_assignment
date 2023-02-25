@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+
+import { AddCheckItem } from '@src/types/itemList';
 
 import { useSelector } from 'react-redux';
+
 import DiscountTarget from '../modal/DiscountTarget';
-import { AddCheckItem } from '@src/types/itemList';
+
+import { AiOutlineEdit } from 'react-icons/ai';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 
 export interface SelectedDiscountListProps {
   name: string;
   rate: number;
-  discountedPrice?: number;
+  update: boolean;
   updateHandler: () => void;
+  sumDiscount: (name: string, discountPrice: number) => void;
 }
 
 const SelectedDiscountList = ({
   name,
   rate,
-  discountedPrice,
   updateHandler,
+  sumDiscount,
 }: SelectedDiscountListProps) => {
-  const [modal, setModal] = useState(false);
   const { selectedCart }: any = useSelector(selector => selector);
+
+  const [modal, setModal] = useState(false);
   const [appliedItem, setAppliedItem] = useState<AddCheckItem[]>(selectedCart);
 
   useEffect(() => {
@@ -34,7 +39,6 @@ const SelectedDiscountList = ({
 
   // 할인 목록, 할인된 가격, 할인율을 내보내자.
   const discountedList = discountedInfo(appliedItem);
-
   function discountedInfo(appliedItem) {
     let list = '';
     let discountedPrice = 0;
@@ -46,9 +50,9 @@ const SelectedDiscountList = ({
       discountedPrice += Number(price) * Number(rate);
     }
     list = list.slice(0, list.length - 1);
+    sumDiscount(name, Math.floor(discountedPrice));
     return [list, discountedPrice, discountedRate];
   }
-
   return (
     <>
       {modal ? (
