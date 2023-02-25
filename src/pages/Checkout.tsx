@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { HiPlusCircle } from 'react-icons/hi';
+import { fetchCurrencyCode } from '@src/redux/action/currencyCodeAction';
 
 import TitleBar from '@components/header/TitleBar';
 import Button from '@components/button/Button';
 
+import ListModal from '@src/components/modal/ListModal';
 import SelectedItemList from '@components/itemList/SelectedItemList';
 import SelectedDiscountList from '@components/itemList/SelectedDiscountList';
+
+import { HiPlusCircle } from 'react-icons/hi';
 
 import {
   AddCheckDiscount,
@@ -16,30 +21,25 @@ import {
   HairList,
   Item,
 } from '@type/itemList';
-import ListModal from '@src/components/modal/ListModal';
-import axios from 'axios';
-import { fetchCurrencyCode } from '@src/redux/action/currencyCodeAction';
-import { saveCart } from '@src/redux/action/cartAction';
-
-export interface appliedDiscount {
-  name: string;
-  appliedItem: string[];
-  discountedPrice: number;
-}
 
 const Checkout = () => {
   const { selectedCart, selectedDiscount }: any = useSelector(
     selector => selector,
   );
-  const [cartList, setCartList] = useState(selectedCart);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchPriceList();
   }, []);
 
+  // 데이터
   const [cartData, setcartData] = useState<AddCheckItem[]>([]);
   const [discountData, setDiscountData] = useState<AddCheckDiscount[]>([]);
-  const dispatch = useDispatch();
+
+  // 모달 state
+  const [cartModal, setcartModal] = useState<boolean>(false);
+  const [discountModal, setDiscountModal] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
 
   // 데이터 페칭
   const fetchPriceList = async () => {
@@ -61,20 +61,14 @@ const Checkout = () => {
     }
   };
 
-  // 데이터 페칭 과정에서 true/false 넣어주어 가공
+  // 데이터 페칭 과정에서 id, check 넣어주어 가공
   const addId = (list: Item[] | Discount[]) => {
     return list.map((item, idx) => {
       return { id: idx, check: false, ...item };
     });
   };
 
-  console.log(selectedDiscount);
-  // 모달 열고 닫고, 업데이트 하는 useState
-  const [cartModal, setcartModal] = useState<boolean>(false);
-  const [discountModal, setDiscountModal] = useState<boolean>(false);
-  const [update, setUpdate] = useState<boolean>(false);
-
-  // 모달 여닫는 핸들러들..
+  // 모달 핸들러들
   const cartModalHandler = () => {
     setcartModal(!cartModal);
   };
@@ -86,8 +80,37 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setCartList(selectedCart);
-  }, [update, cartModal, discountModal]);
+    setDiscountedInfo(discountTmp);
+  }, [update]);
+
+  //적용된 할인목록과, 할인 가격을 담은 state
+  const [discountedInfo, setDiscountedInfo] = useState<[string, number][]>([]);
+
+  // 총 가격 계산 = (장바구니 가격 - 할인 적용된 가격)
+  const sumPrice: number = selectedCart?.reduce(
+    (acc, item) => acc + item.price * item.count,
+    0,
+  );
+
+  const sumDiscountPrice: number = discountedInfo?.reduce(
+    (acc, price) => acc + price[1],
+    0,
+  );
+  const totalPrice: number = sumPrice === 0 ? 0 : sumPrice - sumDiscountPrice;
+
+  // 할인 목록과 할인된 가격 함수
+  let discountTmp: [string, number][] = [];
+  const sumDiscount = (name, discountPrice) => {
+    if (discountTmp.length >= 1) {
+      for (const el of discountTmp) {
+        if (el[0] === name) {
+          el[1] = discountPrice;
+          return;
+        }
+      }
+    }
+    discountTmp = [...discountTmp, [name, discountPrice]];
+  };
 
   return (
     <Container>
@@ -96,7 +119,6 @@ const Checkout = () => {
           <HeaderWrapper>
             <TitleBar />
           </HeaderWrapper>
-
           <ListWrapper>
             <MenuWrapper>
               <MenuDiv onClick={cartModalHandler}>
@@ -108,13 +130,12 @@ const Checkout = () => {
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {cartList?.map((item: AddCheckItem) => (
+            {selectedCart.map((item: AddCheckItem) => (
               <>
                 <SelectedItemList
                   key={item.name}
                   {...item}
                   updateHandler={updateHandler}
-                  /* countModal={cartModal} */
                 />
               </>
             ))}
@@ -124,6 +145,7 @@ const Checkout = () => {
                   key={idx}
                   {...item}
                   updateHandler={updateHandler}
+                  sumDiscount={sumDiscount}
                 />
               </>
             ))}
@@ -131,10 +153,10 @@ const Checkout = () => {
           </ListWrapper>
 
           <ButtonWrapper>
-            <Button /* totalPrice={totalPrice} */ />
+            <Button totalPrice={totalPrice} />
           </ButtonWrapper>
         </>
-      ) : discountModal ? (
+      ) : discountModal && !cartModal ? (
         <>
           <ListModal
             discountModalHandler={discountModalHandler}
