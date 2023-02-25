@@ -20,7 +20,6 @@ const DiscountTargetList = ({
     setChecked(!checked);
     tempCartList(id, idx, checked);
   };
-  console.log(checked, id);
 
   return (
     <Container onClick={checkedHandler}>
