@@ -1,33 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import { AddCheckDiscount, AddCheckItem } from '@type/itemList';
+
 import { BsCheckLg } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 
-import { AddCheckItem } from '@type/itemList';
-
 interface ItemListProps {
-  item: AddCheckItem;
-  temp: number[];
-  tempHandler: (id: number, check: boolean) => void;
+  item?: AddCheckItem;
+  discountItem?: AddCheckDiscount;
+  tempCartList: (idx: number, selected: boolean) => void;
 }
 
-const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
+const ItemList = ({ item, discountItem, tempCartList }: ItemListProps) => {
   const [selected, setSelected] = useState<boolean>(false);
-  const { id, name, price, check }: AddCheckItem = item;
+  let list;
+  if (!item) list = discountItem;
+  if (!discountItem) list = item;
+
+  const { id, name, check } = list;
 
   const checkHandler = () => {
     setSelected(!selected);
+    tempCartList(id, !selected);
   };
-
-  if (selected && !temp.includes(id)) {
-    tempHandler(id, selected);
-  }
-  if (!selected && temp.includes(id)) {
-    const idx = temp.indexOf(id);
-    if (idx > -1) {
-      tempHandler(idx, selected);
-    }
-  }
 
   return (
     <Container
@@ -45,7 +41,7 @@ const ItemList = ({ item, temp, tempHandler }: ItemListProps) => {
           <EditIcon />
           <Tag>{name}</Tag>
         </ItemTag>
-        <Price>{price.toLocaleString()}원</Price>
+        <Price>{list.price ? `${list.price}원` : `${list.rate} %`}</Price>
       </ItemContent>
       {selected ? <CheckIcon /> : check && !selected ? <CheckIcon /> : null}
     </Container>
@@ -61,6 +57,8 @@ const Container = styled.div`
   padding: 10px 20px;
   &:hover {
     cursor: pointer;
+    background-color: #fefcfc;
+    border-radius: 10px;
   }
 `;
 const ItemTag = styled.div`

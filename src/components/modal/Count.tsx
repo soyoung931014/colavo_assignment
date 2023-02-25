@@ -1,51 +1,52 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { saveCart } from '@src/redux/action/cartAction';
-import { AddCheckItem } from '@src/types/itemList';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCart, updateCart } from '@src/redux/action/cartAction';
 
 export interface CountProps {
   count: number;
   id: number;
-  cart: AddCheckItem[];
-  countUpdateHandler: () => void;
-  countModalHandler: () => void;
+  updateHandler: () => void;
+  modalHandler: () => void;
 }
-const Count = ({
-  count,
-  id,
-  cart,
-  countUpdateHandler,
-  countModalHandler,
-}: CountProps) => {
+const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
+  const { selectedCart }: any = useSelector(selector => selector);
+  const dispatch = useDispatch();
+
   const [quantity, setQuantity] = useState(count);
 
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const onlyNumber = value.replace(/[^0-9]/g, '');
+    if (onlyNumber.length >= 3) return;
     setQuantity(Number(onlyNumber));
   };
 
   const saveHandler = () => {
     if (quantity === 0) {
       deleteHandler();
+      return;
     }
-    if (quantity !== undefined) {
-      cart[id].count = quantity;
-    }
-    saveCart(cart);
-    countUpdateHandler();
-    countModalHandler();
+    updateCountHandler();
   };
 
   const deleteHandler = () => {
-    if (cart !== undefined) {
-      cart[id].check = false;
-      cart[id].count = 1;
+    const undelectedCart = selectedCart.filter(item => item.id !== id);
+    dispatch(deleteCart(undelectedCart));
+    updateHandler();
+    modalHandler();
+  };
+
+  const updateCountHandler = () => {
+    let cart;
+    if (quantity !== undefined) {
+      cart = selectedCart.map(item =>
+        item.id === id ? { ...item, count: quantity } : { ...item },
+      );
     }
-    saveCart(cart);
-    countUpdateHandler();
-    countModalHandler();
+    dispatch(updateCart(cart));
+    updateHandler();
+    modalHandler();
   };
 
   return (
@@ -78,19 +79,7 @@ const Count = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { cart } = state;
-  return {
-    cart,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    saveCart: cart => dispatch(saveCart(cart)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Count);
+export default Count;
 
 const BackGround = styled.div`
   position: fixed;

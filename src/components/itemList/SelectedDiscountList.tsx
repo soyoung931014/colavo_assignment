@@ -1,40 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { AddCheckItem } from '@src/types/itemList';
+
+import { useSelector } from 'react-redux';
+
+import DiscountTarget from '../modal/DiscountTarget';
+
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
-import DiscountTarget from '@components/modal/DiscountTarget';
-
 export interface SelectedDiscountListProps {
   name: string;
-  appliedItem: string[];
-  discountedPrice: number;
+  rate: number;
+  update: boolean;
   updateHandler: () => void;
+  sumDiscount: (name: string, discountPrice: number) => void;
 }
 
 const SelectedDiscountList = ({
   name,
-  appliedItem,
-  discountedPrice,
+  rate,
   updateHandler,
+  sumDiscount,
 }: SelectedDiscountListProps) => {
+  const { selectedCart }: any = useSelector(selector => selector);
+
   const [modal, setModal] = useState(false);
+  const [appliedItem, setAppliedItem] = useState<AddCheckItem[]>(selectedCart);
+
+  useEffect(() => {
+    setAppliedItem(selectedCart);
+  }, [selectedCart]);
 
   const modalHandler = () => {
     setModal(!modal);
   };
 
-  const sliceAppliedItem = appliedItem.map((el, idx) => {
-    if (appliedItem.length - 1 === idx) return el.slice(0, -2);
-    else return el;
-  });
-
+  // 할인 목록, 할인된 가격, 할인율을 내보내자.
+  const discountedList = discountedInfo(appliedItem);
+  function discountedInfo(appliedItem) {
+    let list = '';
+    let discountedPrice = 0;
+    const discountedRate = parseInt(`${Number(rate) * 100}`) + '%';
+    for (const item of appliedItem) {
+      const { count, name, price } = item;
+      if (count > 1) list += `${name} X ${count},`;
+      else list += `${name},`;
+      discountedPrice += Number(price) * Number(rate);
+    }
+    list = list.slice(0, list.length - 1);
+    sumDiscount(name, Math.floor(discountedPrice));
+    return [list, discountedPrice, discountedRate];
+  }
   return (
     <>
       {modal ? (
         <DiscountTarget
           name={name}
           appliedItem={appliedItem}
+          setAppliedItem={setAppliedItem}
           modalHandler={modalHandler}
           updateHandler={updateHandler}
         />
@@ -45,8 +70,10 @@ const SelectedDiscountList = ({
             <Tag>{name}</Tag>
             <EditIcon />
           </ItemTag>
-          <Total>{sliceAppliedItem}</Total>
-          <Price>{discountedPrice.toLocaleString()}원</Price>
+          <Total>{discountedList[0]}</Total>
+          <Price>
+            -{discountedList[1].toLocaleString()}원 ( {discountedList[2]} )
+          </Price>
         </ItemContent>
         <CountWrapper>
           <Edit>수정</Edit>
@@ -72,6 +99,8 @@ const Container = styled.div`
   padding: 10px 39px;
   &:hover {
     cursor: pointer;
+    background-color: #fefcfc;
+    border-radius: 10px;
   }
 `;
 const CountWrapper = styled.div`

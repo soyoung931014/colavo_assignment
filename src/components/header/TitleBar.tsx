@@ -16,23 +16,19 @@ const TitleBar = ({
   return (
     <Container>
       <IconWrapper>
-        {text === '시술 메뉴' ? (
-          <Div>
+        <Div>
+          {text === '시술 메뉴' ? (
             <Closed onClick={cartModalHandler} />
-          </Div>
-        ) : text === '할인' ? (
-          <Div>
+          ) : text === '할인' ? (
             <Closed onClick={discountModalHandler} />
-          </Div>
-        ) : (
-          <Closed />
-        )}
+          ) : (
+            <Closed />
+          )}
+        </Div>
       </IconWrapper>
       <TitleWrapper>
         {text ? (
-          <>
-            <Title>{text}</Title>
-          </>
+          <Title>{text}</Title>
         ) : (
           <>
             <Customer>곽지우</Customer>
