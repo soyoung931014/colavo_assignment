@@ -4,8 +4,8 @@ import CurrencyCodeReducer from '../reducers/currencyCodeReducer';
 import discountReducer from '../reducers/discountReducer';
 
 const rootReducer = combineReducers({
-  cart: cartReducer,
-  discount: discountReducer,
+  selectedCart: cartReducer,
+  selectedDiscount: discountReducer,
   currency_code: CurrencyCodeReducer,
 });
 

@@ -1,39 +1,64 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
-import { applyDiscount } from '@src/redux/action/discountAction';
-import { AddCheckDiscount } from '@src/types/itemList';
+import { AddCheckItem } from '@src/types/itemList';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteDiscount } from '@src/redux/action/discountAction';
+
 import DiscountTargetList from '@components/itemList/DiscountTargetList';
 
 export interface DiscountTargetProps {
   name: string;
-  appliedItem: string[];
+  appliedItem: AddCheckItem[];
+  setAppliedItem: (itme: AddCheckItem[]) => void;
   modalHandler: () => void;
   updateHandler: () => void;
-  discount: AddCheckDiscount[];
+  id?: number;
 }
 const DiscountTarget = ({
+  id,
   name,
   appliedItem,
+  setAppliedItem,
   modalHandler,
-  discount,
   updateHandler,
 }: DiscountTargetProps) => {
-  const findDiscount = discount.filter(el => el.name === name);
-  const { id } = findDiscount[0];
+  const { selectedDiscount }: any = useSelector(selector => selector);
+  const dispatch = useDispatch();
 
   const deleteHandler = () => {
-    if (discount !== undefined) {
-      discount[id].check = false;
-    }
-    applyDiscount(discount);
+    const item = selectedDiscount.filter(item => item.name !== name);
+    dispatch(deleteDiscount(item));
     modalHandler();
     updateHandler();
   };
 
   const saveHandler = () => {
+    setAppliedItem(updateAppliedList());
     modalHandler();
+    updateHandler();
+  };
+
+  // 수정 버튼에서 카트리스트 선택 여부 배열
+  let checkId: number[] = appliedItem?.map(item => item.id);
+
+  const tempCartList = (id: number) => {
+    if (checkId.includes(id)) checkId = checkId.filter(el => el !== id);
+    else checkId = [...checkId, id];
+  };
+  // 새로 checkId와 appliedItem을 이용해 수정한 할인 리스트 가져오기
+  const updateAppliedList = () => {
+    let updateList: AddCheckItem[] = [];
+    for (const item of appliedItem) {
+      for (const id of checkId) {
+        if (item.id === id) {
+          updateList = [...updateList, { ...item }];
+        }
+      }
+    }
+
+    return updateList;
   };
 
   return (
@@ -44,7 +69,13 @@ const DiscountTarget = ({
             <Title>{name}</Title>
             <ListWrapper>
               {appliedItem.map((list, idx) => (
-                <DiscountTargetList key={idx} item={list} />
+                <DiscountTargetList
+                  key={idx}
+                  idx={idx}
+                  id={list.id}
+                  name={list.name}
+                  tempCartList={tempCartList}
+                />
               ))}
             </ListWrapper>
             <ButtonWrapper>
@@ -63,18 +94,8 @@ const DiscountTarget = ({
     </>
   );
 };
-const mapStateToProps = state => {
-  const { discount } = state;
-  return {
-    discount,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    applyDiscount: discount => dispatch(applyDiscount(discount)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(DiscountTarget);
+
+export default DiscountTarget;
 const Title = styled.div`
   font-size: 25px;
   text-align: center;
@@ -83,7 +104,9 @@ const Title = styled.div`
   color: ${({ theme }) => theme.color.grey_01};
   font-weight: 600;
 `;
-const ListWrapper = styled.div``;
+const ListWrapper = styled.div`
+  width: 252px;
+`;
 
 const BackGround = styled.div`
   position: fixed;
@@ -99,7 +122,7 @@ const BackGround = styled.div`
 `;
 const Container = styled.div`
   width: 300px;
-  padding: 70px 0;
+  padding: 50px 0;
   background: #ffffff;
   box-shadow: 0px 4px 15px 3px rgba(220, 220, 220, 0.5);
   border-radius: 10px;
@@ -117,7 +140,7 @@ const Button = styled.button<{ Delete?: boolean }>`
   position: relative;
   top: 30px;
   width: 100px;
-  margin-right: ${props => (props.Delete ? '10px' : '0')};
+  margin-right: ${props => (props.Delete ? '20px' : '0')};
   &:hover {
     cursor: pointer;
     background-color: ${({ theme }) => theme.color.purple_02};
@@ -129,7 +152,7 @@ const ButtonWrapper = styled.div`
   position: sticky;
   box-sizing: border-box;
   bottom: 20%;
-  margin-left: 6%;
+  margin-left: 15px;
 `;
 
 const Div = styled.div``;

@@ -1,41 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { connect } from 'react-redux';
-import { saveCart } from '@src/redux/action/cartAction';
+export interface ButtonProps {
+  text?: string;
+  buttonName?: string;
+  cartModalHandler?: any;
+  totalPrice?: any;
+  currency_code?: string;
+}
 
 const Button = ({
   text,
   buttonName,
   cartModalHandler,
-  temp,
-  cart,
-  saveCart,
   totalPrice,
   currency_code,
-}: any) => {
+}: ButtonProps) => {
   const ButtonHandler = () => {
-    if (temp.length === 0) {
-      alert('1개 이상 선택해주세요');
-      return;
-    }
-    selectedItemList(cart);
     cartModalHandler();
-  };
-  const selectedItemList = cart => {
-    if (temp.length > 0) {
-      for (const itemId of temp) {
-        cart[itemId].check = true;
-      }
-      saveCart(cart);
-    }
   };
 
   if (currency_code === 'USD') {
     totalPrice = String(totalPrice * 7);
     totalPrice = totalPrice.slice(0, totalPrice.length - 4);
   }
-
   return (
     <Container>
       <CheckWrapper>
@@ -47,7 +35,7 @@ const Button = ({
           <>
             <Text>합계</Text>
             {currency_code === 'USD' ? (
-              <Total>${totalPrice}</Total>
+              <Total> ${totalPrice} </Total>
             ) : (
               <Total>{totalPrice.toLocaleString()}원</Total>
             )}
@@ -55,7 +43,6 @@ const Button = ({
         )}
       </CheckWrapper>
       <NextWrapper>
-        <Div></Div>
         {buttonName ? (
           <>
             <Wrapper>
@@ -64,7 +51,9 @@ const Button = ({
           </>
         ) : (
           <>
-            <Next>다음</Next>
+            <Wrapper>
+              <Next Default>다음</Next>
+            </Wrapper>
           </>
         )}
       </NextWrapper>
@@ -72,20 +61,7 @@ const Button = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { cart, currency_code } = state;
-  return {
-    cart,
-    currency_code,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    saveCart: cart => dispatch(saveCart(cart)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Button);
+export default Button;
 
 const Container = styled.div``;
 const CheckWrapper = styled.div<{ Guide?: boolean }>`
@@ -93,7 +69,7 @@ const CheckWrapper = styled.div<{ Guide?: boolean }>`
   justify-content: space-between;
   margin-right: 5px;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 23px;
   padding-top: 22px;
   border-top: solid 1px ${({ theme }) => theme.color.grey_02}; ;
 `;
@@ -104,9 +80,9 @@ const Text = styled.div<{ Guide?: boolean }>`
   padding-bottom: 10px;
 `;
 const Total = styled.div`
-  font-size: 30px;
+  font-size: 25px;
 `;
-const Next = styled.div`
+const Next = styled.div<{ Default?: boolean }>`
   font-size: 20px;
   padding: 15px;
   width: 440px;
@@ -115,6 +91,9 @@ const Next = styled.div`
   color: #ffff;
   border-radius: 10px;
   margin-top: 10px;
+  &:hover {
+    background-color: ${props => (props.Default ? '' : '#a393f2')};
+  }
 `;
 const NextWrapper = styled.div`
   display: flex;
@@ -129,4 +108,3 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
 `;
-const Div = styled.div``;

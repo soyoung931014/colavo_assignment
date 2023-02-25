@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import Count from '@components/modal/Count';
 
+import { AiOutlineEdit } from 'react-icons/ai';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+
 export interface SelectedItemListProps {
-  countUpdateHandler: () => void;
-  countModal?: boolean;
+  updateHandler: () => void;
   id: number;
   count: number;
   name: string;
@@ -18,11 +18,11 @@ const SelectedItemList = ({
   count,
   name,
   price,
-  countUpdateHandler,
+  updateHandler,
 }: SelectedItemListProps) => {
   const [modal, setModal] = useState(false);
 
-  const countModalHandler = () => {
+  const modalhandler = () => {
     setModal(!modal);
   };
 
@@ -34,8 +34,8 @@ const SelectedItemList = ({
             <Count
               count={count}
               id={id}
-              countUpdateHandler={countUpdateHandler}
-              countModalHandler={countModalHandler}
+              updateHandler={updateHandler}
+              modalHandler={modalhandler}
             />
           </>
         ) : null}
@@ -68,6 +68,8 @@ const Container = styled.div`
   padding: 10px 39px;
   &:hover {
     cursor: pointer;
+    background-color: #fefcfc;
+    border-radius: 10px;
   }
 `;
 const CountWrapper = styled.div`
@@ -97,7 +99,8 @@ const Tag = styled.div`
 const Price = styled.div`
   font-size: 12px;
   font-weight: 600;
-  margin-top: 4px;
+  margin-top: 5px;
+  padding-top: 2px;
   color: ${({ theme }) => theme.color.grey_05};
 `;
 const EditIcon = styled(AiOutlineEdit)`
@@ -118,4 +121,6 @@ const Total = styled.div`
   color: ${({ theme }) => theme.color.grey_04};
 `;
 
-const ItemContent = styled.div``;
+const ItemContent = styled.div`
+  margin-top: 5px;
+`;

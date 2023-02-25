@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import { BsCheckLg } from 'react-icons/bs';
 
 export interface DiscountTargetList {
-  item: string;
-  id?: number;
+  name: string;
+  id: number;
+  idx: number;
+  tempCartList: (id: number, idx: number, value: boolean) => void;
 }
-const DiscountTargetList = ({ item }: DiscountTargetList) => {
-  item = item.slice(0, item.length - 2);
-
-  const [checked, setChecked] = useState<boolean>(false);
+const DiscountTargetList = ({
+  name,
+  id,
+  idx,
+  tempCartList,
+}: DiscountTargetList) => {
+  const [checked, setChecked] = useState<boolean>(true);
   const checkedHandler = () => {
     setChecked(!checked);
+    tempCartList(id, idx, checked);
   };
 
   return (
     <Container onClick={checkedHandler}>
-      <Tag>{item}</Tag>
-      {!checked ? (
+      <Tag>{name}</Tag>
+      {checked ? (
         <div>
           <CheckIcon />
         </div>
