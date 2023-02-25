@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export interface ButtonProps {
@@ -52,7 +52,7 @@ const Button = ({
         ) : (
           <>
             <Wrapper>
-              <Next>다음</Next>
+              <Next Default>다음</Next>
             </Wrapper>
           </>
         )}
@@ -82,7 +82,7 @@ const Text = styled.div<{ Guide?: boolean }>`
 const Total = styled.div`
   font-size: 25px;
 `;
-const Next = styled.div`
+const Next = styled.div<{ Default?: boolean }>`
   font-size: 20px;
   padding: 15px;
   width: 440px;
@@ -91,6 +91,9 @@ const Next = styled.div`
   color: #ffff;
   border-radius: 10px;
   margin-top: 10px;
+  &:hover {
+    background-color: ${props => (props.Default ? '' : '#a393f2')};
+  }
 `;
 const NextWrapper = styled.div`
   display: flex;
