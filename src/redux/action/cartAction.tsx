@@ -1,31 +1,31 @@
-export const FETCH_CART_INFO = 'FETCH_CART_INFO';
-export const SAVE_CART = 'SAVE_CART';
-export const DELETE_CART = 'DELETE_CART';
-export const UPDATE_CART = 'UPDATE_CART';
+import { AddCheckItem } from '@src/types/itemList';
 
-export const fetchCartInfo = data => {
-  return {
-    type: 'FETCH_CART_INFO',
-    payload: data,
-  };
-};
-export const saveCart = data => {
+export const SAVE_CART = 'SAVE_CART' as const;
+export const DELETE_CART = 'DELETE_CART' as const;
+export const UPDATE_CART = 'UPDATE_CART' as const;
+
+export const saveCart = (data: AddCheckItem[]) => {
   return {
     type: 'SAVE_CART',
     payload: data,
   };
 };
 
-export const deleteCart = data => {
+export const deleteCart = (data: AddCheckItem[]) => {
   return {
     type: 'DELETE_CART',
     payload: data,
   };
 };
 
-export const updateCart = data => {
+export const updateCart = (data: AddCheckItem[]) => {
   return {
     type: 'UPDATE_CART',
     payload: data,
   };
 };
+
+export type cartAction =
+  | ReturnType<typeof saveCart>
+  | ReturnType<typeof deleteCart>
+  | ReturnType<typeof updateCart>;
