@@ -21,10 +21,11 @@ import {
   HairList,
   Item,
 } from '@type/itemList';
+import { RootState } from '@src/redux/store/rootReducer';
 
 const Checkout = () => {
-  const { selectedCart, selectedDiscount }: any = useSelector(
-    selector => selector,
+  const { selectedCart, selectedDiscount } = useSelector(
+    (selector: RootState) => selector,
   );
   const dispatch = useDispatch();
 
@@ -50,8 +51,10 @@ const Checkout = () => {
         )
         .then(res => {
           const { items, discounts, currency_code }: HairList = res.data;
-          const itemArray = addId(Object.values(items));
-          const discountArray = addId(Object.values(discounts));
+          const itemArray: AddCheckItem[] = addId(Object.values(items));
+          const discountArray: AddCheckDiscount[] = addId(
+            Object.values(discounts),
+          );
           setcartData([...itemArray]);
           setDiscountData([...discountArray]);
           dispatch(fetchCurrencyCode(currency_code));

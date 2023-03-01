@@ -10,6 +10,7 @@ import { applyDiscount } from '@src/redux/action/discountAction';
 import ItemList from '../itemList/ItemList';
 import TitleBar from '../header/TitleBar';
 import Button from '../button/Button';
+import { RootState } from '@src/redux/store/rootReducer';
 
 export interface ListModalProps {
   cartModalHandler?: () => void;
@@ -31,8 +32,8 @@ const ListModal = ({
   //discountData: 할인 데이터
   //selectedDiscount: 선택된 할인 목록
 
-  const { selectedCart, selectedDiscount }: any = useSelector(
-    selector => selector,
+  const { selectedCart, selectedDiscount } = useSelector(
+    (selector: RootState) => selector,
   );
   const dispatch = useDispatch();
 

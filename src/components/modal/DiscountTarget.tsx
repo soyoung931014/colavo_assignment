@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteDiscount } from '@src/redux/action/discountAction';
 
 import DiscountTargetList from '@components/itemList/DiscountTargetList';
+import { RootState } from '@src/redux/store/rootReducer';
 
 export interface DiscountTargetProps {
   name: string;
@@ -24,7 +25,7 @@ const DiscountTarget = ({
   modalHandler,
   updateHandler,
 }: DiscountTargetProps) => {
-  const { selectedDiscount }: any = useSelector(selector => selector);
+  const { selectedDiscount } = useSelector((selector: RootState) => selector);
   const dispatch = useDispatch();
 
   const deleteHandler = () => {

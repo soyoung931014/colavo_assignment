@@ -1,3 +1,5 @@
+import { deleteCart, saveCart, updateCart } from '@src/redux/action/cartAction';
+
 export interface HairList {
   items: {
     [key: string]: Item;
@@ -27,16 +29,4 @@ export interface AddCheckDiscount extends Discount {
   map(arg0: (discount: any) => JSX.Element): import('react').ReactNode;
   id: number;
   check: boolean;
-}
-
-export interface StoreInfo {
-  cart: AddCheckItem[];
-  discount: AddCheckDiscount[];
-  currency_code: string;
-}
-
-export interface fetchProps {
-  fetchCartInfo: (cartList: AddCheckItem[]) => void;
-  fetchDiscountInfo: (discountList: AddCheckDiscount[]) => void;
-  fetchCurrencyCode: (currency_code: string) => void;
 }

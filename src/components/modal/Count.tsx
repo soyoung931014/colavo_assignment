@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCart, updateCart } from '@src/redux/action/cartAction';
+import { RootState } from '@src/redux/store/rootReducer';
 
 export interface CountProps {
   count: number;
@@ -11,7 +12,7 @@ export interface CountProps {
   modalHandler: () => void;
 }
 const Count = ({ count, id, updateHandler, modalHandler }: CountProps) => {
-  const { selectedCart }: any = useSelector(selector => selector);
+  const { selectedCart } = useSelector((selector: RootState) => selector);
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(count);

@@ -1,17 +1,15 @@
 import { AddCheckItem } from '@src/types/itemList';
 import {
+  cartAction,
   DELETE_CART,
-  FETCH_CART_INFO,
   SAVE_CART,
   UPDATE_CART,
 } from '../action/cartAction';
 
 const initialState: AddCheckItem[] = [];
 
-const cartReducer = (state = initialState, action) => {
+const cartReducer = (state = initialState, action: cartAction) => {
   switch (action.type) {
-    case FETCH_CART_INFO:
-      return [...state, ...action.payload];
     case SAVE_CART:
       return [...state, ...action.payload];
     case UPDATE_CART:
