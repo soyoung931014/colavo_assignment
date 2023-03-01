@@ -9,11 +9,11 @@ import DiscountTarget from '../modal/DiscountTarget';
 
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiArrowDropDownLine } from 'react-icons/ri';
+import { RootState } from '@src/redux/store/rootReducer';
 
 export interface SelectedDiscountListProps {
   name: string;
   rate: number;
-  update: boolean;
   updateHandler: () => void;
   sumDiscount: (name: string, discountPrice: number) => void;
 }
@@ -24,7 +24,7 @@ const SelectedDiscountList = ({
   updateHandler,
   sumDiscount,
 }: SelectedDiscountListProps) => {
-  const { selectedCart }: any = useSelector(selector => selector);
+  const { selectedCart } = useSelector((selector: RootState) => selector);
 
   const [modal, setModal] = useState(false);
   const [appliedItem, setAppliedItem] = useState<AddCheckItem[]>(selectedCart);
