@@ -83,6 +83,10 @@ const Checkout = () => {
     setDiscountedInfo(discountTmp);
   }, [update]);
 
+  useEffect(() => {
+    updateHandler();
+  }, [selectedCart, selectedDiscount]);
+
   //적용된 할인목록과, 할인 가격을 담은 state
   const [discountedInfo, setDiscountedInfo] = useState<[string, number][]>([]);
 
