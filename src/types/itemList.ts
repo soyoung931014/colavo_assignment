@@ -1,5 +1,3 @@
-import { deleteCart, saveCart, updateCart } from '@src/redux/action/cartAction';
-
 export interface HairList {
   items: {
     [key: string]: Item;
