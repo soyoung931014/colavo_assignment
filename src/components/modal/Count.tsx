@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCart, updateCart } from '@src/redux/action/cartAction';
 
-
 export interface CountProps {
   count: number;
   id: number;

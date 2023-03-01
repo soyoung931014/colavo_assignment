@@ -81,7 +81,11 @@ const Checkout = () => {
 
   useEffect(() => {
     setDiscountedInfo(discountTmp);
-  }, [update, cartModal, discountModal]);
+  }, [update]);
+
+  useEffect(() => {
+    updateHandler();
+  }, [selectedCart, selectedDiscount]);
 
   //적용된 할인목록과, 할인 가격을 담은 state
   const [discountedInfo, setDiscountedInfo] = useState<[string, number][]>([]);
@@ -132,23 +136,19 @@ const Checkout = () => {
               </MenuDiv>
             </MenuWrapper>
             {selectedCart.map((item: AddCheckItem) => (
-              <>
-                <SelectedItemList
-                  key={item.name}
-                  {...item}
-                  updateHandler={updateHandler}
-                />
-              </>
+              <SelectedItemList
+                key={item.name}
+                {...item}
+                updateHandler={updateHandler}
+              />
             ))}
             {selectedDiscount.map(item => (
-              <>
-                <SelectedDiscountList
-                  key={item.name}
-                  {...item}
-                  updateHandler={updateHandler}
-                  sumDiscount={sumDiscount}
-                />
-              </>
+              <SelectedDiscountList
+                key={item.name}
+                {...item}
+                updateHandler={updateHandler}
+                sumDiscount={sumDiscount}
+              />
             ))}
             <Div></Div>
           </ListWrapper>
