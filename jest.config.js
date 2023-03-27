@@ -12,6 +12,7 @@ module.exports = {
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@type/(.*)$': '<rootDir>/src/type/$1',
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
+    '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test/jest-setup.js'],
