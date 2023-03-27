@@ -14,4 +14,5 @@ module.exports = {
     '^@hooks/(.*)$': '<rootDir>/src/hooks/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/test/jest-setup.js'],
 };
