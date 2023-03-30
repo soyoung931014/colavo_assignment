@@ -1,18 +1,9 @@
-import Count from '@src/components/modal/Count';
 import Checkout from '@src/pages/Checkout';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders, screen, act } from './utils';
 
 const event = userEvent.setup();
 
-const setup = async () => {
-  const utils = renderWithProviders(<Count />);
-  const input = await screen.findByLabelText('count-input');
-  return {
-    input,
-    ...utils,
-  };
-};
 describe('item, discount는 각각 장바구니로 추가/삭제하기', () => {
   test('item 추가/삭제하기', async () => {
     renderWithProviders(<Checkout />);
