@@ -1,6 +1,5 @@
 import { server } from '@src/mocks/server';
 import '@testing-library/jest-dom';
-
 //server를 가져와서 모든 테스트가 진행되기 전에 server를 열어준다.
 beforeAll(() => server.listen());
 

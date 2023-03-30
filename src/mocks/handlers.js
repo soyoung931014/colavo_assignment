@@ -10,7 +10,10 @@ export const handlers = [
             { count: 1, name: '기본펌', price: 100000 },
             { count: 1, name: '드라이', price: 30000 },
           ],
-          discounts: [{ name: '회원권 할인', rate: 0.1 }],
+          discounts: [
+            { name: '회원권 할인', rate: 0.1 },
+            { name: '기분이다 할인', rate: 0.05 },
+          ],
         }),
       );
     },
