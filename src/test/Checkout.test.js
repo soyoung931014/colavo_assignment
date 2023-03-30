@@ -1,6 +1,6 @@
 import Checkout from '@src/pages/Checkout';
 import userEvent from '@testing-library/user-event';
-import { renderWithProviders, screen, act } from './utils';
+import { renderWithProviders, screen, act, waitFor } from './utils';
 
 const event = userEvent.setup();
 
@@ -118,4 +118,36 @@ test('item의 수량 선택 가능 ex) 기본펌 X 3', async () => {
   const count = await screen.findByTestId('count');
   expect(count).toHaveTextContent('3');
   expect(price).toHaveTextContent('300,000');
+});
+
+test('동일한 아이템을 장바구니로 담을 수 없음', async () => {
+  renderWithProviders(<Checkout />);
+  const hairMenu = screen.getByTestId('item');
+  await act(async () => {
+    await event.click(hairMenu);
+  });
+
+  const perm = await screen.findByText('기본펌');
+  await act(async () => {
+    await event.click(perm);
+  });
+
+  const completeButton = await screen.findByText('완료');
+  await act(async () => {
+    await event.click(completeButton);
+  });
+
+  const item = await screen.findByText('기본펌');
+  const price = await screen.findByTestId('price');
+  expect(item).toBeInTheDocument();
+  expect(price).toHaveTextContent('100,000');
+
+  const backToHairMenu = screen.getByTestId('item');
+  await act(async () => {
+    await event.click(backToHairMenu);
+  });
+
+  window.alert = jest.fn();
+  const itemTitle = await screen.findByText('시술 메뉴');
+  expect(itemTitle).toBeInTheDocument();
 });
