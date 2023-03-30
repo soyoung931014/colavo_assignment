@@ -27,6 +27,7 @@ const ItemList = ({ item, discountItem, tempCartList }: ItemListProps) => {
 
   return (
     <Container
+      data-testid={list.price ? 'cart' : 'dis'}
       onClick={
         !check
           ? checkHandler

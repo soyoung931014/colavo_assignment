@@ -39,7 +39,7 @@ const SelectedItemList = ({
             />
           </>
         ) : null}
-        <Container onClick={() => setModal(!modal)}>
+        <Container onClick={() => setModal(!modal)} data-testid="modal">
           <ItemContent>
             <ItemTag>
               <EditIcon />

@@ -64,7 +64,7 @@ const SelectedDiscountList = ({
           updateHandler={updateHandler}
         />
       ) : null}
-      <Container onClick={modalHandler}>
+      <Container onClick={modalHandler} data-testid="disModal">
         <ItemContent>
           <ItemTag>
             <Tag>{name}</Tag>

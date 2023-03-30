@@ -28,7 +28,7 @@ const TitleBar = ({
       </IconWrapper>
       <TitleWrapper>
         {text ? (
-          <Title>{text}</Title>
+          <Title data-testid="dis">{text}</Title>
         ) : (
           <>
             <Customer>곽지우</Customer>
