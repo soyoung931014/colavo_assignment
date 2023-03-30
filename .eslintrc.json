@@ -9,7 +9,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
-    "plugin:@testing-library/jest-dom"
+    "plugin:@testing-library/jest-dom",
+    "plugin:@testing-library/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,7 +20,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "@testing-library/jest-dom","prettier","testing-library/react"
+  "plugins": ["react", "@typescript-eslint", "@testing-library/jest-dom","prettier","@testing-library/react"
   ],
   "rules": {
     "prettier/prettier": [
