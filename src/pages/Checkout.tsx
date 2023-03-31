@@ -142,21 +142,23 @@ const Checkout = () => {
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {selectedCart.map((item: AddCheckItem) => (
-              <SelectedItemList
-                key={item.name}
-                {...item}
-                updateHandler={updateHandler}
-              />
-            ))}
-            {selectedDiscount.map(item => (
-              <SelectedDiscountList
-                key={item.name}
-                {...item}
-                updateHandler={updateHandler}
-                sumDiscount={sumDiscount}
-              />
-            ))}
+            <div data-testid="selectedList">
+              {selectedCart.map((item: AddCheckItem) => (
+                <SelectedItemList
+                  key={item.name}
+                  {...item}
+                  updateHandler={updateHandler}
+                />
+              ))}
+              {selectedDiscount.map(item => (
+                <SelectedDiscountList
+                  key={item.name}
+                  {...item}
+                  updateHandler={updateHandler}
+                  sumDiscount={sumDiscount}
+                />
+              ))}
+            </div>
             <Div></Div>
           </ListWrapper>
 
