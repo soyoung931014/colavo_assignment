@@ -15,5 +15,5 @@ module.exports = {
     '^@mocks/(.*)$': '<rootDir>/src/mocks/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/src/test/jest-setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/src/tests/jest-setup.js'],
 };
