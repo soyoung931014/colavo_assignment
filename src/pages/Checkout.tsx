@@ -129,30 +129,36 @@ const Checkout = () => {
           </HeaderWrapper>
           <ListWrapper>
             <MenuWrapper>
-              <MenuDiv onClick={cartModalHandler}>
+              <MenuDiv onClick={cartModalHandler} data-testid="item">
                 <Icon />
                 <Text>시술</Text>
               </MenuDiv>
-              <MenuDiv Discount onClick={discountModalHandler}>
+              <MenuDiv
+                Discount
+                onClick={discountModalHandler}
+                data-testid="discount"
+              >
                 <Icon />
                 <Text>할인</Text>
               </MenuDiv>
             </MenuWrapper>
-            {selectedCart.map((item: AddCheckItem) => (
-              <SelectedItemList
-                key={item.name}
-                {...item}
-                updateHandler={updateHandler}
-              />
-            ))}
-            {selectedDiscount.map(item => (
-              <SelectedDiscountList
-                key={item.name}
-                {...item}
-                updateHandler={updateHandler}
-                sumDiscount={sumDiscount}
-              />
-            ))}
+            <div data-testid="selectedList">
+              {selectedCart.map((item: AddCheckItem) => (
+                <SelectedItemList
+                  key={item.name}
+                  {...item}
+                  updateHandler={updateHandler}
+                />
+              ))}
+              {selectedDiscount.map(item => (
+                <SelectedDiscountList
+                  key={item.name}
+                  {...item}
+                  updateHandler={updateHandler}
+                  sumDiscount={sumDiscount}
+                />
+              ))}
+            </div>
             <Div></Div>
           </ListWrapper>
 

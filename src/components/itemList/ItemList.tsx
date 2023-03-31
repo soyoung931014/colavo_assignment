@@ -27,11 +27,12 @@ const ItemList = ({ item, discountItem, tempCartList }: ItemListProps) => {
 
   return (
     <Container
+      data-testid={list.price ? 'cart' : 'dis'}
       onClick={
         !check
           ? checkHandler
           : () =>
-              alert(
+              window.alert(
                 '이미 담은 목록입니다. 삭제를 원하시면 뒤로 돌아가서 삭제해주세요.',
               )
       }

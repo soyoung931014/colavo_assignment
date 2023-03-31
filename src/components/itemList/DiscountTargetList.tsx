@@ -22,14 +22,16 @@ const DiscountTargetList = ({
   };
 
   return (
-    <Container onClick={checkedHandler}>
+    <Container onClick={checkedHandler} data-testid={name}>
       <Tag>{name}</Tag>
       {checked ? (
-        <div>
+        <div data-testid="selected">
           <CheckIcon />
         </div>
       ) : (
-        <Nothing />
+        <div data-testid="notSelected">
+          <Nothing />
+        </div>
       )}
     </Container>
   );
