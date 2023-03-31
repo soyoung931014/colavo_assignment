@@ -20,7 +20,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "@testing-library/jest-dom","prettier","@testing-library/react"
+  "plugins": ["react", "@typescript-eslint","@testing-library/eslint-plugin", "@testing-library/jest-dom","prettier","@testing-library/react"
   ],
   "rules": {
     "prettier/prettier": [
