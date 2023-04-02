@@ -35,13 +35,6 @@
     "test": "./node_modules/.bin/jest --runInBand",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "@testing-library/react"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
