@@ -67,7 +67,7 @@ const DiscountTarget = ({
       <BackGround>
         <Container>
           <div>
-            <Title>{name}</Title>
+            <Title data-testid={name}>{name}</Title>
             <ListWrapper>
               {appliedItem.map((list, idx) => (
                 <DiscountTargetList

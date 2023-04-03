@@ -39,7 +39,7 @@ const SelectedItemList = ({
             />
           </>
         ) : null}
-        <Container onClick={() => setModal(!modal)}>
+        <Container onClick={() => setModal(!modal)} data-testid="modal">
           <ItemContent>
             <ItemTag>
               <EditIcon />
@@ -48,7 +48,7 @@ const SelectedItemList = ({
             <Price>{price.toLocaleString()}원</Price>
           </ItemContent>
           <CountWrapper>
-            <Total>{count}</Total>
+            <Total data-testid="count">{count}</Total>
             <DropDown>
               <DropDownIcon />
             </DropDown>

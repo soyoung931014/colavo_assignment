@@ -8,7 +8,9 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:@testing-library/jest-dom",
+    "plugin:@testing-library/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,7 +20,8 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "@testing-library/jest-dom","prettier","@testing-library/react"
+  ],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -28,6 +31,7 @@
     ],
     "object-curly-spacing": ["error", "always"]
   },
+  
   "settings": {
     "import/resolver": {
       "node": {

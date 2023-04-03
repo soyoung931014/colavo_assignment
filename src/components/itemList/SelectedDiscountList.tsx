@@ -64,14 +64,14 @@ const SelectedDiscountList = ({
           updateHandler={updateHandler}
         />
       ) : null}
-      <Container onClick={modalHandler}>
+      <Container onClick={modalHandler} data-testid="disModal">
         <ItemContent>
           <ItemTag>
             <Tag>{name}</Tag>
             <EditIcon />
           </ItemTag>
-          <Total>{discountedList[0]}</Total>
-          <Price>
+          <Total data-testid="disList">{discountedList[0]}</Total>
+          <Price data-testid="disPrice">
             -{discountedList[1].toLocaleString()}원 ( {discountedList[2]} )
           </Price>
         </ItemContent>
